@@ -31,10 +31,11 @@
             android:paddingRight="50dp">
         </ListView>
         <include layout="@layout/buck_result_bs_1"
-            android:id="@+id/bs-row-clickme"
+            android:id="@+id/bs_row_clickme"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/hr1"/>
+            android:layout_below="@id/hr1"
+            />
 
 
         <TextView
@@ -54,7 +55,7 @@
             android:paddingRight="50dp">
         </ListView>
         <include layout="@layout/buck_result_bs_2"
-            android:id="@+id/bs-row3"
+            android:id="@+id/bs_row3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/hr1"/>
@@ -98,7 +99,7 @@
             android:paddingRight="50dp">
         </ListView>
         <include layout="@layout/buck_result_bs_3"
-            android:id="@+id/bs-row2"
+            android:id="@+id/bs_row2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/hr1"/>
@@ -120,7 +121,7 @@
             android:paddingRight="50dp">
         </ListView>
         <include layout="@layout/member_row"
-            android:id="@+id/bs-row1"
+            android:id="@+id/bs_row1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/hr1"/>
