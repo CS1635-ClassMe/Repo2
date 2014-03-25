@@ -6,7 +6,6 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 
@@ -28,16 +27,6 @@ public class SearchActivity extends ActionBarActivity {
                 startActivity(intent);
             }
         });
-
-        ViewGroup result = (ViewGroup) findViewById(R.id.bs_row_clickme);
-        result.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(activity, CourseStreamActivity.class);
-                startActivity(intent);
-            }
-        });
-
 
         //call new intent in lister callback
     }
