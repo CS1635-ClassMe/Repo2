@@ -33,7 +33,7 @@ public class SearchActivity extends ActionBarActivity {
         result.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(activity, ClassView.class);
+                Intent intent = new Intent(activity, CourseStreamActivity.class);
                 startActivity(intent);
             }
         });
