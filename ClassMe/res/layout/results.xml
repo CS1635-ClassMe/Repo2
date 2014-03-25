@@ -17,6 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Active Course"
+
             />
         <LinearLayout
             android:layout_width="match_parent"
@@ -31,7 +32,7 @@
         </ListView>
         <include layout="@layout/buck_result_bs_1"
             android:id="@+id/classRow"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/hr1"/>
 
@@ -39,7 +40,8 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Archived Course"/>
+            android:text="Archived Course"
+            android:paddingTop="20dp"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -53,14 +55,15 @@
         </ListView>
         <include layout="@layout/buck_result_bs_2"
             android:id="@+id/classRow"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/hr1"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Posts"/>
+            android:text="Posts"
+            android:paddingTop="20dp"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -72,11 +75,17 @@
             android:layout_height="0dp"
             android:paddingRight="50dp">
         </ListView>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="50dp"
+            android:text="[ no results ]"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Instructors"/>
+            android:text="Instructors"
+            android:paddingTop="20dp"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -88,11 +97,17 @@
             android:layout_height="0dp"
             android:paddingRight="50dp">
         </ListView>
+        <include layout="@layout/buck_result_bs_3"
+            android:id="@+id/bs-row2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/hr1"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Members"/>
+            android:text="Members"
+            android:paddingTop="20dp"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -104,6 +119,11 @@
             android:layout_height="0dp"
             android:paddingRight="50dp">
         </ListView>
+        <include layout="@layout/member_row"
+            android:id="@+id/bs-row1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/hr1"/>
 
     </LinearLayout>
 
