@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:padding="5dp"
+	android:background="@color/background">
+
+	<TextView
+		android:id="@+id/instructorLabel"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginRight="5dp"
+		android:layout_marginBottom="5dp"
+		android:text="Instructor:"/>
+	
+	<TextView
+		android:id="@+id/instructor"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_toRightOf="@id/instructorLabel"
+		android:text="Jingtao Wang"/>
+	
+	<TextView
+		android:id="@+id/sectionLabel"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_below="@id/instructorLabel"
+		android:layout_marginRight="5dp"
+		android:text="Section:"/>
+
+	<TextView
+		android:id="@+id/section"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_below="@id/instructorLabel"
+		android:layout_toRightOf="@id/sectionLabel"
+		android:text="2014 Spring"/>
+
+	<RatingBar
+		android:id="@+id/rating"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_below="@id/sectionLabel"
+		android:rating="3.5"/>
+
+	<Button
+		android:id="@+id/membersButton"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignParentRight="true"
+		android:text="Members"/>
+
+	<Button
+		android:id="@+id/joinButton"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_below="@id/membersButton"
+		android:layout_alignParentRight="true"
+		android:text="Join"/>
+
+	<include layout="@layout/hr"
+			 android:id="@+id/hr1"
+			 android:layout_height="2dp"
+			 android:layout_width="match_parent"
+			 android:layout_below="@id/rating"
+			 android:layout_marginTop="5dp"
+			 android:layout_marginBottom="5dp"/>
+
+	<LinearLayout
+		android:id="@+id/sortRow"
+		android:orientation="horizontal"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_below="@id/hr1"
+		android:gravity="center_vertical">
+
+		<TextView
+			android:id="@+id/sortLabel"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="Sort By:"
+			android:textSize="20sp"/>
+
+		<RadioGroup
+			android:id="@+id/sortGroup"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:orientation="horizontal">
+
+			<RadioButton
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:textSize="20sp"
+				android:checked="true"
+				android:text="Time"/>
+
+			<RadioButton
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:textSize="20sp"
+				android:text="Popularity"/>
+
+		</RadioGroup>
+
+	</LinearLayout>
+
+	<include layout="@layout/hr"
+			 android:id="@+id/hr2"
+			 android:layout_height="2dp"
+			 android:layout_width="match_parent"
+			 android:layout_below="@id/sortRow"
+			 android:layout_marginTop="5dp"
+			 android:layout_marginBottom="5dp"/>
+
+
+	<RelativeLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:padding="10dp"
+		android:layout_below="@id/hr2">
+
+		<ListView
+			android:id="@+id/postList"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"/>
+
+		<TextView android:id="@+id/empty"
+				  android:layout_width="wrap_content"
+				  android:layout_height="wrap_content"
+				  android:layout_centerInParent="true"
+				  android:visibility="gone"
+				  android:text="No Posts To Show"/>
+
+	</RelativeLayout>
+
+</RelativeLayout>
