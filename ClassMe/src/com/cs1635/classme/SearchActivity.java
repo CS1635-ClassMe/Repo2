@@ -29,15 +29,6 @@ public class SearchActivity extends ActionBarActivity {
             }
         });
 
-        ViewGroup result = (ViewGroup) findViewById(R.id.bs_row_clickme);
-        result.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(activity, CourseStreamActivity.class);
-                startActivity(intent);
-            }
-        });
-
 
         //call new intent in lister callback
     }
