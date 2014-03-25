@@ -1,13 +1,13 @@
 package com.cs1635.classme;
 
-import android.app.ActionBar;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 
 public class SearchActivity extends ActionBarActivity {
     SearchActivity activity = this;
@@ -33,6 +33,28 @@ public class SearchActivity extends ActionBarActivity {
         //call new intent in lister callback
     }
 
+    public void onCheckboxClicked(View view){
+        // Is the view now checked?
+        boolean checked = ((CheckBox) view).isChecked();
+
+        // Check which checkbox was clicked
+        /*switch(view.getId()) {
+            case R.id.search_filter_activecourse:
+                if (checked)
+                // Put some meat on the sandwich
+                else
+                // Remove the meat
+                break;
+            case R.id.checkbox_cheese:
+                if (checked)
+                // Cheese me
+                else
+                // I'm lactose intolerant
+                break;
+            // TODO: Veggie sandwich
+        }*/
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

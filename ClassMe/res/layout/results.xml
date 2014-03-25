@@ -26,9 +26,15 @@
         </LinearLayout>
         <ListView android:id="@+id/results_list_active_course"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="0dp"
             android:paddingRight="50dp">
-            </ListView>
+        </ListView>
+        <include layout="@layout/buck_result_bs_1"
+            android:id="@+id/classRow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/hr1"/>
+
 
         <TextView
             android:layout_width="match_parent"
@@ -42,9 +48,14 @@
         </LinearLayout>
         <ListView android:id="@+id/results_list_archived_course"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="0dp"
             android:paddingRight="50dp">
         </ListView>
+        <include layout="@layout/buck_result_bs_2"
+            android:id="@+id/classRow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/hr1"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -58,7 +69,7 @@
         </LinearLayout>
         <ListView android:id="@+id/results_list_posts"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="0dp"
             android:paddingRight="50dp">
         </ListView>
 
@@ -74,7 +85,7 @@
         </LinearLayout>
         <ListView android:id="@+id/results_list_instructors"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="0dp"
             android:paddingRight="50dp">
         </ListView>
 
@@ -90,7 +101,7 @@
         </LinearLayout>
         <ListView android:id="@+id/results_list_members"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="0dp"
             android:paddingRight="50dp">
         </ListView>
 
