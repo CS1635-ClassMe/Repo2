@@ -59,20 +59,12 @@ public class CourseStreamActivity extends ActionBarActivity
 	}
 
 	@Override
-	public void onResume()
-	{
-		super.onResume();
-		new PostsAsyncTask().execute("all");
-	}
-
-	@Override
 	public boolean onCreateOptionsMenu(Menu menu)
 	{
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.stream, menu);
 		refresh = (SupportMenuItem) menu.findItem(R.id.refresh);
-		if(refresh == null)
-			Log.d("ClassMe","couldn't get refresh");
+		new PostsAsyncTask().execute("all");
 		return true;
 	}
 
@@ -92,6 +84,9 @@ public class CourseStreamActivity extends ActionBarActivity
 			Intent intent = new Intent(this, NewPost.class);
 			startActivity(intent);
 		}
+		if(id == R.id.refresh)
+			new PostsAsyncTask().execute("all");
+
 		return super.onOptionsItemSelected(item);
 	}
 
