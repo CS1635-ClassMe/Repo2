@@ -31,7 +31,7 @@
             android:paddingRight="50dp">
         </ListView>
         <include layout="@layout/buck_result_bs_1"
-            android:id="@+id/classRow"
+            android:id="@+id/bs-row-clickme"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/hr1"/>
@@ -54,7 +54,7 @@
             android:paddingRight="50dp">
         </ListView>
         <include layout="@layout/buck_result_bs_2"
-            android:id="@+id/classRow"
+            android:id="@+id/bs-row3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/hr1"/>
