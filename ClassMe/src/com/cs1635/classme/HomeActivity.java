@@ -8,7 +8,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-
 public class HomeActivity extends ActionBarActivity
 {
 	HomeActivity activity = this;
@@ -42,7 +41,6 @@ public class HomeActivity extends ActionBarActivity
 			}
 		});
 	}
-
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)

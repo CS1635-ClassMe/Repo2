@@ -13,7 +13,7 @@ public class ResultsActivity extends ActionBarActivity
 {
 
 	ResultsActivity activity = this;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
