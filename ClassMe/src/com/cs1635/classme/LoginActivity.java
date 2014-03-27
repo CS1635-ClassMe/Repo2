@@ -19,6 +19,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.gson.Gson;
 import com.shared.User;
 
@@ -60,7 +62,7 @@ public class LoginActivity extends Activity
 
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
-		if(true || prefs.contains("loggedIn")) //TODO: temporary for demo
+		if(prefs.contains("loggedIn"))
 		{
 			Intent intent = new Intent(this, HomeActivity.class);
 			startActivity(intent);
@@ -70,8 +72,10 @@ public class LoginActivity extends Activity
 		setContentView(R.layout.activity_login);
 
 		// Set up the login form.
-		usernameView = (EditText) findViewById(R.id.username);
-		passwordEdit = (EditText) findViewById(R.id.password);
+		usernameView = (EditText)findViewById(R.id.username);
+
+		passwordEdit = (EditText)findViewById(R.id.password);
+
 		passwordEdit.setOnEditorActionListener(new TextView.OnEditorActionListener()
 		{
 			@Override
@@ -95,11 +99,11 @@ public class LoginActivity extends Activity
 			}
 		});
 
-		firstName = (EditText) findViewById(R.id.firstName);
-		lastName = (EditText) findViewById(R.id.lastName);
-		registerEmail = (EditText) findViewById(R.id.registerEmail);
-		registerUsername = (EditText) findViewById(R.id.registerUsername);
-		registerPassword = (EditText) findViewById(R.id.registerPassword);
+		firstName = (EditText)findViewById(R.id.firstName);
+		lastName = (EditText)findViewById(R.id.lastName);
+		registerEmail = (EditText)findViewById(R.id.registerEmail);
+		registerUsername = (EditText)findViewById(R.id.registerUsername);
+		registerPassword = (EditText)findViewById(R.id.registerPassword);
 		registerPassword.setOnEditorActionListener(new TextView.OnEditorActionListener()
 		{
 			@Override
@@ -232,7 +236,7 @@ public class LoginActivity extends Activity
 		@Override
 		protected void onPreExecute()
 		{
-			progressDialog = ProgressDialog.show(context,"","Signing In...",true);
+			progressDialog = ProgressDialog.show(context, "", "Signing In...", true);
 		}
 
 		@Override
@@ -245,7 +249,7 @@ public class LoginActivity extends Activity
 
 			try
 			{
-				HttpResponse urlResponse = AppEngineClient.makeRequest("/addendum/doLogin", nameValuePairs);
+				HttpResponse urlResponse = AppEngineClient.makeRequest("/doLogin", nameValuePairs);
 				String response = EntityUtils.toString(urlResponse.getEntity());
 
 				Gson gson = new Gson();
@@ -306,7 +310,7 @@ public class LoginActivity extends Activity
 
 			try
 			{
-				HttpResponse urlResponse = AppEngineClient.makeRequest("/addendum/createUser", nameValuePairs);
+				HttpResponse urlResponse = AppEngineClient.makeRequest("/createUser", nameValuePairs);
 				String response = EntityUtils.toString(urlResponse.getEntity());
 
 				return response;
@@ -333,7 +337,7 @@ public class LoginActivity extends Activity
 					registerUsername.setText("");
 					registerPassword.setText("");
 					usernameView.requestFocus();
-					Toast.makeText(context, "Please check your email for a confirmation link", Toast.LENGTH_SHORT);
+					Toast.makeText(context,"Account created successfully",Toast.LENGTH_SHORT);
 				}
 				if(result.equals("user_exists"))
 				{

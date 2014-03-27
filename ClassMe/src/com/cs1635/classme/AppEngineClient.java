@@ -13,7 +13,7 @@ import java.util.List;
 
 public class AppEngineClient
 {
-	static final String BASE_URL = "https://studentclassnet.appspot.com";
+	static final String BASE_URL = "https://classmeapp.appspot.com";
 
 	public static HttpResponse makeRequest(String urlPath, List<NameValuePair> params) throws Exception 
 	{

@@ -157,7 +157,7 @@ public class NewPost extends ActionBarActivity
 		ArrayAdapter<String> adapter = null;
 		if(editPost == null)
 		{
-			adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, user.getCourseList());
+			//adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, user.getCourseList());
 			adapter.insert("Everyone", 0);
 		}
 		else
