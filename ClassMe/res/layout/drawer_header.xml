@@ -39,7 +39,7 @@
 				android:textColor="#FFFFFF"/>
 
 			<TextView
-				android:id="@+id/username"
+				android:id="@+id/from"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:textColor="#FFFFFF"/>

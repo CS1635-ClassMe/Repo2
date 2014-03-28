@@ -36,7 +36,7 @@ public class HomeActivity extends ActionBarActivity
 			public void onClick(View v)
 			{
 				Intent intent = new Intent(activity,ChatActivity.class);
-				intent.putExtra("username","Aamir");
+				intent.putExtra("id","63026710");
 				startActivity(intent);
 			}
 		});
@@ -66,6 +66,10 @@ public class HomeActivity extends ActionBarActivity
 		{
 			Intent intent = new Intent(this, SearchActivity.class);
 			startActivity(intent);
+		}
+		if(id == R.id.chat)
+		{
+			startActivity(new Intent(this,ChatListActivity.class));
 		}
 		return super.onOptionsItemSelected(item);
 	}

@@ -144,7 +144,7 @@ public class ProfileActivity extends ActionBarActivity
 			TextView realName = (TextView) layout.findViewById(R.id.realName);
 			realName.setText(userProfile.getName());
 
-			TextView username = (TextView) layout.findViewById(R.id.username);
+			TextView username = (TextView) layout.findViewById(R.id.from);
 			username.setText(userProfile.getUsername());
 
 			TextView about = (TextView) layout.findViewById(R.id.about);
@@ -298,7 +298,7 @@ public class ProfileActivity extends ActionBarActivity
 		Gson gson = new Gson();
 		User user = gson.fromJson(prefs.getString("userObject", ""), User.class);
 		realName.setText(user.getFirstName() + " " + user.getLastName());
-		TextView username = (TextView) layout.findViewById(R.id.username);
+		TextView username = (TextView) layout.findViewById(R.id.from);
 		username.setText(prefs.getString("loggedIn", "default"));
 
 		return layout;

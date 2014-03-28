@@ -72,7 +72,7 @@ public class LoginActivity extends Activity
 		setContentView(R.layout.activity_login);
 
 		// Set up the login form.
-		usernameView = (EditText)findViewById(R.id.username);
+		usernameView = (EditText)findViewById(R.id.from);
 
 		passwordEdit = (EditText)findViewById(R.id.password);
 
@@ -275,7 +275,7 @@ public class LoginActivity extends Activity
 				Gson gson = new Gson();
 				edit.putString("userObject", gson.toJson(user));
 				edit.commit();
-				Intent intent = new Intent(context, StreamActivity.class);
+				Intent intent = new Intent(context, HomeActivity.class);
 				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				startActivity(intent);
 			}

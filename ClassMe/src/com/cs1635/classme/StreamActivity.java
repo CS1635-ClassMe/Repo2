@@ -166,7 +166,7 @@ public class StreamActivity extends ActionBarActivity implements ActionBar.OnNav
 		Gson gson = new Gson();
 		User user = gson.fromJson(prefs.getString("userObject", ""), User.class);
 		realName.setText(user.getFirstName() + " " + user.getLastName());
-		TextView username = (TextView) layout.findViewById(R.id.username);
+		TextView username = (TextView) layout.findViewById(R.id.from);
 		username.setText(prefs.getString("loggedIn", "default"));
 
 		return layout;

@@ -102,6 +102,10 @@
 			android:configChanges="orientation|screenSize"
             android:label="@string/title_activity_new_course" >
         </activity>
+		<activity
+			android:name="com.cs1635.classme.ChatListActivity"
+			android:configChanges="orientation|screenSize">
+		</activity>
         <activity
             android:name="com.cs1635.classme.Members"
             android:label="@string/title_activity_members"

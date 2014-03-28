@@ -10,21 +10,39 @@
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content">
 
-		<TextView
-			android:id="@+id/messageText"
-			android:layout_width="match_parent"
+		<LinearLayout
+			android:id="@+id/messageLayout"
+			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:background="@color/white"
-			android:layout_toLeftOf="@+id/userImageFrame"
-			android:layout_alignBottom="@+id/userImageFrame"
+			android:gravity="bottom"
 			android:padding="5dp"
-			android:text="I thought it was a bit of snoozefest to be honest"/>
+			android:minHeight="64dp"
+			android:orientation="vertical"
+			android:background="@color/white"
+			android:layout_toLeftOf="@+id/userImageFrame">
+
+			<TextView
+				android:id="@+id/messageText"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				tools:text="I thought it was a bit of a snoozefest to be honest."/>
+
+			<TextView
+				android:id="@+id/timeStamp"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:textColor="@color/muted"
+				android:gravity="right"
+				tools:text="4/3/14 12:35PM"/>
+
+		</LinearLayout>
 
 		<FrameLayout
 			android:id="@+id/userImageFrame"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:layout_alignParentRight="true">
+			android:layout_alignParentRight="true"
+			android:layout_alignBottom="@id/messageLayout">
 
 			<ImageView
 				android:id="@+id/userImage"
@@ -33,6 +51,7 @@
 				android:src="@drawable/user_icon"/>
 
 			<ImageView
+				android:id="@+id/me"
 				android:layout_width="64dp"
 				android:layout_height="64dp"
 				android:src="@drawable/me_triangle"/>

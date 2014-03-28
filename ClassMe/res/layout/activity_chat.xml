@@ -7,26 +7,21 @@
 	android:descendantFocusability="beforeDescendants"
 	android:focusableInTouchMode="true">
 
-	<include layout="@layout/chat_bubble_you"
-		android:id="@+id/you"/>
-	<include layout="@layout/chat_bubble_me"
-			 android:layout_width="wrap_content"
-			 android:layout_height="wrap_content"
-			 android:layout_below="@id/you"/>
-
 	<ListView
 		android:id="@+id/chatList"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:layout_above="@+id/bottomLayout"/>
+		android:layout_above="@+id/bottomLayout"
+		android:stackFromBottom="true"
+		android:transcriptMode="alwaysScroll"
+		android:divider="@null"/>
 
 	<RelativeLayout
 		android:id="@id/bottomLayout"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:layout_alignParentBottom="true"
-		android:background="@color/white"
-		android:padding="10dp">
+		android:background="@color/white">
 
 		<EditText
 			android:id="@+id/sendText"

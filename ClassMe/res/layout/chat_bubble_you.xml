@@ -14,28 +14,47 @@
 			android:id="@+id/userImageFrame"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:layout_alignTop="@id/messageText">
+			android:layout_alignTop="@+id/messageLayout">
 
 			<ImageView
+				android:id="@+id/userImage"
 				android:layout_width="64dp"
 				android:layout_height="64dp"
 				android:src="@drawable/user_icon"/>
 
 			<ImageView
+				android:id="@+id/you"
 				android:layout_width="64dp"
 				android:layout_height="64dp"
 				android:src="@drawable/you_triangle"/>
 
 		</FrameLayout>
 
-		<TextView
-			android:id="@+id/messageText"
-			android:layout_width="match_parent"
+		<LinearLayout
+			android:id="@id/messageLayout"
+			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
+			android:gravity="bottom"
+			android:orientation="vertical"
 			android:background="@color/white"
-			android:layout_toRightOf="@id/userImageFrame"
-			android:padding="5dp"
-			android:text="What did you think of that last class?"/>
+			android:layout_toRightOf="@id/userImageFrame">
+
+			<TextView
+				android:id="@+id/messageText"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:padding="5dp"
+				tools:text="What did you think of that last class?"/>
+
+			<TextView
+				android:id="@+id/timeStamp"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:textColor="@color/muted"
+				android:padding="5dp"
+				tools:text="4/3/14 12:35PM"/>
+
+		</LinearLayout>
 
 	</RelativeLayout>
 

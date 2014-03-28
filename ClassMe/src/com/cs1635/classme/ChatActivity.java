@@ -1,9 +1,8 @@
 package com.cs1635.classme;
 
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -15,7 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.TextView;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -23,38 +22,39 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.shared.User;
+import com.shared.TextMessage;
 
-import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
-
 
 public class ChatActivity extends ActionBarActivity
 {
 	ActionBar actionBar;
-	public static final String EXTRA_MESSAGE = "message";
 	public static final String PROPERTY_REG_ID = "registration_id";
 	private static final String PROPERTY_APP_VERSION = "appVersion";
-	private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
 	String SENDER_ID = "856052645219";
 	static final String TAG = "ClassMe";
 
-	TextView mDisplay;
 	GoogleCloudMessaging gcm;
-	SharedPreferences prefs;
 	Context context;
 	ChatActivity activity = this;
 
 	String regid;
 	EditText text;
+
+	static SharedPreferences prefs;
+	static ArrayList<TextMessage> messages = new ArrayList<TextMessage>();
+	static ListView chatList;
+	static String id;
+	static boolean isResumed = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -63,17 +63,36 @@ public class ChatActivity extends ActionBarActivity
 		setContentView(R.layout.activity_chat);
 
 		prefs = PreferenceManager.getDefaultSharedPreferences(activity);
+		actionBar = getSupportActionBar();
 
 		//get information about who we are chatting with
 		Bundle bundle = getIntent().getExtras();
-		String username = "Test User";
 		if(bundle != null)
 		{
-			username = bundle.getString("username");
+			id = bundle.getString("id");
+			//if an associated notification is showing, cancel it
+			NotificationManager notificationManager = (NotificationManager) activity.getSystemService(Context.NOTIFICATION_SERVICE);
+			notificationManager.cancel(Integer.parseInt(id));
+
+			Gson gson = new Gson();
+			Type type = new TypeToken<ArrayList<TextMessage>>(){}.getType();
+			if(prefs.contains(id+"-history")) //do we have any previous history for this conversation?
+				messages = gson.fromJson(prefs.getString(id+"-history",null), type);
+
+			String username = "";
+			for(TextMessage message : messages)
+			{
+				if(!username.contains(message.getFrom()) && !message.getFrom().equals(prefs.getString("loggedIn",null)))
+					username += message.getFrom()+",";
+			}
+			if(username.endsWith(","))
+				username = username.substring(0,username.length()-1);
+
+			actionBar.setTitle(username);
 		}
 
-		actionBar = getSupportActionBar();
-		actionBar.setTitle(username);
+		chatList = (ListView) findViewById(R.id.chatList);
+		chatList.setAdapter(new ChatListAdapter(activity,1,messages));
 
 		ImageButton sendButton = (ImageButton) findViewById(R.id.sendButton);
 		text = (EditText) findViewById(R.id.sendText);
@@ -82,8 +101,10 @@ public class ChatActivity extends ActionBarActivity
 			@Override
 			public void onClick(View v)
 			{
-				text.setText("");
 				new SendTask().execute(text.getText().toString());
+				SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
+				addMessage(text.getText().toString(),prefs.getString("loggedIn",null),sdf.format(new Date()));
+				text.setText("");
 			}
 		});
 
@@ -99,12 +120,25 @@ public class ChatActivity extends ActionBarActivity
 		}
 	}
 
+	public static void addMessage(String message, String sender, String timeStamp)
+	{
+		messages.add(new TextMessage(message,sender,timeStamp));
+		((ChatListAdapter)chatList.getAdapter()).notifyDataSetChanged();
+	}
+
 	@Override
 	public void onResume()
 	{
 		super.onResume();
 		checkPlayServices();
-		registerInBackground();
+		isResumed = true;
+	}
+
+	@Override
+	public void onPause()
+	{
+		super.onPause();
+		isResumed = false;
 	}
 
 	/**
@@ -128,30 +162,13 @@ public class ChatActivity extends ActionBarActivity
 		// since the existing regID is not guaranteed to work with the new
 		// app version.
 		int registeredVersion = prefs.getInt(PROPERTY_APP_VERSION, Integer.MIN_VALUE);
-		int currentVersion = getAppVersion(context);
+		int currentVersion = registeredVersion++;
 		if(registeredVersion != currentVersion)
 		{
 			Log.i(TAG, "App version changed.");
 			return "";
 		}
 		return registrationId;
-	}
-
-	/**
-	 * @return Application's version code from the {@code PackageManager}.
-	 */
-	private static int getAppVersion(Context context)
-	{
-		try
-		{
-			PackageInfo packageInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
-			return packageInfo.versionCode;
-		}
-		catch(PackageManager.NameNotFoundException e)
-		{
-			// should never happen
-			throw new RuntimeException("Could not get package name: " + e);
-		}
 	}
 
 	/**
@@ -209,11 +226,9 @@ public class ChatActivity extends ActionBarActivity
 	private void storeRegistrationId(Context context, String regId)
 	{
 		final SharedPreferences prefs = getGCMPreferences(context);
-		int appVersion = getAppVersion(context);
-		Log.i(TAG, "Saving regId on app version " + appVersion);
+		Log.i(TAG, "Saving regId");
 		SharedPreferences.Editor editor = prefs.edit();
 		editor.putString(PROPERTY_REG_ID, regId);
-		editor.putInt(PROPERTY_APP_VERSION, appVersion);
 		editor.commit();
 	}
 
@@ -314,13 +329,15 @@ public class ChatActivity extends ActionBarActivity
 			Gson gson = new Gson();
 			String time = gson.toJson(Calendar.getInstance());
 			ArrayList<String> usernames = new ArrayList<String>();
+			usernames.add(prefs.getString("loggedIn",""));
 			String users = gson.toJson(usernames,new TypeToken<ArrayList<String>>(){}.getType());
 
-			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(4);
+			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(5);
 			nameValuePairs.add(new BasicNameValuePair("text", params[0]));
 			nameValuePairs.add(new BasicNameValuePair("sender", prefs.getString("loggedIn","")));
 			nameValuePairs.add(new BasicNameValuePair("sentTime", time));
 			nameValuePairs.add(new BasicNameValuePair("usernames", users));
+			nameValuePairs.add(new BasicNameValuePair("id", String.valueOf(actionBar.getTitle().hashCode())));
 
 			try
 			{

@@ -49,7 +49,7 @@ public class PostViewAdapter extends ArrayAdapter<Post>
 
 		TextView title = (TextView) v.findViewById(R.id.title);
 		TextView content = (TextView) v.findViewById(R.id.content);
-		TextView username = (TextView) v.findViewById(R.id.username);
+		TextView username = (TextView) v.findViewById(R.id.from);
 		ImageView profileImage = (ImageView) v.findViewById(R.id.profileImage);
 		TextView time = (TextView) v.findViewById(R.id.time);
 		TextView numComments = (TextView) v.findViewById(R.id.numComments);

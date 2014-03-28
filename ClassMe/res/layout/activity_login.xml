@@ -14,7 +14,7 @@
             android:orientation="vertical">
 
             <EditText
-                android:id="@+id/username"
+                android:id="@+id/from"
                 android:singleLine="true"
                 android:maxLines="1"
                 android:layout_width="match_parent"
