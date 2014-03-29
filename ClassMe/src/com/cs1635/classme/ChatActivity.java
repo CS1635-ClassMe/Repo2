@@ -53,7 +53,7 @@ public class ChatActivity extends ActionBarActivity
 	static SharedPreferences prefs;
 	static ArrayList<TextMessage> messages = new ArrayList<TextMessage>();
 	static ListView chatList;
-	static String id;
+	static String id = "";
 	static boolean isResumed = false;
 
 	@Override
@@ -69,24 +69,33 @@ public class ChatActivity extends ActionBarActivity
 		Bundle bundle = getIntent().getExtras();
 		if(bundle != null)
 		{
-			id = bundle.getString("id");
-			//if an associated notification is showing, cancel it
-			NotificationManager notificationManager = (NotificationManager) activity.getSystemService(Context.NOTIFICATION_SERVICE);
-			notificationManager.cancel(Integer.parseInt(id));
-
-			Gson gson = new Gson();
-			Type type = new TypeToken<ArrayList<TextMessage>>(){}.getType();
-			if(prefs.contains(id+"-history")) //do we have any previous history for this conversation?
-				messages = gson.fromJson(prefs.getString(id+"-history",null), type);
-
 			String username = "";
-			for(TextMessage message : messages)
+
+			if(bundle.containsKey("userString"))
 			{
-				if(!username.contains(message.getFrom()) && !message.getFrom().equals(prefs.getString("loggedIn",null)))
-					username += message.getFrom()+",";
+				username = bundle.getString("userString");
+				id = String.valueOf(username.hashCode());
 			}
-			if(username.endsWith(","))
-				username = username.substring(0,username.length()-1);
+			else if(bundle.containsKey("id"))
+			{
+				id = bundle.getString("id");
+				//if an associated notification is showing, cancel it
+				NotificationManager notificationManager = (NotificationManager) activity.getSystemService(Context.NOTIFICATION_SERVICE);
+				notificationManager.cancel(Integer.parseInt(id));
+
+				Gson gson = new Gson();
+				Type type = new TypeToken<ArrayList<TextMessage>>(){}.getType();
+				if(prefs.contains(id+"-history")) //do we have any previous history for this conversation?
+					messages = gson.fromJson(prefs.getString(id+"-history",null), type);
+
+				for(TextMessage message : messages)
+				{
+					if(!username.contains(message.getFrom()) && !message.getFrom().equals(prefs.getString("loggedIn",null)))
+						username += message.getFrom()+",";
+				}
+				if(username.endsWith(","))
+					username = username.substring(0,username.length()-1);
+			}
 
 			actionBar.setTitle(username);
 		}
@@ -122,7 +131,7 @@ public class ChatActivity extends ActionBarActivity
 
 	public static void addMessage(String message, String sender, String timeStamp)
 	{
-		messages.add(new TextMessage(message,sender,timeStamp));
+		messages.add(new TextMessage(message,sender,timeStamp,id));
 		((ChatListAdapter)chatList.getAdapter()).notifyDataSetChanged();
 	}
 
@@ -330,6 +339,12 @@ public class ChatActivity extends ActionBarActivity
 			String time = gson.toJson(Calendar.getInstance());
 			ArrayList<String> usernames = new ArrayList<String>();
 			usernames.add(prefs.getString("loggedIn",""));
+			for(String username : actionBar.getTitle().toString().split(","))
+			{
+				if(!usernames.contains(username))
+					usernames.add(username);
+
+			}
 			String users = gson.toJson(usernames,new TypeToken<ArrayList<String>>(){}.getType());
 
 			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(5);
@@ -337,7 +352,7 @@ public class ChatActivity extends ActionBarActivity
 			nameValuePairs.add(new BasicNameValuePair("sender", prefs.getString("loggedIn","")));
 			nameValuePairs.add(new BasicNameValuePair("sentTime", time));
 			nameValuePairs.add(new BasicNameValuePair("usernames", users));
-			nameValuePairs.add(new BasicNameValuePair("id", String.valueOf(actionBar.getTitle().hashCode())));
+			nameValuePairs.add(new BasicNameValuePair("id", String.valueOf(id)));
 
 			try
 			{

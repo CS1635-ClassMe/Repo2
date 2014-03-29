@@ -6,7 +6,7 @@
 	android:background="@color/background">
 
 	<LinearLayout
-		android:id="@+id/newChat"
+		android:id="@+id/newChatLayout"
 		android:orientation="horizontal"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
@@ -14,6 +14,7 @@
 		android:gravity="center">
 
 		<TextView
+			android:id="@+id/newChat"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:textSize="20sp"
@@ -26,6 +27,6 @@
 		android:id="@+id/recentChats"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		android:layout_below="@id/newChat"/>
+		android:layout_below="@id/newChatLayout"/>
 
 </RelativeLayout>

@@ -96,7 +96,7 @@
 		<activity
 			android:name="com.cs1635.classme.CourseStreamActivity"
 			android:configChanges="orientation|screenSize"
-			android:parentActivityName="com.cs1635.classme.HomeActivity" />
+			android:parentActivityName="com.cs1635.classme.ChatListActivity" />
         <activity
             android:name="com.cs1635.classme.NewCourse"
 			android:configChanges="orientation|screenSize"
@@ -104,7 +104,8 @@
         </activity>
 		<activity
 			android:name="com.cs1635.classme.ChatListActivity"
-			android:configChanges="orientation|screenSize">
+			android:configChanges="orientation|screenSize"
+			android:parentActivityName="com.cs1635.classme.HomeActivity">
 		</activity>
         <activity
             android:name="com.cs1635.classme.Members"
