@@ -36,7 +36,7 @@ public class GcmBroadcastReceiver extends WakefulBroadcastReceiver
 		if(prefs.contains(bundle.getString("id")+"-history")) //do we have any previous history for this conversation?
 			messages = gson.fromJson(prefs.getString(bundle.getString("id")+"-history",null), type);
 
-		messages.add(new TextMessage(bundle.getString("text"),bundle.getString("sender"),bundle.getString("sentTime")));
+		messages.add(new TextMessage(bundle.getString("text"),bundle.getString("sender"),bundle.getString("sentTime"),bundle.getString("id")));
 		SharedPreferences.Editor edit = prefs.edit();
 		edit.putString(bundle.getString("id")+"-history",gson.toJson(messages,type));
 		edit.apply();
@@ -46,7 +46,7 @@ public class GcmBroadcastReceiver extends WakefulBroadcastReceiver
 			ChatActivity.addMessage(bundle.getString("text"),bundle.getString("sender"),bundle.getString("sentTime"));
 
 		//if the chat activity is not currently showing, then make a notification
-		if(!ChatActivity.isResumed && !ChatActivity.id.equals(bundle.getString("id")))
+		if(!ChatActivity.isResumed && ChatActivity.id != null && !ChatActivity.id.equals(bundle.getString("id")))
 		{
 			// Creates an explicit intent for an Activity in your app
 			Intent resultIntent = new Intent(context, ChatActivity.class);

@@ -9,6 +9,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -32,6 +34,7 @@ public class ChatListActivity extends ActionBarActivity
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		Gson gson = new Gson();
 		Map<String,?> keys = prefs.getAll();
+		ArrayList<ArrayList<TextMessage>> recentChats = new ArrayList<ArrayList<TextMessage>>();
 		if(keys != null)
 		{
 			for(Map.Entry<String,?> entry : keys.entrySet())
@@ -40,16 +43,22 @@ public class ChatListActivity extends ActionBarActivity
 				{
 					Type type = new TypeToken<ArrayList<TextMessage>>(){}.getType();
 					ArrayList<TextMessage> messages = gson.fromJson(entry.getValue().toString(), type);
-					String title = "";
-					String lastMessage = messages.get(messages.size()-1).getText();
-					for(TextMessage message : messages)
-					{
-						if(!title.contains(message.getFrom()))
-							title += message.getFrom() + ",";
-					}
+					recentChats.add(messages);
 				}
 			}
 		}
+		ListView recentChatsList = (ListView) findViewById(R.id.recentChats);
+		recentChatsList.setAdapter(new RecentChatsAdapter(activity,1,recentChats));
+
+		TextView newChat = (TextView) findViewById(R.id.newChat);
+		newChat.setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				new ContactChooserDialog(activity);
+			}
+		});
 	}
 
 	@Override

@@ -5,13 +5,14 @@ package com.shared;
  */
 public class TextMessage
 {
-	private String text, from,timestamp;
+	private String text, from ,timestamp, conversationId;
 
-	public TextMessage(String text, String from, String timestamp)
+	public TextMessage(String text, String from, String timestamp, String conversationId)
 	{
 		this.text = text;
 		this.from = from;
 		this.timestamp = timestamp;
+		this.conversationId = conversationId;
 	}
 
 	public String getTimestamp()
@@ -42,5 +43,15 @@ public class TextMessage
 	public void setText(String text)
 	{
 		this.text = text;
+	}
+
+	public String getConversationId()
+	{
+		return conversationId;
+	}
+
+	public void setConversationId(String conversationId)
+	{
+		this.conversationId = conversationId;
 	}
 }
