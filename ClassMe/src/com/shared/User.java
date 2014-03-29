@@ -1,7 +1,6 @@
 package com.shared;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -21,9 +20,6 @@ public class User implements Serializable
 
 	/** The last name. */
 	private String lastName;
-
-	/** The course list. */
-	private ArrayList<String> courseList = new ArrayList<String>();
 
 	/**
 	 * Instantiates a new user.
@@ -58,66 +54,6 @@ public class User implements Serializable
 	public void setUsername(String username)
 	{
 		this.username = username;
-	}
-
-	/**
-	 * Gets the course list.
-	 *
-	 * @return the course list
-	 */
-	public ArrayList<String> getCourseList()
-	{
-		return courseList;
-	}
-
-	/**
-	 * Sets the course list.
-	 *
-	 * @param courseList the new course list
-	 */
-	public void setCourseList(ArrayList<String> courseList)
-	{
-		this.courseList = courseList;
-	}
-
-	/**
-	 * Serialize.
-	 *
-	 * @return the string
-	 */
-	public String serialize()
-	{
-		String serialString = username+"+";
-		for(String course : courseList)
-		{
-			serialString += course+"-";
-		}
-
-		return serialString;
-	}
-
-	/**
-	 * Deserialize.
-	 *
-	 * @param serialString the serial string
-	 * @return the user
-	 */
-	public static User deserialize(String serialString)
-	{
-		User user = new User();
-		String[] username = serialString.split("\\+");
-		user.setUsername(username[0]);
-		if(username.length > 1)
-		{
-			String[] courses = username[1].split("-");
-			ArrayList<String> courseList = new ArrayList<String>();
-			for(String course : courses)
-			{
-				courseList.add(course);
-			}
-			user.setCourseList(courseList);
-		}
-		return user;
 	}
 
 	/**

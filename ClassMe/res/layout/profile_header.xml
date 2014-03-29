@@ -23,7 +23,7 @@
 		android:textSize="24sp"/>
 
 	<TextView
-		android:id="@+id/username"
+		android:id="@+id/from"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_below="@id/realName"
@@ -33,7 +33,7 @@
 	<LinearLayout
 		android:layout_width="match_parent"
 		android:layout_height="32dp"
-		android:layout_below="@id/username"
+		android:layout_below="@id/from"
 		android:orientation="horizontal"
 		android:gravity="center_vertical"
 		android:background="#ffdddddd">

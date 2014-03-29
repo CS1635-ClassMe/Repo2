@@ -8,7 +8,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-
 public class HomeActivity extends ActionBarActivity
 {
 	HomeActivity activity = this;
@@ -37,12 +36,11 @@ public class HomeActivity extends ActionBarActivity
 			public void onClick(View v)
 			{
 				Intent intent = new Intent(activity,ChatActivity.class);
-				intent.putExtra("username","Aamir");
+				intent.putExtra("id","63026710");
 				startActivity(intent);
 			}
 		});
 	}
-
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)
@@ -68,6 +66,10 @@ public class HomeActivity extends ActionBarActivity
 		{
 			Intent intent = new Intent(this, SearchActivity.class);
 			startActivity(intent);
+		}
+		if(id == R.id.chat)
+		{
+			startActivity(new Intent(this,ChatListActivity.class));
 		}
 		return super.onOptionsItemSelected(item);
 	}

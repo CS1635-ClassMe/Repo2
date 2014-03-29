@@ -118,7 +118,7 @@ public class SinglePostActivity extends ActionBarActivity
 
 		TextView title = (TextView) v.findViewById(R.id.title);
 		WebView content = (WebView) v.findViewById(R.id.content);
-		TextView username = (TextView) v.findViewById(R.id.username);
+		TextView username = (TextView) v.findViewById(R.id.from);
 		ImageView profileImage = (ImageView) v.findViewById(R.id.profileImage);
 		TextView time = (TextView) v.findViewById(R.id.time);
 		TextView score = (TextView) v.findViewById(R.id.score);

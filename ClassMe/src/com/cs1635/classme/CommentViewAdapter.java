@@ -52,7 +52,7 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>
 		View v = vi.inflate(R.layout.comment, null);
 
 		TextView content = (TextView) v.findViewById(R.id.content);
-		TextView username = (TextView) v.findViewById(R.id.username);
+		TextView username = (TextView) v.findViewById(R.id.from);
 		ImageView profileImage = (ImageView) v.findViewById(R.id.profileImage);
 		TextView time = (TextView) v.findViewById(R.id.time);
 		TextView plusOne = (TextView) v.findViewById(R.id.plusOne);

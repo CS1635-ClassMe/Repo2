@@ -7,13 +7,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 
 public class ResultsActivity extends ActionBarActivity
 {
 
 	ResultsActivity activity = this;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -27,6 +28,17 @@ public class ResultsActivity extends ActionBarActivity
 			public void onClick(View view)
 			{
 				Intent intent = new Intent(activity, CourseStreamActivity.class);
+				startActivity(intent);
+			}
+		});
+
+		Button newCourseButton = (Button) findViewById(R.id.newCourseButton);
+		newCourseButton.setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				Intent intent = new Intent(activity, NewCourse.class);
 				startActivity(intent);
 			}
 		});

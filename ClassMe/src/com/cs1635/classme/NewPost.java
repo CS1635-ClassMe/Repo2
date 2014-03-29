@@ -61,6 +61,7 @@ public class NewPost extends ActionBarActivity
 	ArrayList<String> attachmentNames = new ArrayList<String>(), attachmentKeys = new ArrayList<String>(), deleteKeys = new ArrayList<String>();
 	FlowLayout attachmentsPanel;
 	Post editPost;
+	User user;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -79,7 +80,9 @@ public class NewPost extends ActionBarActivity
 		getSupportActionBar().hide();
 
 		Gson gson = new Gson();
-		final User user = gson.fromJson(PreferenceManager.getDefaultSharedPreferences(this).getString("userObject", ""), User.class);
+		user = gson.fromJson(PreferenceManager.getDefaultSharedPreferences(this).getString("userObject", ""), User.class);
+		if(user == null)
+			user = new User();
 
 		final AlphaAnimation alphaUp = new AlphaAnimation(.5f, 1f); //hack for view.setAlpha in api < 11
 		alphaUp.setDuration(0);
@@ -154,7 +157,7 @@ public class NewPost extends ActionBarActivity
 		ArrayAdapter<String> adapter = null;
 		if(editPost == null)
 		{
-			adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, user.getCourseList());
+			//adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, user.getCourseList());
 			adapter.insert("Everyone", 0);
 		}
 		else

@@ -166,7 +166,7 @@ public class StreamActivity extends ActionBarActivity implements ActionBar.OnNav
 		Gson gson = new Gson();
 		User user = gson.fromJson(prefs.getString("userObject", ""), User.class);
 		realName.setText(user.getFirstName() + " " + user.getLastName());
-		TextView username = (TextView) layout.findViewById(R.id.username);
+		TextView username = (TextView) layout.findViewById(R.id.from);
 		username.setText(prefs.getString("loggedIn", "default"));
 
 		return layout;
@@ -203,18 +203,18 @@ public class StreamActivity extends ActionBarActivity implements ActionBar.OnNav
 
 	private void fillNavigationMenu()
 	{
-		Gson gson = new Gson();
+		/*Gson gson = new Gson();
 		User user = gson.fromJson(prefs.getString("userObject", ""), User.class);
 		ArrayList<String> courseList = user.getCourseList();
 		courseList.add(0, "All Classes");
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
-		actionBar.setListNavigationCallbacks(new ArrayAdapter<String>(context, R.layout.actionbar_spinner_dropdown, courseList), this);
+		actionBar.setListNavigationCallbacks(new ArrayAdapter<String>(context, R.layout.actionbar_spinner_dropdown, courseList), this);*/
 	}
 
 	@Override
 	public boolean onNavigationItemSelected(int itemPosition, long itemId)
 	{
-		Gson gson = new Gson();
+		/*Gson gson = new Gson();
 		User user = gson.fromJson(prefs.getString("userObject", ""), User.class);
 		ArrayList<String> courseList = user.getCourseList();
 		courseList.add(0, "All Classes");
@@ -224,7 +224,7 @@ public class StreamActivity extends ActionBarActivity implements ActionBar.OnNav
 		else
 			streamLevel = courseList.get(itemPosition);
 
-		new PostsAsyncTask().execute(streamLevel);
+		new PostsAsyncTask().execute(streamLevel);*/
 		return true;
 	}
 
