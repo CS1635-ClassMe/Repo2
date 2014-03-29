@@ -1,12 +1,22 @@
 package com.cs1635.classme;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.shared.TextMessage;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.Map;
 
 public class ChatListActivity extends ActionBarActivity
 {
@@ -18,7 +28,28 @@ public class ChatListActivity extends ActionBarActivity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_chat_list);
 
-
+		//find all chat histories
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		Gson gson = new Gson();
+		Map<String,?> keys = prefs.getAll();
+		if(keys != null)
+		{
+			for(Map.Entry<String,?> entry : keys.entrySet())
+			{
+				if(entry.getKey().contains("-history")) //should be a serialized chat history
+				{
+					Type type = new TypeToken<ArrayList<TextMessage>>(){}.getType();
+					ArrayList<TextMessage> messages = gson.fromJson(entry.getValue().toString(), type);
+					String title = "";
+					String lastMessage = messages.get(messages.size()-1).getText();
+					for(TextMessage message : messages)
+					{
+						if(!title.contains(message.getFrom()))
+							title += message.getFrom() + ",";
+					}
+				}
+			}
+		}
 	}
 
 	@Override
@@ -40,7 +71,7 @@ public class ChatListActivity extends ActionBarActivity
 		{
 			return true;
 		}
-		
+
 		return super.onOptionsItemSelected(item);
 	}
 
