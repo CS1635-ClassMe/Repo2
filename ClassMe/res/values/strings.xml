@@ -25,4 +25,20 @@
 	<string name="SortT">Time</string>
 	<string name="SortP">Popular</string>
 	<string name="content">Content</string>
+
+    <string-array name="spinner_populate">
+        <item>All</item>
+        <item>Spring 2014</item>
+        <item>Fall 2013</item>
+        <item>Summer 2013</item>
+        <item>Spring 2013</item>
+        <item>Fall 2012</item>
+    </string-array>
+
+    <string name="tab1">Discuss</string>
+    <string name="tab2">Lecture</string>
+    <string name="tab3">Notes</string>
+    <string name="tab4">Calendar</string>
+    <string name="tab5">Members</string>
+
 </resources>

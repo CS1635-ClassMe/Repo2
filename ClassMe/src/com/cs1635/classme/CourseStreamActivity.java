@@ -3,7 +3,6 @@ package com.cs1635.classme;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.internal.view.SupportMenu;
 import android.support.v4.internal.view.SupportMenuItem;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -11,7 +10,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -42,8 +40,9 @@ public class CourseStreamActivity extends ActionBarActivity
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.group_page);
+		setContentView(R.layout.new_course_page);
 
+        /*
 		Button membersButton = (Button) findViewById(R.id.membersButton);
 		membersButton.setOnClickListener(new View.OnClickListener()
 		{
@@ -56,15 +55,16 @@ public class CourseStreamActivity extends ActionBarActivity
 		});
 
 		postList = (ListView) findViewById(R.id.postList);
+		*/
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)
 	{
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.stream, menu);
-		refresh = (SupportMenuItem) menu.findItem(R.id.refresh);
-		new PostsAsyncTask().execute("all");
+		//getMenuInflater().inflate(R.menu.stream, menu);
+	//	refresh = (SupportMenuItem) menu.findItem(R.id.refresh);
+	//	new PostsAsyncTask().execute("all");
 		return true;
 	}
 
@@ -74,8 +74,10 @@ public class CourseStreamActivity extends ActionBarActivity
 		// Handle action bar item clicks here. The action bar will
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if(id == R.id.action_settings)
+		/*
+        int id = item.getItemId();
+
+        if(id == R.id.action_settings)
 		{
 			return true;
 		}
@@ -88,6 +90,8 @@ public class CourseStreamActivity extends ActionBarActivity
 			new PostsAsyncTask().execute("all");
 
 		return super.onOptionsItemSelected(item);
+		*/
+        return true;
 	}
 
 	class PostsAsyncTask extends AsyncTask<String, Void, ArrayList<Post>>

@@ -3,12 +3,24 @@
 
     <application>
         <activity
-            android:name=".........src.com.cs1635.classme.SearchActivity"
+            android:name="com.cs1635.classme.SearchActivity"
             android:label="@string/title_activity_search" >
         </activity>
         <activity
-            android:name=".........src.com.cs1635.classme.ResultsActivity"
+            android:name="com.cs1635.classme.ResultsActivity"
             android:label="@string/title_activity_results" >
+        </activity>
+        <activity
+            android:name="com.cs1635.classme.new_course_page"
+            android:label="@string/title_activity_new_course_page" >
+        </activity>
+        <activity
+            android:name="com.cs1635.classme.CoursePage"
+            android:label="@string/title_activity_course_page" >
+        </activity>
+        <activity
+            android:name=".........src.com.cs1635.classme.BuckCourse"
+            android:label="@string/title_activity_buck_course" >
         </activity>
     </application>
 
