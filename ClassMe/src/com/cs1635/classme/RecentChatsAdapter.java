@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,7 +48,7 @@ public class RecentChatsAdapter extends ArrayAdapter<ArrayList<TextMessage>>
 		for(String username : recentChats.get(position).get(0).getUsernames())
 		{
             if(!username.equals(prefs.getString("loggedIn","")) && !nameString.contains(username))
-				nameString += message.getFrom() + ", ";
+				nameString += username + ", ";
 
 		}
 		if(nameString.endsWith(","))
