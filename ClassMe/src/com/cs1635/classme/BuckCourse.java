@@ -7,6 +7,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 
 public class BuckCourse extends FragmentActivity implements ActionBar.TabListener
 {
@@ -51,6 +52,7 @@ public class BuckCourse extends FragmentActivity implements ActionBar.TabListene
 				// on changing the page
 				// make respected tab selected
 				actionBar.setSelectedNavigationItem(position);
+                Log.d("butt", "BLAH");
 			}
 
 			@Override
