@@ -1,11 +1,11 @@
 package com.cs1635.classme;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.DatePicker;
-import android.widget.TimePicker;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.fourmob.datetimepicker.date.DatePickerDialog;
@@ -15,11 +15,13 @@ import com.sleepbot.datetimepicker.time.TimePickerDialog;
 
 import java.util.Calendar;
 
-public class CreateEventActivity extends ActionBarActivity implements OnDateSetListener, TimePickerDialog.OnTimeSetListener
+public class CreateEventActivity extends ActionBarActivity
+		implements OnDateSetListener, TimePickerDialog.OnTimeSetListener
 {
 	CreateEventActivity activity = this;
 	public static final String DATEPICKER_TAG = "datepicker";
 	public static final String TIMEPICKER_TAG = "timepicker";
+	Calendar calendar = Calendar.getInstance();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -34,6 +36,10 @@ public class CreateEventActivity extends ActionBarActivity implements OnDateSetL
 
 		Button chooseDate = (Button) findViewById(R.id.chooseDate);
 		Button chooseTime = (Button) findViewById(R.id.chooseTime);
+		Button createEvent = (Button) findViewById(R.id.cal_create_submit);
+
+		final EditText title = (EditText) findViewById(R.id.cal_create_title);
+		final EditText description = (EditText) findViewById(R.id.cal_create_description);
 
 		chooseDate.setOnClickListener(new View.OnClickListener()
 		{
@@ -53,15 +59,41 @@ public class CreateEventActivity extends ActionBarActivity implements OnDateSetL
 				timePickerDialog.show(getSupportFragmentManager(), TIMEPICKER_TAG);
 			}
 		});
+
+		createEvent.setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				if(title.getText().toString().trim().equals(""))
+				{
+					title.setError("Title cannot be blank");
+					return;
+				}
+
+				new AsyncTask<String,Void,Void>()
+				{
+					@Override
+					protected Void doInBackground(String... params)
+					{
+
+						return null;
+					}
+				}.execute(title.getText().toString(),description.getText().toString());
+			}
+		});
 	}
 
 	@Override
-	public void onDateSet(DatePickerDialog datePickerDialog, int year, int month, int day) {
-		Toast.makeText(activity, "new date:" + year + "-" + month + "-" + day, Toast.LENGTH_LONG).show();
+	public void onDateSet(DatePickerDialog datePickerDialog, int year, int month, int day)
+	{
+		calendar.set(year,month,day);
 	}
 
 	@Override
-	public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute) {
-		Toast.makeText(activity, "new time:" + hourOfDay + "-" + minute, Toast.LENGTH_LONG).show();
+	public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute)
+	{
+		calendar.set(Calendar.HOUR_OF_DAY,hourOfDay);
+		calendar.set(Calendar.MINUTE,minute);
 	}
 }
