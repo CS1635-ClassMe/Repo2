@@ -9,6 +9,7 @@
 	<RelativeLayout
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
+		android:layout_alignParentLeft="true"
 		android:layout_toLeftOf="@+id/chatIcon">
 
 		<ImageView
@@ -42,9 +43,11 @@
 
 	<ImageView
 		android:id="@+id/chatIcon"
-		android:layout_width="128dp"
+		android:layout_width="64dp"
 		android:layout_height="64dp"
 		android:layout_alignParentRight="true"
-		android:src="@drawable/chat"/>
+		android:src="@drawable/ic_chat"
+		android:background="@drawable/border"
+		android:layout_marginLeft="10dp"/>
 
 </RelativeLayout>

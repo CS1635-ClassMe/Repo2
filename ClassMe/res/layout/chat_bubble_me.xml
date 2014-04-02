@@ -6,58 +6,67 @@
 	android:layout_height="wrap_content"
 	android:padding="10dp">
 
-	<RelativeLayout
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content">
+	<LinearLayout
+		android:id="@+id/messageLayout"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:gravity="bottom"
+		android:padding="5dp"
+		android:minHeight="64dp"
+		android:orientation="vertical"
+		android:background="@color/white"
+		android:layout_toLeftOf="@+id/userImageFrame">
 
-		<LinearLayout
-			android:id="@+id/messageLayout"
+		<TextView
+			android:id="@+id/messageText"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:gravity="bottom"
-			android:padding="5dp"
-			android:minHeight="64dp"
-			android:orientation="vertical"
-			android:background="@color/white"
-			android:layout_toLeftOf="@+id/userImageFrame">
+			tools:text="I thought it was a bit of a snoozefest to be honest."/>
 
-			<TextView
-				android:id="@+id/messageText"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				tools:text="I thought it was a bit of a snoozefest to be honest."/>
-
-			<TextView
-				android:id="@+id/timeStamp"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:textColor="@color/muted"
-				android:gravity="right"
-				tools:text="4/3/14 12:35PM"/>
-
-		</LinearLayout>
-
-		<FrameLayout
-			android:id="@+id/userImageFrame"
+		<TextView
+			android:id="@+id/timeStamp"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:layout_alignParentRight="true"
-			android:layout_alignBottom="@id/messageLayout">
+			android:textColor="@color/muted"
+			android:gravity="right"
+			tools:text="4/3/14 12:35PM"/>
 
-			<ImageView
-				android:id="@+id/userImage"
-				android:layout_width="64dp"
-				android:layout_height="64dp"
-				android:src="@drawable/user_icon"/>
+	</LinearLayout>
 
-			<ImageView
-				android:id="@+id/me"
-				android:layout_width="64dp"
-				android:layout_height="64dp"
-				android:src="@drawable/me_triangle"/>
+	<FrameLayout
+		android:id="@+id/userImageFrame"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignParentRight="true"
+		android:layout_alignBottom="@id/messageLayout">
 
-		</FrameLayout>
+		<ImageView
+			android:id="@+id/userImage"
+			android:layout_width="64dp"
+			android:layout_height="64dp"
+			android:src="@drawable/user_icon"/>
 
-	</RelativeLayout>
+		<ImageView
+			android:id="@+id/me"
+			android:layout_width="64dp"
+			android:layout_height="64dp"
+			android:src="@drawable/me_triangle"/>
+
+		<TextView
+			android:id="@+id/username"
+			android:layout_gravity="center_horizontal|bottom"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:background="#ddffffff"
+			android:paddingLeft="2dp"
+			android:paddingRight="2dp"
+			android:textStyle="bold"
+			android:textSize="10sp"
+			android:maxWidth="64dp"
+			android:lines="1"
+			android:ellipsize="end"
+			tools:text="Buck"/>
+
+	</FrameLayout>
 
 </RelativeLayout>

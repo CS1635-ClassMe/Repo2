@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.shared.TextMessage;
 
 import java.util.ArrayList;
@@ -21,7 +23,6 @@ public class RecentChatsAdapter extends ArrayAdapter<ArrayList<TextMessage>>
 	Context context;
 	ArrayList<ArrayList<TextMessage>> recentChats;
 	SharedPreferences prefs;
-	String nameString = "";
 
 	public RecentChatsAdapter(Context context, int textViewResourceId, ArrayList<ArrayList<TextMessage>> recentChats)
 	{
@@ -45,10 +46,11 @@ public class RecentChatsAdapter extends ArrayAdapter<ArrayList<TextMessage>>
 		TextView text = (TextView) v.findViewById(R.id.text);
 		TextView time = (TextView) v.findViewById(R.id.time);
 
-		for(TextMessage message : recentChats.get(position))
+		String nameString = "";
+		for(String username : recentChats.get(position).get(0).getUsernames())
 		{
-			if(!nameString.contains(message.getFrom()))
-				nameString += message.getFrom() + ",";
+			if(!username.equals(prefs.getString("loggedIn","")) && !nameString.contains(username))
+				nameString += username + ",";
 		}
 		if(nameString.endsWith(","))
 			nameString = nameString.substring(0,nameString.length()-1);
@@ -62,9 +64,11 @@ public class RecentChatsAdapter extends ArrayAdapter<ArrayList<TextMessage>>
 			@Override
 			public void onClick(View v)
 			{
+				Gson gson = new Gson();
 				Intent intent = new Intent(context,ChatActivity.class);
 				Bundle bundle = new Bundle();
 				bundle.putString("id",recentChats.get(position).get(0).getConversationId());
+				bundle.putString("usernames",gson.toJson(recentChats.get(position).get(0).getUsernames()));
 				intent.putExtras(bundle);
 				context.startActivity(intent);
 			}
