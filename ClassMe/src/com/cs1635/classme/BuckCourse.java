@@ -15,7 +15,7 @@ public class BuckCourse extends FragmentActivity implements
     private TabsPagerAdapter mAdapter;
     private android.app.ActionBar actionBar;
     // Tab titles
-    private String[] tabs = { "Discuss", "Lecture", "Notes", "Calendar", "Members" };
+    private String[] tabs = { "Discuss", "Lecture", "Notes", "Events", "Members" };
 
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     @Override

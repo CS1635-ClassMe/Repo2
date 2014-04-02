@@ -29,7 +29,7 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
                 return new tab_notes();
             case 3:
                 // Movies fragment activity
-                return new tab_calendar();
+                return new tab_events();
             case 4:
                 // Movies fragment activity
                 return new tab_members();
