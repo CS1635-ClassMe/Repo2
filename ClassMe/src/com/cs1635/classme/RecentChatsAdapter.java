@@ -47,12 +47,11 @@ public class RecentChatsAdapter extends ArrayAdapter<ArrayList<TextMessage>>
 		String nameString = "";
 		for(String username : recentChats.get(position).get(0).getUsernames())
 		{
-            if(!username.equals(prefs.getString("loggedIn","")) && !nameString.contains(username))
+			if(!username.equals(prefs.getString("loggedIn","")) && !nameString.contains(username))
 				nameString += username + ", ";
-
 		}
-		if(nameString.endsWith(","))
-			nameString = nameString.substring(0,nameString.length()-1);
+		if(nameString.endsWith(", "))
+			nameString = nameString.substring(0,nameString.length()-2);
 
 		name.setText(nameString);
 		text.setText(recentChats.get(position).get(recentChats.get(position).size()-1).getText());
