@@ -32,22 +32,6 @@
             android:text="[ DATE DUE ] 3/02/14"
             android:textSize="15dp"
             />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:text=" | "
-            android:textSize="15dp"
-            />
-
-        <TextView android:id="@+id/cal_single_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="[ TIME DUE ] 2:00PM"
-            android:textSize="15dp"
-            />
     </LinearLayout>
 
 </LinearLayout>
