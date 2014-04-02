@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,7 +71,7 @@ public class tab_events extends Fragment
             protected ArrayList<Event> doInBackground(Void... voidsss)
             {
                 List<NameValuePair> params = new ArrayList<NameValuePair>(1);
-                params.add(new BasicNameValuePair("classID", BuckCourse.classId));
+                params.add(new BasicNameValuePair("classId", BuckCourse.classId));
                 HttpResponse response;
                 try {
                     response = AppEngineClient.makeRequest("/listEvents", params);
@@ -78,6 +79,8 @@ public class tab_events extends Fragment
                     Gson gson = new Gson();
                     Type listOfEvents = new TypeToken<ArrayList<Event>>(){}.getType();
                     String entityString = EntityUtils.toString(response.getEntity());
+
+                    Log.d("PRINT entity", entityString);
 
                     return gson.fromJson(entityString, listOfEvents); //Return listy! :) "Youre doing great, buck. keep it up" --Robert //"You forgot an apostrophe" --Robert
 
@@ -91,6 +94,11 @@ public class tab_events extends Fragment
             @Override
             protected void onPostExecute(ArrayList<Event> listy)
             {
+
+                Log.d("PRINT LISTY", listy.toString());
+                Log.d("size doesnt matter robert", Integer.toString(listy.size()));
+
+
                 if (listy != null) {
                     ExistingEventsAdapter adapt = (ExistingEventsAdapter) listView.getAdapter();
                     adapt.addAll(listy);

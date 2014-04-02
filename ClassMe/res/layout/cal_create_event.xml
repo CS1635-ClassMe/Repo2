@@ -47,7 +47,7 @@
         <TextView android:id="@+id/cal_create_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="( 3/14/2009 )"
+            android:text="( )"
             android:textSize="20dp"
             android:layout_marginTop="10dp"
             />
@@ -74,7 +74,7 @@
         <TextView android:id="@+id/cal_create_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="( 02:00 PM )"
+            android:text="( )"
             android:textSize="20dp"
             android:layout_marginTop="10dp"
             />

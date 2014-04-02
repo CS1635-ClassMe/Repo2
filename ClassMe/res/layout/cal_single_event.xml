@@ -10,6 +10,9 @@
         android:text="[ EVENT TITLE ]"
         android:textSize="20dp"
         android:textStyle="bold"
+
+        android:lines="1"
+        android:ellipsize="end"
         />
 
     <TextView android:id="@+id/cal_single_description"
@@ -20,6 +23,9 @@
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
         android:textStyle="italic"
+
+        android:lines="1"
+        android:ellipsize="end"
         />
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -31,6 +37,9 @@
             android:layout_height="wrap_content"
             android:text="[ DATE DUE ] 3/02/14"
             android:textSize="15dp"
+
+            android:lines="1"
+            android:ellipsize="end"
             />
     </LinearLayout>
 
