@@ -1,6 +1,7 @@
 package com.cs1635.classme;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -57,8 +58,17 @@ public class tab_events extends Fragment
     private void populateListView(View rootView){
         final ListView listView = (ListView) rootView.findViewById(R.id.cal_view_existing);
 
-        new Thread(new Runnable() {
-            public void run() {
+
+
+
+
+
+        new AsyncTask<Void,Void,ArrayList<Event>>()
+        {
+
+            @Override
+            protected ArrayList<Event> doInBackground(Void... voidsss)
+            {
                 List<NameValuePair> params = new ArrayList<NameValuePair>(1);
                 params.add(new BasicNameValuePair("classID", BuckCourse.classId));
                 HttpResponse response;
@@ -68,20 +78,28 @@ public class tab_events extends Fragment
                     Gson gson = new Gson();
                     Type listOfEvents = new TypeToken<ArrayList<Event>>(){}.getType();
                     String entityString = EntityUtils.toString(response.getEntity());
-                    ArrayList<Event> listy = gson.fromJson(entityString, listOfEvents);
 
-                    ExistingEventsAdapter adapt = (ExistingEventsAdapter) listView.getAdapter();
-
-                    
-                    adapt.addAll(listy);
-                    adapt.notifyDataSetChanged();
-
+                    return gson.fromJson(entityString, listOfEvents); //Return listy! :) "Youre doing great, buck. keep it up" --Robert //"You forgot an apostrophe" --Robert
 
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+
+                return null;
             }
-        }).start();
+
+            @Override
+            protected void onPostExecute(ArrayList<Event> listy)
+            {
+                if (listy != null) {
+                    ExistingEventsAdapter adapt = (ExistingEventsAdapter) listView.getAdapter();
+                    adapt.addAll(listy);
+                    adapt.notifyDataSetChanged();
+                }
+
+            }
+
+        }.execute();
     }
 }
 
