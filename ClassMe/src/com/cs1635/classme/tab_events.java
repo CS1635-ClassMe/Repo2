@@ -3,7 +3,6 @@ package com.cs1635.classme;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,17 +47,18 @@ public class tab_events extends Fragment
 
         populateListView(rootView);
 
+        ListView lv = (ListView) rootView.findViewById(R.id.cal_view_existing);
+
+        lv.setAdapter(new ExistingEventsAdapter(getActivity(), 42, new ArrayList<Event>() ) );
+
 		return rootView;
 	}
 
     private void populateListView(View rootView){
-        ListView listView = (ListView) rootView.findViewById(R.id.cal_view_existing);
-
-        Log.d("butt", "inPop");
+        final ListView listView = (ListView) rootView.findViewById(R.id.cal_view_existing);
 
         new Thread(new Runnable() {
             public void run() {
-                Log.d("butt", "inthread");
                 List<NameValuePair> params = new ArrayList<NameValuePair>(1);
                 params.add(new BasicNameValuePair("classID", BuckCourse.classId));
                 HttpResponse response;
@@ -68,9 +68,13 @@ public class tab_events extends Fragment
                     Gson gson = new Gson();
                     Type listOfEvents = new TypeToken<ArrayList<Event>>(){}.getType();
                     String entityString = EntityUtils.toString(response.getEntity());
-                    gson.fromJson(entityString, listOfEvents);
+                    ArrayList<Event> listy = gson.fromJson(entityString, listOfEvents);
 
+                    ExistingEventsAdapter adapt = (ExistingEventsAdapter) listView.getAdapter();
 
+                    
+                    adapt.addAll(listy);
+                    adapt.notifyDataSetChanged();
 
 
                 } catch (Exception e) {

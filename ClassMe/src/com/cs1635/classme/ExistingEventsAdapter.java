@@ -7,24 +7,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
-import com.shared.TextMessage;
+import com.shared.Event;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
-public class ChatListAdapter extends ArrayAdapter<TextMessage>
+public class ExistingEventsAdapter extends ArrayAdapter<Event>
 {
     Context context;
-    ArrayList<TextMessage> messages;
+    ArrayList<Event> events;
     SharedPreferences prefs;
 
-    public ChatListAdapter(Context context, int textViewResourceId, ArrayList<TextMessage> messages)
+    public ExistingEventsAdapter(Context context, int textViewResourceId, ArrayList<Event> events)
     {
-        super(context, textViewResourceId, messages);
-        this.messages = messages;
+        super(context, textViewResourceId, events);
+        this.events = events;
         this.context = context;
         prefs = PreferenceManager.getDefaultSharedPreferences(context);
     }
@@ -36,41 +36,23 @@ public class ChatListAdapter extends ArrayAdapter<TextMessage>
         View v;
         if(convertView != null)
         {
-            if(!messages.get(position).getFrom().equals(prefs.getString("loggedIn",null)))
-            {
-                if(convertView.findViewById(R.id.you) != null)
-                    v = convertView;
-                else
-                    v = vi.inflate(R.layout.chat_bubble_you,null);
-            }
-            else
-            {
-                if(convertView.findViewById(R.id.me) != null)
-                    v = convertView;
-                else
-                    v = vi.inflate(R.layout.chat_bubble_me,null);
-            }
+           v = convertView;
         }
         else
         {
-            if(!messages.get(position).getFrom().equals(prefs.getString("loggedIn",null)))
-                v = vi.inflate(R.layout.chat_bubble_you, null);
-            else
-                v = vi.inflate(R.layout.chat_bubble_me,null);
+            v = vi.inflate(R.layout.cal_single_event, null);
         }
 
-        TextView messageText = (TextView) v.findViewById(R.id.messageText);
-        TextView timeStamp = (TextView) v.findViewById(R.id.timeStamp);
-        ImageView userImage = (ImageView) v.findViewById(R.id.userImage);
-        TextView username = (TextView) v.findViewById(R.id.username);
+        TextView title = (TextView) v.findViewById(R.id.cal_single_title);
+        TextView description = (TextView) v.findViewById(R.id.cal_single_description);
+        TextView date = (TextView) v.findViewById(R.id.cal_single_date);
 
-        messageText.setText(messages.get(position).getText());
-        timeStamp.setText(messages.get(position).getTimestamp());
-        userImage.setImageResource(R.drawable.user_icon);
-        username.setText(messages.get(position).getFrom());
 
-        //String url = "http://classmeapp.appspot.com/addendum/getImage?username="+messages.get(position).getFrom();
-        //UrlImageViewHelper.setUrlDrawable(userImage, url);
+        title.setText(events.get(position).getTitle());
+        description.setText(events.get(position).getDescription());
+        Date dateObj = events.get(position).getDate();
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy  |  hh:mm a");
+        date.setText(sdf.format(dateObj));
 
         return  v;
     }
