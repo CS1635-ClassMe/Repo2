@@ -36,22 +36,26 @@ public class GcmBroadcastReceiver extends WakefulBroadcastReceiver
 		if(prefs.contains(bundle.getString("id")+"-history")) //do we have any previous history for this conversation?
 			messages = gson.fromJson(prefs.getString(bundle.getString("id")+"-history",null), type);
 
-		messages.add(new TextMessage(bundle.getString("text"),bundle.getString("sender"),bundle.getString("sentTime"),bundle.getString("id")));
+		Type listOfStrings = new TypeToken<ArrayList<String>>(){}.getType();
+		ArrayList<String> usernames = gson.fromJson(bundle.getString("usernames"), listOfStrings);
+
+		messages.add(new TextMessage(bundle.getString("text"),bundle.getString("sender"),bundle.getString("sentTime"),bundle.getString("id"),usernames));
 		SharedPreferences.Editor edit = prefs.edit();
 		edit.putString(bundle.getString("id")+"-history",gson.toJson(messages,type));
 		edit.apply();
 
 		//if message coming in from someone else, add it to the chat activity if the id matches
 		if(bundle.getString("id").equals(ChatActivity.id) && !bundle.getString("sender").equals(prefs.getString("loggedIn",null)))
-			ChatActivity.addMessage(bundle.getString("text"),bundle.getString("sender"),bundle.getString("sentTime"));
+			ChatActivity.addMessage(bundle.getString("text"),bundle.getString("sender"),bundle.getString("sentTime"),usernames);
 
 		//if the chat activity is not currently showing, then make a notification
-		if(!ChatActivity.isResumed && ChatActivity.id != null && !ChatActivity.id.equals(bundle.getString("id")))
+		if(!ChatActivity.isResumed || !bundle.getString("id").equals(ChatActivity.id))
 		{
 			// Creates an explicit intent for an Activity in your app
 			Intent resultIntent = new Intent(context, ChatActivity.class);
 			Bundle bundle1 = new Bundle();
 			bundle1.putString("id",bundle.getString("id"));
+			bundle1.putString("usernames",bundle.getString("usernames"));
 			resultIntent.putExtras(bundle1);
 
 			NotificationCompat.Builder builder = new NotificationCompat.Builder(context);

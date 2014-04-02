@@ -62,10 +62,12 @@ public class ChatListAdapter extends ArrayAdapter<TextMessage>
 		TextView messageText = (TextView) v.findViewById(R.id.messageText);
 		TextView timeStamp = (TextView) v.findViewById(R.id.timeStamp);
 		ImageView userImage = (ImageView) v.findViewById(R.id.userImage);
+		TextView username = (TextView) v.findViewById(R.id.username);
 
 		messageText.setText(messages.get(position).getText());
 		timeStamp.setText(messages.get(position).getTimestamp());
 		userImage.setImageResource(R.drawable.user_icon);
+		username.setText(messages.get(position).getFrom());
 
 		//String url = "http://classmeapp.appspot.com/addendum/getImage?username="+messages.get(position).getFrom();
 		//UrlImageViewHelper.setUrlDrawable(userImage, url);

@@ -1,12 +1,23 @@
 package com.cs1635.classme;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.shared.TextMessage;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.Map;
 
 public class HomeActivity extends ActionBarActivity
 {
@@ -29,17 +40,25 @@ public class HomeActivity extends ActionBarActivity
 			}
 		});
 
-		ViewGroup chatRow = (ViewGroup) findViewById(R.id.chatRow);
-		chatRow.setOnClickListener(new View.OnClickListener()
+		//find all chat histories
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		Gson gson = new Gson();
+		Map<String,?> keys = prefs.getAll();
+		ArrayList<ArrayList<TextMessage>> recentChats = new ArrayList<ArrayList<TextMessage>>();
+		if(keys != null)
 		{
-			@Override
-			public void onClick(View v)
+			for(Map.Entry<String,?> entry : keys.entrySet())
 			{
-				Intent intent = new Intent(activity,ChatActivity.class);
-				intent.putExtra("id","63026710");
-				startActivity(intent);
+				if(entry.getKey().contains("-history")) //should be a serialized chat history
+				{
+					Type type = new TypeToken<ArrayList<TextMessage>>(){}.getType();
+					ArrayList<TextMessage> messages = gson.fromJson(entry.getValue().toString(), type);
+					recentChats.add(messages);
+				}
 			}
-		});
+		}
+		ListView recentChatsList = (ListView) findViewById(R.id.recentChats);
+		recentChatsList.setAdapter(new RecentChatsAdapter(activity,1,recentChats));
 	}
 
 	@Override
@@ -60,6 +79,8 @@ public class HomeActivity extends ActionBarActivity
 		int id = item.getItemId();
 		if(id == R.id.action_settings)
 		{
+			Intent intent = new Intent(this, Preferences.class);
+			startActivity(intent);
 			return true;
 		}
 		if(id == R.id.search)

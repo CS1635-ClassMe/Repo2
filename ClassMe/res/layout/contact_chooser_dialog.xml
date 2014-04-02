@@ -5,10 +5,36 @@
 				android:layout_width="match_parent"
 				android:layout_height="match_parent">
 
+	<RelativeLayout
+		android:id="@+id/customNameLayout"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal">
+
+		<AutoCompleteTextView
+			android:id="@+id/customName"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_toLeftOf="@+id/addButton"
+			android:layout_centerVertical="true"
+			android:hint="Type a username"/>
+
+		<ImageView
+			android:id="@id/addButton"
+			android:layout_width="32dp"
+			android:layout_height="32dp"
+			android:layout_alignParentRight="true"
+			android:layout_centerVertical="true"
+			android:src="@drawable/add_class"/>
+
+	</RelativeLayout>
+
 	<ScrollView
 		android:id="@+id/scrollView"
 		android:layout_width="match_parent"
 		android:layout_height="250dp"
+		android:layout_below="@id/customNameLayout"
+		android:background="@color/tan"
 		android:padding="5dp">
 
 		<org.apmem.tools.layouts.FlowLayout

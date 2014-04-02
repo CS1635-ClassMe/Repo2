@@ -28,6 +28,21 @@
 				android:layout_height="64dp"
 				android:src="@drawable/you_triangle"/>
 
+			<TextView
+				android:id="@+id/username"
+				android:layout_gravity="center_horizontal|bottom"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:background="#ddffffff"
+				android:paddingLeft="2dp"
+				android:paddingRight="2dp"
+				android:textStyle="bold"
+				android:textSize="10sp"
+				android:maxWidth="64dp"
+				android:lines="1"
+				android:ellipsize="end"
+				tools:text="Buck"/>
+
 		</FrameLayout>
 
 		<LinearLayout

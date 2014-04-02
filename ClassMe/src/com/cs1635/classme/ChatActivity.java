@@ -49,6 +49,7 @@ public class ChatActivity extends ActionBarActivity
 
 	String regid;
 	EditText text;
+	ArrayList<String> usernames;
 
 	static SharedPreferences prefs;
 	static ArrayList<TextMessage> messages = new ArrayList<TextMessage>();
@@ -69,35 +70,34 @@ public class ChatActivity extends ActionBarActivity
 		Bundle bundle = getIntent().getExtras();
 		if(bundle != null)
 		{
-			String username = "";
+			Gson gson = new Gson();
 
-			if(bundle.containsKey("userString"))
+			Type listOfStrings = new TypeToken<ArrayList<String>>(){}.getType();
+			usernames = gson.fromJson(bundle.getString("usernames"), listOfStrings);
+			id = bundle.getString("id");
+			//if an associated notification is showing, cancel it
+			NotificationManager notificationManager = (NotificationManager) activity.getSystemService(Context.NOTIFICATION_SERVICE);
+			notificationManager.cancel(Integer.parseInt(id));
+
+			Type type = new TypeToken<ArrayList<TextMessage>>(){}.getType();
+			if(prefs.contains(id+"-history")) //do we have any previous history for this conversation?
+				messages = gson.fromJson(prefs.getString(id+"-history",null), type);
+
+			String title = "";
+			for(String username : usernames)
 			{
-				username = bundle.getString("userString");
-				id = String.valueOf(username.hashCode());
+				if(!username.equals(prefs.getString("loggedIn",null)))
+					title += username+",";
 			}
-			else if(bundle.containsKey("id"))
-			{
-				id = bundle.getString("id");
-				//if an associated notification is showing, cancel it
-				NotificationManager notificationManager = (NotificationManager) activity.getSystemService(Context.NOTIFICATION_SERVICE);
-				notificationManager.cancel(Integer.parseInt(id));
+			if(title.endsWith(","))
+				title = title.substring(0,title.length()-1);
 
-				Gson gson = new Gson();
-				Type type = new TypeToken<ArrayList<TextMessage>>(){}.getType();
-				if(prefs.contains(id+"-history")) //do we have any previous history for this conversation?
-					messages = gson.fromJson(prefs.getString(id+"-history",null), type);
-
-				for(TextMessage message : messages)
-				{
-					if(!username.contains(message.getFrom()) && !message.getFrom().equals(prefs.getString("loggedIn",null)))
-						username += message.getFrom()+",";
-				}
-				if(username.endsWith(","))
-					username = username.substring(0,username.length()-1);
-			}
-
-			actionBar.setTitle(username);
+			actionBar.setTitle(title);
+		}
+		else
+		{
+			Toast.makeText(activity,"Unable to get messages.",Toast.LENGTH_SHORT).show();
+			finish();
 		}
 
 		chatList = (ListView) findViewById(R.id.chatList);
@@ -112,7 +112,7 @@ public class ChatActivity extends ActionBarActivity
 			{
 				new SendTask().execute(text.getText().toString());
 				SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
-				addMessage(text.getText().toString(),prefs.getString("loggedIn",null),sdf.format(new Date()));
+				addMessage(text.getText().toString(),prefs.getString("loggedIn",null),sdf.format(new Date()),usernames);
 				text.setText("");
 			}
 		});
@@ -129,9 +129,9 @@ public class ChatActivity extends ActionBarActivity
 		}
 	}
 
-	public static void addMessage(String message, String sender, String timeStamp)
+	public static void addMessage(String message, String sender, String timeStamp, ArrayList<String> usernames)
 	{
-		messages.add(new TextMessage(message,sender,timeStamp,id));
+		messages.add(new TextMessage(message,sender,timeStamp,id,usernames));
 		((ChatListAdapter)chatList.getAdapter()).notifyDataSetChanged();
 	}
 

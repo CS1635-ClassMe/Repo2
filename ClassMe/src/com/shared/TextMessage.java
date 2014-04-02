@@ -1,18 +1,22 @@
 package com.shared;
 
+import java.util.ArrayList;
+
 /**
  * Created by Robert McDermot on 3/27/14.
  */
 public class TextMessage
 {
 	private String text, from ,timestamp, conversationId;
+	private ArrayList<String> usernames;
 
-	public TextMessage(String text, String from, String timestamp, String conversationId)
+	public TextMessage(String text, String from, String timestamp, String conversationId, ArrayList<String> usernames)
 	{
 		this.text = text;
 		this.from = from;
 		this.timestamp = timestamp;
 		this.conversationId = conversationId;
+		this.usernames = usernames;
 	}
 
 	public String getTimestamp()
@@ -53,5 +57,15 @@ public class TextMessage
 	public void setConversationId(String conversationId)
 	{
 		this.conversationId = conversationId;
+	}
+
+	public ArrayList<String> getUsernames()
+	{
+		return usernames;
+	}
+
+	public void setUsernames(ArrayList<String> usernames)
+	{
+		this.usernames = usernames;
 	}
 }
