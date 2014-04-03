@@ -123,7 +123,8 @@
         <activity
             android:name="com.cs1635.classme.BuckCourse"
             android:configChanges="orientation|screenSize"
-            android:label="@string/title_activity_class_view" >
+            android:label="@string/title_activity_class_view"
+			android:parentActivityName="com.cs1635.classme.HomeActivity">
         </activity>
 		<activity
 			android:name="com.cs1635.classme.Preferences"

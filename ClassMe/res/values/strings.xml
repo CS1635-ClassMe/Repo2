@@ -41,6 +41,6 @@
     <string name="tab4">Calendar</string>
     <string name="tab5">Members</string>
 
-    <string name="view_day_existing">Existing Events:</string>
+    <string name="view_day_existing">Upcoming Events:</string>
 
 </resources>

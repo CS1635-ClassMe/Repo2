@@ -1,18 +1,17 @@
 package com.cs1635.classme;
 
 import android.annotation.TargetApi;
-import android.app.ActionBar;
-import android.app.ActionBar.Tab;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 
-public class BuckCourse extends FragmentActivity implements ActionBar.TabListener
+public class BuckCourse extends ActionBarActivity implements ActionBar.TabListener
 {
 	private ViewPager viewPager;
-	private TabsPagerAdapter mAdapter;
-	private android.app.ActionBar actionBar;
+	private ActionBar actionBar;
 	// Tab titles
 	private String[] tabs = {"Discuss", "Lecture", "Notes", "Events", "Members"};
 	public static String classId = "CS1635";
@@ -26,12 +25,12 @@ public class BuckCourse extends FragmentActivity implements ActionBar.TabListene
 
 		// Initilization
 		viewPager = (ViewPager) findViewById(R.id.pager);
-		actionBar = getActionBar();
-		mAdapter = new TabsPagerAdapter(getSupportFragmentManager());
+		actionBar = getSupportActionBar();
+		TabsPagerAdapter mAdapter = new TabsPagerAdapter(getSupportFragmentManager());
 
 		viewPager.setAdapter(mAdapter);
-		actionBar.setHomeButtonEnabled(false);
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+		actionBar.setTitle(classId);
 
 		// Adding Tabs
 		for(String tab_name : tabs)
@@ -66,20 +65,19 @@ public class BuckCourse extends FragmentActivity implements ActionBar.TabListene
 	}
 
 	@Override
-	public void onTabSelected(Tab tab, android.app.FragmentTransaction fragmentTransaction)
+	public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction)
 	{
 		viewPager.setCurrentItem(tab.getPosition());
-
 	}
 
 	@Override
-	public void onTabUnselected(Tab tab, android.app.FragmentTransaction fragmentTransaction)
+	public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction)
 	{
 
 	}
 
 	@Override
-	public void onTabReselected(Tab tab, android.app.FragmentTransaction fragmentTransaction)
+	public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction)
 	{
 
 	}

@@ -15,13 +15,13 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class ExistingEventsAdapter extends ArrayAdapter<Event>
+public class UpcomingEventsAdapter extends ArrayAdapter<Event>
 {
     Context context;
     ArrayList<Event> events;
     SharedPreferences prefs;
 
-    public ExistingEventsAdapter(Context context, int textViewResourceId, ArrayList<Event> events)
+    public UpcomingEventsAdapter(Context context, int textViewResourceId, ArrayList<Event> events)
     {
         super(context, textViewResourceId, events);
         this.events = events;
@@ -47,12 +47,20 @@ public class ExistingEventsAdapter extends ArrayAdapter<Event>
         TextView description = (TextView) v.findViewById(R.id.cal_single_description);
         TextView date = (TextView) v.findViewById(R.id.cal_single_date);
 
-
         title.setText(events.get(position).getTitle());
         description.setText(events.get(position).getDescription());
         Date dateObj = events.get(position).getDate();
         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy  |  hh:mm a");
         date.setText(sdf.format(dateObj));
+
+		v.setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				new EventDetailsDialog(context, events.get(position));
+			}
+		});
 
         return  v;
     }

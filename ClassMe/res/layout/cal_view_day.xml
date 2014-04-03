@@ -11,29 +11,24 @@
         android:layout_height="60dp"
         android:layout_margin="10dp"
         android:background="@color/blue_light"
-        android:text="Create New Event" />
+        android:text="Create New Event"/>
 
     <TextView android:id="@+id/tview"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/view_day_existing"
         android:textSize="32dp"
-        android:paddingTop="30dp"
-        android:paddingLeft="10dp"
-        android:paddingBottom="10dp"
-        android:layout_below="@id/cal_view_submit"
-        />
+		android:layout_marginLeft="10dp"
+		android:layout_marginRight="10dp"
+        android:layout_below="@id/cal_view_submit"/>
 
     <ListView android:id="@+id/cal_view_existing"
         android:background="@color/tan"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
+		android:layout_margin="10dp"
         android:padding="10dp"
         android:layout_below="@id/tview"
-        android:layout_alignParentBottom="true"
-        >
-    </ListView>
+        android:layout_alignParentBottom="true"/>
 
 </RelativeLayout>
