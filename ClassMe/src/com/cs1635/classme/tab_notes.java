@@ -27,6 +27,17 @@ public class tab_notes extends Fragment
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
 		View rootView = inflater.inflate(R.layout.tab_notes, container, false);
+
+        (rootView.findViewById(R.id.tab_notes_new)).setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(getActivity(), CreateNoteActivity.class);
+                        startActivity(intent);
+                    }
+                }
+        );
+
 	/*preview = (ImageView) rootView.findViewById(R.id.preview);
 
 		ContentValues values = new ContentValues();

@@ -1,5 +1,6 @@
 package com.cs1635.classme;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,6 +17,16 @@ public class tab_lecture extends Fragment {
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.tab_lecture, container, false);
+
+        (rootView.findViewById(R.id.tab_lecture_new)).setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(getActivity(), CreateLectureActivity.class);
+                        startActivity(intent);
+                    }
+                }
+        );
 
         return rootView;
     }
