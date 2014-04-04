@@ -71,7 +71,7 @@ public class NewPost extends ActionBarActivity
 
 		Bundle bundle = getIntent().getBundleExtra("bundle");
 		if(bundle != null)
-			editPost = (Post) bundle.getSerializable("post");
+			editPost = (Post) bundle.getSerializable("postText");
 
 		ContentValues values = new ContentValues();
 		values.put(MediaStore.Images.Media.TITLE, "temp.jpg");
@@ -184,7 +184,7 @@ public class NewPost extends ActionBarActivity
 				{
 					AlertDialog.Builder builder = new AlertDialog.Builder(context)
 							.setTitle("Addendum Mobile")
-							.setMessage("Do you want to discard this post?")
+							.setMessage("Do you want to discard this postText?")
 							.setNegativeButton("No", new DialogInterface.OnClickListener()
 							{
 								@Override
@@ -342,7 +342,7 @@ public class NewPost extends ActionBarActivity
 			}
 			else
 			{
-				Toast.makeText(context, "There was a problem uploading your post.  Please try again.", Toast.LENGTH_SHORT).show();
+				Toast.makeText(context, "There was a problem uploading your postText.  Please try again.", Toast.LENGTH_SHORT).show();
 			}
 		}
 	}
@@ -523,7 +523,7 @@ public class NewPost extends ActionBarActivity
 			progressDialog.dismiss();
 			if(!success)
 			{
-				Toast.makeText(context, "Error while uploading post", Toast.LENGTH_SHORT).show();
+				Toast.makeText(context, "Error while uploading postText", Toast.LENGTH_SHORT).show();
 				return;
 			}
 			else
@@ -532,7 +532,7 @@ public class NewPost extends ActionBarActivity
 					new DeleteAttachmentsTask().execute(key);
 
 				Bundle bundle = new Bundle();
-				bundle.putSerializable("post",editPost);
+				bundle.putSerializable("postText",editPost);
 				Intent result = new Intent();
 				result.putExtras(bundle);
 				setResult(Activity.RESULT_OK, result);

@@ -82,8 +82,7 @@ public class tab_events extends Fragment
 
 					Log.d("PRINT entity", entityString);
 
-					return gson.fromJson(entityString, listOfEvents); //Return listy! :) "Youre doing great, buck. keep it up" --Robert //"You forgot an apostrophe" --Robert
-
+					return gson.fromJson(entityString, listOfEvents); //Return listy!
 				}
 				catch(Exception e)
 				{
@@ -96,18 +95,12 @@ public class tab_events extends Fragment
 			@Override
 			protected void onPostExecute(ArrayList<Event> listy)
 			{
-
-				Log.d("PRINT LISTY", listy.toString());
-				Log.d("size doesnt matter robert", Integer.toString(listy.size()));
-
-
 				if(listy != null)
 				{
 					UpcomingEventsAdapter adapt = (UpcomingEventsAdapter) listView.getAdapter();
 					adapt.addAll(listy);
 					adapt.notifyDataSetChanged();
 				}
-
 			}
 
 		}.execute();

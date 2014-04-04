@@ -103,7 +103,7 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>
 				@Override
 				public void onClick(View v)
 				{
-					Toast.makeText(context, "This comment was accepted by the post author as a good answer", Toast.LENGTH_SHORT).show();
+					Toast.makeText(context, "This comment was accepted by the postText author as a good answer", Toast.LENGTH_SHORT).show();
 				}
 			});
 		}

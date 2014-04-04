@@ -100,7 +100,7 @@ public class FileUploadTask extends AsyncTask<String, Void, String>
 		if(response != null)
 		{
 			Toast.makeText(context, "Successfully uploaded file.", Toast.LENGTH_SHORT).show();
-			//post.setText(post.getText() + "<img src=\"http://studentclassnet.appspot.com/addendum/getImage?key=" + response + "\">");
+			//postText.setText(postText.getText() + "<img src=\"http://studentclassnet.appspot.com/addendum/getImage?key=" + response + "\">");
 		}
 		else
 			Toast.makeText(context, "Upload error, please check your connection and try again.", Toast.LENGTH_SHORT).show();
