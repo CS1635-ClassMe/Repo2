@@ -1,31 +1,57 @@
 package com.cs1635.classme;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 public class ChangeProfilePictureDialog extends AlertDialog
 {
-	Context context;
-	AlertDialog dialog;
+	Activity activity;
+	AlertDialog dialog, d;
+	String filePath;
+	ImageView currentAvatar;
+	Uri fileUri;
 
-	protected ChangeProfilePictureDialog(Context con)
+	public void setImage()
 	{
-		super(con);
-		context = con;
+		if(fileUri == null)
+		{
+			SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
+			String url = "http://classmeapp.appspot.com/fileRequest?username=" + prefs.getString("loggedIn", "");
+			ImageLoader loader = ImageLoader.getInstance();
+			loader.init(new ImageLoaderConfiguration.Builder(activity).build());
+			loader.displayImage(url,currentAvatar);
+		}
+		else
+			currentAvatar.setImageURI(fileUri);
+	}
 
-		Builder builder = new Builder(context);
-		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	public ChangeProfilePictureDialog(Activity a)
+	{
+		super(a);
+		this.activity = a;
+
+		Builder builder = new Builder(activity);
+		LayoutInflater inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		View view = inflater.inflate(R.layout.change_profile_picture_dialog, null);
 		builder.setTitle("Profile Picture");
 		builder.setView(view);
+
+		currentAvatar = (ImageView) view.findViewById(R.id.currentAvatar);
 
 		View avatarLayout = view.findViewById(R.id.avatarLayout);
 		avatarLayout.setOnClickListener(new View.OnClickListener()
@@ -35,9 +61,10 @@ public class ChangeProfilePictureDialog extends AlertDialog
 			{
 				ContentValues values = new ContentValues();
 				values.put(MediaStore.Images.Media.TITLE, "temp.jpg");
-				Uri captureUri = context.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+				Uri captureUri = activity.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
 
-				showPhotoDialog(captureUri);
+				showPhotoDialog(captureUri,activity);
+				dialog.dismiss();
 			}
 		});
 
@@ -57,7 +84,15 @@ public class ChangeProfilePictureDialog extends AlertDialog
 			@Override
 			public void onClick(View v)
 			{
-
+				if(filePath != null)
+				{
+					FileUploadTask task = new FileUploadTask(activity);
+					task.profileUpload = true;
+					task.execute(filePath);
+					dialog.dismiss();
+				}
+				else
+					dialog.dismiss();
 			}
 		});
 
@@ -66,10 +101,10 @@ public class ChangeProfilePictureDialog extends AlertDialog
 		dialog.show();
 	}
 
-	private void showPhotoDialog(final Uri captureUri)
+	private void showPhotoDialog(final Uri captureUri, final Activity activity)
 	{
-		Builder builder = new Builder(context);
-		View view = ((LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.photo_dialog, null);
+		Builder builder = new Builder(activity);
+		View view = ((LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.photo_dialog, null);
 		builder.setView(view);
 		LinearLayout choosePhoto = (LinearLayout) view.findViewById(R.id.choosePhoto);
 		choosePhoto.setOnClickListener(new View.OnClickListener()
@@ -78,8 +113,8 @@ public class ChangeProfilePictureDialog extends AlertDialog
 			public void onClick(View v)
 			{
 				Intent pickPhoto = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-				getOwnerActivity().startActivityForResult(pickPhoto, 1);
-				dialog.dismiss();
+				activity.startActivityForResult(pickPhoto, 1);
+				d.dismiss();
 			}
 		});
 		LinearLayout takePhoto = (LinearLayout) view.findViewById(R.id.takePhoto);
@@ -90,12 +125,12 @@ public class ChangeProfilePictureDialog extends AlertDialog
 			{
 				Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 				intent.putExtra(MediaStore.EXTRA_OUTPUT, captureUri);
-				getOwnerActivity().startActivityForResult(intent, 0);
-				dialog.dismiss();
+				activity.startActivityForResult(intent, 0);
+				d.dismiss();
 			}
 		});
 
-		dialog = builder.create();
-		dialog.show();
+		d = builder.create();
+		d.show();
 	}
 }

@@ -1,11 +1,14 @@
 package com.cs1635.classme;
 
+import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -15,8 +18,9 @@ import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.provider.MediaStore;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
+import android.widget.Toast;
 
 public class Preferences extends PreferenceActivity
 {
@@ -71,7 +75,8 @@ public class Preferences extends PreferenceActivity
 				{
 					public boolean onPreferenceClick(Preference preference)
 					{
-						new ChangeProfilePictureDialog(getActivity());
+						ChangeProfilePictureDialog dialog = new ChangeProfilePictureDialog(getActivity());
+						dialog.setImage();
 						return true;
 					}
 				});
@@ -135,6 +140,32 @@ public class Preferences extends PreferenceActivity
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data)
 	{
-		Log.d("ClassMe", "here");
+		Uri fileUri = null;
+		ContentValues values = new ContentValues();
+		values.put(MediaStore.Images.Media.TITLE, "temp.jpg");
+		Uri captureUri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+
+		if(resultCode != Activity.RESULT_OK)
+		{
+			Toast.makeText(this, "Unable to get image", Toast.LENGTH_SHORT).show();
+			return;
+		}
+		if(requestCode == 0) //if camera
+			fileUri = captureUri;
+		else //if photo chooser
+			fileUri = data.getData();
+
+		ChangeProfilePictureDialog dialog = new ChangeProfilePictureDialog(this);
+		dialog.filePath = getRealPathFromURI(fileUri);
+		dialog.fileUri = fileUri;
+		dialog.setImage();
+	}
+
+	public String getRealPathFromURI(Uri uri)
+	{
+		Cursor cursor = getContentResolver().query(uri, null, null, null, null);
+		cursor.moveToFirst();
+		int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+		return cursor.getString(idx);
 	}
 }
