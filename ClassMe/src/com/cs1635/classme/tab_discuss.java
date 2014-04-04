@@ -1,10 +1,12 @@
 package com.cs1635.classme;
 
-import android.support.v4.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 
 /**
@@ -16,6 +18,16 @@ public class tab_discuss extends Fragment {
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.tab_discuss, container, false);
+
+        (rootView.findViewById(R.id.tab_discuss_new)).setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(getActivity(), CreateDiscussionActivity.class);
+                        startActivity(intent);
+                    }
+                }
+        );
 
         return rootView;
     }
