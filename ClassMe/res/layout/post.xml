@@ -21,7 +21,9 @@
 				android:id="@+id/title"
 				android:layout_alignParentTop="true"
 				android:layout_alignParentLeft="true"
-				android:layout_margin="5dp"/>
+				android:layout_margin="5dp"
+                android:text="Title of Post"
+                />
 
 			<View
 				android:id="@+id/divider"
@@ -44,14 +46,17 @@
 				android:id="@+id/from"
 				android:textStyle="bold"
 				android:layout_alignTop="@+id/profileImage"
-				android:layout_toRightOf="@+id/profileImage"/>
+				android:layout_toRightOf="@+id/profileImage"
+                android:text="from: bucko"
+                />
 
 			<TextView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:id="@+id/time"
 				android:layout_below="@+id/from"
-				android:layout_toRightOf="@+id/profileImage"/>
+				android:layout_toRightOf="@+id/profileImage"
+                android:text="time: 8:13am"/>
 
 			<TextView
 				android:layout_width="wrap_content"
@@ -59,7 +64,9 @@
 				android:id="@+id/content"
 				android:layout_below="@+id/profileImage"
 				android:layout_margin="5dp"
-				android:layout_alignParentLeft="true"/>
+				android:layout_alignParentLeft="true"
+                android:text="CONTENT! "
+                />
 
 			<LinearLayout
 				android:layout_width="wrap_content"
@@ -83,7 +90,9 @@
 					android:layout_height="wrap_content"
 					android:textStyle="bold"
 					android:layout_gravity="center_vertical"
-					android:id="@+id/numComments"/>
+					android:id="@+id/numComments"
+                    android:text="5"
+                    />
 
 			</LinearLayout>
 

@@ -13,7 +13,7 @@ public class BuckCourse extends ActionBarActivity implements ActionBar.TabListen
 	private ViewPager viewPager;
 	private ActionBar actionBar;
 	// Tab titles
-	private String[] tabs = {"Discuss", "Lecture", "Notes", "Events", "Members"};
+	private String[] tabs = {"Discussions", "Recorded Lectures", "Class Notes", "Events", "Members"};
 	public static String classId = "CS1635";
 
 	@TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
