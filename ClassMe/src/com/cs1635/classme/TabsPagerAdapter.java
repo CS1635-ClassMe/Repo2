@@ -30,9 +30,6 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
             case 3:
                 // Movies fragment activity
                 return new tab_events();
-            case 4:
-                // Movies fragment activity
-                return new tab_members();
         }
 
         return null;
@@ -41,7 +38,7 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
     @Override
     public int getCount() {
         // get item count - equal to number of tabs
-        return 5;
+        return 4;
     }
 
 }
