@@ -32,7 +32,7 @@ public class tab_notes extends Fragment
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent intent = new Intent(getActivity(), CreateDiscussionActivity.class);
+                        Intent intent = new Intent(getActivity(), CreateNoteActivity.class);
                         startActivity(intent);
                     }
                 }

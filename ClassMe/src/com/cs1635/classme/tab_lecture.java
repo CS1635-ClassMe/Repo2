@@ -22,7 +22,7 @@ public class tab_lecture extends Fragment {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent intent = new Intent(getActivity(), CreateDiscussionActivity.class);
+                        Intent intent = new Intent(getActivity(), CreateLectureActivity.class);
                         startActivity(intent);
                     }
                 }
