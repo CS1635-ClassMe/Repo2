@@ -77,6 +77,15 @@ public class HomeActivity extends ActionBarActivity
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
+		if(id == R.id.logout)
+		{
+			SharedPreferences.Editor edit = PreferenceManager.getDefaultSharedPreferences(this).edit();
+			edit.remove("loggedIn");
+			edit.commit();
+			startActivity(new Intent(this, LoginActivity.class));
+			finish();
+			return true;
+		}
 		if(id == R.id.action_settings)
 		{
 			Intent intent = new Intent(this, Preferences.class);

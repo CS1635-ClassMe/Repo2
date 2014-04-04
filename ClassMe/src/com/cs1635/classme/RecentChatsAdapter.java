@@ -9,9 +9,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.shared.TextMessage;
 
 import java.util.ArrayList;
@@ -43,6 +47,12 @@ public class RecentChatsAdapter extends ArrayAdapter<ArrayList<TextMessage>>
 		TextView name = (TextView) v.findViewById(R.id.name);
 		TextView text = (TextView) v.findViewById(R.id.text);
 		TextView time = (TextView) v.findViewById(R.id.time);
+		ImageView userImage = (ImageView) v.findViewById(R.id.userImage);
+
+		String url = "http://classmeapp.appspot.com/fileRequest?username="+recentChats.get(position).get(recentChats.get(position).size()-1).getFrom();
+		ImageLoader loader = ImageLoader.getInstance();
+		loader.init(new ImageLoaderConfiguration.Builder(context).build());
+		loader.displayImage(url, userImage);
 
 		String nameString = "";
 		for(String username : recentChats.get(position).get(0).getUsernames())
@@ -54,7 +64,7 @@ public class RecentChatsAdapter extends ArrayAdapter<ArrayList<TextMessage>>
 			nameString = nameString.substring(0,nameString.length()-2);
 
 		name.setText(nameString);
-		text.setText(recentChats.get(position).get(recentChats.get(position).size()-1).getText());
+		text.setText(recentChats.get(position).get(recentChats.get(position).size()-1).getFrom()+ ": " +recentChats.get(position).get(recentChats.get(position).size()-1).getText());
 		time.setText(recentChats.get(position).get(recentChats.get(position).size()-1).getTimestamp());
 
 		v.setOnClickListener(new View.OnClickListener()

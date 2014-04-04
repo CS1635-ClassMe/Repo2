@@ -2,7 +2,9 @@ package com.cs1635.classme;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.webkit.MimeTypeMap;
 import android.widget.Toast;
@@ -15,6 +17,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
 import java.io.File;
@@ -27,6 +30,7 @@ public class FileUploadTask extends AsyncTask<String, Void, String>
 	ProgressDialog progressDialog;
 	//boolean isAttachment;
 	Context context;
+	boolean profileUpload = false;
 
 	public FileUploadTask(Context c)
 	{
@@ -49,7 +53,10 @@ public class FileUploadTask extends AsyncTask<String, Void, String>
 		String responseUrl = null;
 		try
 		{
-			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(4);
+			SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
+			if(profileUpload)
+				nameValuePairs.add(new BasicNameValuePair("username",prefs.getString("loggedIn","")));
 
 			// execute request
 			HttpResponse urlResponse = AppEngineClient.makeRequest("/fileUpload", nameValuePairs);
