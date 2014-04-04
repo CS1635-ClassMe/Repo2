@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent">
+
+    <TextView android:id="@+id/tview2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/list_discussions_existing"
+        android:textSize="32dp"
+        />
+
+    <ListView android:id="@+id/list_of_discussions"
+        android:background="@color/tan"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:padding="10dp"
+        android:layout_below="@id/tview2"
+        android:layout_alignParentBottom="true"/>
+
+</RelativeLayout>

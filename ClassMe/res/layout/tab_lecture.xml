@@ -1,89 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    >
 
 
-    <LinearLayout
+    <Button android:id="@+id/tab_lecture_new"
         android:layout_width="fill_parent"
-        android:layout_height="50dp"
-        android:id="@+id/buttonLayout"
-        android:layout_marginBottom="0dp"
-        android:background="@drawable/card"
-        android:gravity="center">
+        android:layout_height="60dp"
+        android:background="@color/blue_light"
+        android:text="Upload New Lecture"
+        android:layout_margin="10dp"/>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:gravity="center"
-            android:id="@+id/attachLayout"
-            android:layout_marginRight="5dp"
-            android:layout_weight="1">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/attach"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:text="Audio / Video"
-                android:textColor="#ff979797"/>
-
-        </LinearLayout>
-
-        <View
-            android:layout_width="1dp"
-            android:layout_height="wrap_content"
-            android:background="#ff979797"/>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:gravity="center"
-            android:id="@+id/shareLayout"
-            android:layout_marginLeft="5dp"
-            android:layout_weight="1">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/send"/>
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:text="Share"
-                android:textColor="#ff979797"
-                android:layout_weight="1"/>
-
-        </LinearLayout>
-
-
-    </LinearLayout>
-
-    <EditText
+    <include layout="@layout/list_lectures"
+        android:layout_below="@id/tab_lecture_new"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textCapSentences|textMultiLine"
-        android:gravity="top|left"
-        android:id="@+id/postText"
-        android:hint="Description"
-        android:layout_below="@id/buttonLayout"
-        android:background="@color/tan"
-        android:padding="10dp"
-        android:lines="2"/>
+        android:layout_height="fill_parent"
+        android:layout_margin="10dp"
+        />
 
 
-    <TextView android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="Lecture"
-        android:textSize="20dp"
-        android:layout_centerInParent="true"/>
+
 
 </RelativeLayout>

@@ -1,13 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    >
 
-    <TextView android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="Discuss"
-        android:textSize="20dp"
-        android:layout_centerInParent="true"/>
+    <Button android:id="@+id/tab_discuss_new"
+        android:layout_width="fill_parent"
+        android:layout_height="60dp"
+        android:background="@color/blue_light"
+        android:text="Create New Discussion"
+        android:layout_margin="10dp"
+        />
+
+    <include layout="@layout/list_discussions"
+        android:layout_below="@id/tab_discuss_new"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_margin="10dp"
+        />
+
 
 </RelativeLayout>

@@ -1,7 +1,6 @@
 package com.cs1635.classme;
 
 import android.app.Activity;
-import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -28,7 +27,7 @@ public class tab_notes extends Fragment
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
 		View rootView = inflater.inflate(R.layout.tab_notes, container, false);
-		preview = (ImageView) rootView.findViewById(R.id.preview);
+	/*preview = (ImageView) rootView.findViewById(R.id.preview);
 
 		ContentValues values = new ContentValues();
 		values.put(MediaStore.Images.Media.TITLE, "temp.jpg");
@@ -53,7 +52,7 @@ public class tab_notes extends Fragment
 				new FileUploadTask(getActivity()).execute(getRealPathFromURI(fileUri));
 			}
 		});
-
+*/
 		return rootView;
 	}
 

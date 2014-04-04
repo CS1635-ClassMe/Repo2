@@ -37,7 +37,7 @@ public class tab_events extends Fragment
 	{
 		View rootView = inflater.inflate(R.layout.tab_events, container, false);
 
-		Button createEvent = (Button) rootView.findViewById(R.id.cal_view_submit);
+		Button createEvent = (Button) rootView.findViewById(R.id.tab_events_new);
 		createEvent.setOnClickListener(new View.OnClickListener()
 		{
 			@Override
@@ -49,7 +49,7 @@ public class tab_events extends Fragment
 
 		populateListView(rootView);
 
-		ListView lv = (ListView) rootView.findViewById(R.id.cal_view_existing);
+		ListView lv = (ListView) rootView.findViewById(R.id.list_of_events);
 
 		lv.setAdapter(new UpcomingEventsAdapter(getActivity(), 42, new ArrayList<Event>()));
 
@@ -58,7 +58,7 @@ public class tab_events extends Fragment
 
 	private void populateListView(View rootView)
 	{
-		final ListView listView = (ListView) rootView.findViewById(R.id.cal_view_existing);
+		final ListView listView = (ListView) rootView.findViewById(R.id.list_of_events);
 
 
 		new AsyncTask<Void, Void, ArrayList<Event>>()
