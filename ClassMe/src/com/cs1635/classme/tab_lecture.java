@@ -22,6 +22,8 @@ public class tab_lecture extends Fragment {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+
+                        BuckCourse.rememberPosition(BuckCourse.Position.LECTURE);
                         Intent intent = new Intent(getActivity(), CreateLectureActivity.class);
                         startActivity(intent);
                     }
