@@ -22,6 +22,9 @@ public class tab_discuss extends Fragment {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+
+                        BuckCourse.rememberPosition(BuckCourse.Position.DISCUSS);
+
                         Intent intent = new Intent(getActivity(), CreateDiscussionActivity.class);
                         startActivity(intent);
                     }

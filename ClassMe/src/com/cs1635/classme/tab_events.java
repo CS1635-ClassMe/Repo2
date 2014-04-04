@@ -43,7 +43,9 @@ public class tab_events extends Fragment
 			@Override
 			public void onClick(View v)
 			{
-				startActivity(new Intent(getActivity(), CreateEventActivity.class));
+                BuckCourse.rememberPosition(BuckCourse.Position.EVENTS);
+
+                startActivity(new Intent(getActivity(), CreateEventActivity.class));
 			}
 		});
 
@@ -96,11 +98,6 @@ public class tab_events extends Fragment
 			@Override
 			protected void onPostExecute(ArrayList<Event> listy)
 			{
-
-				Log.d("PRINT LISTY", listy.toString());
-				Log.d("size doesnt matter robert", Integer.toString(listy.size()));
-
-
 				if(listy != null)
 				{
 					UpcomingEventsAdapter adapt = (UpcomingEventsAdapter) listView.getAdapter();

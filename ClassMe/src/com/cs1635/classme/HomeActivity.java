@@ -29,6 +29,8 @@ public class HomeActivity extends ActionBarActivity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
 
+        BuckCourse.resetPosition();
+
 		ViewGroup classRow = (ViewGroup) findViewById(R.id.classRow);
 		classRow.setOnClickListener(new View.OnClickListener()
 		{
