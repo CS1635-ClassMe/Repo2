@@ -42,5 +42,9 @@
     <string name="tab5">Members</string>
 
     <string name="view_day_existing">Upcoming Events:</string>
+	<string name="tap_to_change">Tap To Change</string>
+	<string name="current">Current:</string>
+	<string name="cancel">Cancel</string>
+	<string name="ok">OK</string>
 
 </resources>

@@ -27,7 +27,7 @@ public class ResultsActivity extends ActionBarActivity
 			@Override
 			public void onClick(View view)
 			{
-				Intent intent = new Intent(activity, CourseStreamActivity.class);
+				Intent intent = new Intent(activity, BuckCourse.class);
 				startActivity(intent);
 			}
 		});

@@ -126,7 +126,7 @@ public class NewPost extends ActionBarActivity
 			@Override
 			public void onClick(View v)
 			{
-				new PhotoDialog(context, captureUri);
+				//new PhotoDialog(context, captureUri);
 			}
 		});
 		LinearLayout linkLayout = (LinearLayout) findViewById(R.id.linkLayout);

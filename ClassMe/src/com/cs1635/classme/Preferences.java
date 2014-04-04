@@ -16,6 +16,7 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 
 public class Preferences extends PreferenceActivity
 {
@@ -70,7 +71,7 @@ public class Preferences extends PreferenceActivity
 				{
 					public boolean onPreferenceClick(Preference preference)
 					{
-						//new ProfilePictureDialog(context);
+						new ChangeProfilePictureDialog(getActivity());
 						return true;
 					}
 				});
@@ -129,5 +130,11 @@ public class Preferences extends PreferenceActivity
 
 			mNotificationManager.notify(100, builder.build());
 		}
+	}
+
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data)
+	{
+		Log.d("ClassMe", "here");
 	}
 }
