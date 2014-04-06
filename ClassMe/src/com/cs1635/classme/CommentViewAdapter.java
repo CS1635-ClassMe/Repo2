@@ -49,7 +49,11 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>
 	public View getView(final int position, View convertView, ViewGroup parent)
 	{
 		LayoutInflater vi = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		View v = vi.inflate(R.layout.comment, null);
+		View v;
+		if(convertView != null)
+			v = convertView;
+		else
+			v = vi.inflate(R.layout.comment, null);
 
 		TextView content = (TextView) v.findViewById(R.id.content);
 		TextView username = (TextView) v.findViewById(R.id.from);
@@ -131,7 +135,7 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>
 		if(comments.get(position).getLastEdit() != null)
 			timeString += "(last edit - " + String.valueOf(android.text.format.DateFormat.format(editFormatString, comments.get(position).getLastEdit())) + ")";
 		time.setText(timeString);
-		UrlImageViewHelper.setUrlDrawable(profileImage, "https://studentclassnet.appspot.com/addendum/getImage?username=" + comments.get(position).getUsername());
+		UrlImageViewHelper.setUrlDrawable(profileImage, "https://classmeapp.appspot.com/fileRequest?username=" + comments.get(position).getUsername());
 
 		if(comments.get(position).getAttachmentKeys().size() > 0)
 		{
@@ -143,7 +147,7 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>
 				String key = comments.get(position).getAttachmentKeys().get(i);
 				String name = comments.get(position).getAttachmentNames().get(i);
 				TextView attachment = new TextView(context);
-				attachment.setText(Html.fromHtml("<a href=\"https://studentclassnet.appspot.com/addendum/getImage?key=" + key + "\">" + name + "</a>"));
+				attachment.setText(Html.fromHtml("<a href=\"https://classmeapp.appspot.com/fileRequest?key=" + key + "\">" + name + "</a>"));
 				attachment.setMovementMethod(LinkMovementMethod.getInstance());
 				attachmentsLayout.addView(attachment);
 			}
@@ -166,15 +170,14 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>
 		{
 			Gson gson = new Gson();
 			String comment = gson.toJson(params[0]);
-			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(3);
 			nameValuePairs.add(new BasicNameValuePair("comment", comment));
 			nameValuePairs.add(new BasicNameValuePair("postKey", post.getPostKey()));
-			nameValuePairs.add(new BasicNameValuePair("accepter", prefs.getString("loggedIn", "")));
 			nameValuePairs.add(new BasicNameValuePair("newValue", String.valueOf(newValue)));
 
 			try
 			{
-				AppEngineClient.makeRequest("/addendum/acceptComment", nameValuePairs);
+				AppEngineClient.makeRequest("/acceptComment", nameValuePairs);
 			}
 			catch(Exception ex)
 			{

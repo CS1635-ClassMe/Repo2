@@ -11,8 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.shared.TextMessage;
 
 import java.util.ArrayList;
@@ -72,9 +70,7 @@ public class ChatListAdapter extends ArrayAdapter<TextMessage>
 		username.setText(messages.get(position).getFrom());
 
 		String url = "http://classmeapp.appspot.com/fileRequest?username="+messages.get(position).getFrom();
-		ImageLoader loader = ImageLoader.getInstance();
-		loader.init(new ImageLoaderConfiguration.Builder(context).build());
-		loader.displayImage(url, userImage);
+		UrlImageViewHelper.setUrlDrawable(userImage,url,R.drawable.user_icon,10000);
 
 		return  v;
 	}

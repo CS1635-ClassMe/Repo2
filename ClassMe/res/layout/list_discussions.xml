@@ -1,23 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="fill_parent">
+				android:orientation="vertical"
+				android:layout_width="match_parent"
+				android:layout_height="fill_parent">
 
-    <TextView android:id="@+id/tview2"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/list_discussions_existing"
-        android:textSize="32dp"
-        />
+	<TextView
+		android:id="@+id/tview2"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:text="@string/list_discussions_existing"
+		android:textSize="32dp"
+		/>
 
-    <ListView android:id="@+id/list_of_discussions"
-        android:background="@color/tan"
-        android:layout_width="match_parent"
-        android:layout_height="fill_parent"
-        android:padding="10dp"
-        android:layout_below="@id/tview2"
-        android:layout_alignParentBottom="true"/>
+	<TextView
+		android:id="@android:id/empty"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_centerInParent="true"
+		android:text="No Discussions To Show"
+		android:visibility="gone"/>
+
+	<ListView
+		android:id="@+id/list_of_discussions"
+		android:background="@color/tan"
+		android:layout_width="match_parent"
+		android:layout_height="fill_parent"
+		android:padding="10dp"
+		android:layout_below="@id/tview2"
+		android:layout_alignParentBottom="true"/>
 
 </RelativeLayout>

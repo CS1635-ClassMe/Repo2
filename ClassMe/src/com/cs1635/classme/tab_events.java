@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,12 +29,13 @@ import java.util.List;
  */
 public class tab_events extends Fragment
 {
-
+	View rootView;
+	boolean doneTask = false;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
-		View rootView = inflater.inflate(R.layout.tab_events, container, false);
+		rootView = inflater.inflate(R.layout.tab_events, container, false);
 
 		Button createEvent = (Button) rootView.findViewById(R.id.tab_events_new);
 		createEvent.setOnClickListener(new View.OnClickListener()
@@ -43,29 +43,41 @@ public class tab_events extends Fragment
 			@Override
 			public void onClick(View v)
 			{
-                BuckCourse.rememberPosition(BuckCourse.Position.EVENTS);
+				BuckCourse.rememberPosition(BuckCourse.Position.EVENTS);
 
-                startActivity(new Intent(getActivity(), CreateEventActivity.class));
+				startActivity(new Intent(getActivity(), CreateEventActivity.class));
 			}
 		});
 
-		populateListView(rootView);
+		if(!doneTask)
+			populateListView(rootView);
 
 		ListView lv = (ListView) rootView.findViewById(R.id.list_of_events);
-
 		lv.setAdapter(new UpcomingEventsAdapter(getActivity(), 42, new ArrayList<Event>()));
 
 		return rootView;
+	}
+
+	@Override
+	public void setUserVisibleHint(boolean isVisibleToUser)
+	{
+		super.setUserVisibleHint(isVisibleToUser);
+		if(isVisibleToUser)
+		{
+			if(rootView != null)
+			{
+				populateListView(rootView);
+				doneTask = true;
+			}
+		}
 	}
 
 	private void populateListView(View rootView)
 	{
 		final ListView listView = (ListView) rootView.findViewById(R.id.list_of_events);
 
-
 		new AsyncTask<Void, Void, ArrayList<Event>>()
 		{
-
 			@Override
 			protected ArrayList<Event> doInBackground(Void... voidsss)
 			{
@@ -77,12 +89,8 @@ public class tab_events extends Fragment
 					response = AppEngineClient.makeRequest("/listEvents", params);
 					//parse
 					Gson gson = new Gson();
-					Type listOfEvents = new TypeToken<ArrayList<Event>>()
-					{
-					}.getType();
+					Type listOfEvents = new TypeToken<ArrayList<Event>>(){}.getType();
 					String entityString = EntityUtils.toString(response.getEntity());
-
-					Log.d("PRINT entity", entityString);
 
 					return gson.fromJson(entityString, listOfEvents); //Return listy!
 				}

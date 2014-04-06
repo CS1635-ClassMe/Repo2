@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -13,6 +12,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
@@ -21,6 +21,8 @@ import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.v4.app.NotificationCompat;
 import android.widget.Toast;
+
+import java.io.File;
 
 public class Preferences extends PreferenceActivity
 {
@@ -140,24 +142,17 @@ public class Preferences extends PreferenceActivity
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data)
 	{
-		Uri fileUri = null;
-		ContentValues values = new ContentValues();
-		values.put(MediaStore.Images.Media.TITLE, "temp.jpg");
-		Uri captureUri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-
 		if(resultCode != Activity.RESULT_OK)
 		{
 			Toast.makeText(this, "Unable to get image", Toast.LENGTH_SHORT).show();
 			return;
 		}
-		if(requestCode == 0) //if camera
-			fileUri = captureUri;
-		else //if photo chooser
-			fileUri = data.getData();
 
 		ChangeProfilePictureDialog dialog = new ChangeProfilePictureDialog(this);
-		dialog.filePath = getRealPathFromURI(fileUri);
-		dialog.fileUri = fileUri;
+		if(requestCode == 0)
+			dialog.filePath = new File(Environment.getExternalStorageDirectory() + "/DCIM/", "temp.png").getPath();
+		else
+			dialog.filePath = getRealPathFromURI(data.getData());
 		dialog.setImage();
 	}
 

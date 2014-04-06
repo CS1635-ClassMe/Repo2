@@ -1,12 +1,23 @@
 package com.cs1635.classme;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
+import android.text.Html;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.webkit.MimeTypeMap;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.apache.http.HttpEntity;
@@ -17,49 +28,67 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
+import org.apmem.tools.layouts.FlowLayout;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Created by Robert McDermot on 4/6/14.
+ */
 public class FileUploadTask extends AsyncTask<String, Void, String>
 {
 	ProgressDialog progressDialog;
-	//boolean isAttachment;
-	Context context;
-	boolean profileUpload = false;
+	boolean isAttachment, profileUpload = false;
+	Activity activity;
+	ArrayList<String> attachmentKeys, attachmentNames, deleteKeys;
+	FlowLayout attachmentsPanel;
+	EditText postText;
 
-	public FileUploadTask(Context c)
+	public FileUploadTask(boolean isAttachment, Activity activity, ArrayList<String> attachmentKeys, ArrayList<String> attachmentNames, ArrayList<String> deleteKeys, FlowLayout attachmentsPanel, EditText postText)
 	{
-		context = c;
+		this.isAttachment = isAttachment;
+		this.activity = activity;
+		this.attachmentKeys = attachmentKeys;
+		this.attachmentNames = attachmentNames;
+		this.deleteKeys = deleteKeys;
+		this.attachmentsPanel = attachmentsPanel;
+		this.postText = postText;
 	}
 
 	@Override
 	protected void onPreExecute()
 	{
-		progressDialog = ProgressDialog.show(context, "", "Uploading file to server, please wait...", true);
+		progressDialog = ProgressDialog.show(activity, "", "Uploading file to server, please wait...", true);
 	}
 
 	@Override
-	protected String doInBackground(String... filePath)
+	protected String doInBackground(String... arg0)
 	{
-		if(filePath[0] == null)
+		if(arg0[0] == null)
 			return null;
 
-		String resp = null;
+		String response = null;
 		String responseUrl = null;
 		try
 		{
-			SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
-			if(profileUpload)
-				nameValuePairs.add(new BasicNameValuePair("username",prefs.getString("loggedIn","")));
+			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 
 			// execute request
-			HttpResponse urlResponse = AppEngineClient.makeRequest("/fileUpload", nameValuePairs);
+			String url = "/fileUpload";
+			if(profileUpload)
+			{
+				SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
+				url += "?username=" + prefs.getString("loggedIn", "");
+			}
+			HttpResponse urlResponse = AppEngineClient.makeRequest(url, nameValuePairs);
 			HttpEntity entity = urlResponse.getEntity();
 			if(entity != null)
 			{
@@ -79,18 +108,22 @@ public class FileUploadTask extends AsyncTask<String, Void, String>
 			HttpClient httpclient = new DefaultHttpClient();
 			HttpPost httppost = new HttpPost(responseUrl);
 			MultipartEntity entity = new MultipartEntity();
-			File image = new File(filePath[0]);
-			String mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(MimeTypeMap.getFileExtensionFromUrl(filePath[0]));
+			File image = new File(arg0[0]);
+			String mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(MimeTypeMap.getFileExtensionFromUrl(arg0[0]));
 			entity.addPart("data", new FileBody(image, mimeType));
 			httppost.setEntity(entity);
-			HttpResponse response = httpclient.execute(httppost);
-			resp = EntityUtils.toString(response.getEntity());
+			response = EntityUtils.toString(httpclient.execute(httppost).getEntity());
+			if(isAttachment && !isCancelled())
+			{
+				attachmentNames.add(image.getName());
+				attachmentKeys.add(response);
+			}
 		}
 		catch(IOException e)
 		{
 			Log.e("ClassMe", "Error uploading file: " + e.getMessage());
 		}
-		return resp;
+		return response;
 	}
 
 	@Override
@@ -99,10 +132,39 @@ public class FileUploadTask extends AsyncTask<String, Void, String>
 		progressDialog.dismiss();
 		if(response != null)
 		{
-			Toast.makeText(context, "Successfully uploaded file.", Toast.LENGTH_SHORT).show();
-			//postText.setText(postText.getText() + "<img src=\"http://studentclassnet.appspot.com/addendum/getImage?key=" + response + "\">");
+			if(isAttachment)
+			{
+				LayoutInflater inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+				final View layout = inflater.inflate(R.layout.attachment, null);
+				final TextView name = (TextView) layout.findViewById(R.id.fileName);
+				name.setText(attachmentNames.get(attachmentNames.size() - 1));
+				ImageView delete = (ImageView) layout.findViewById(R.id.delete);
+				delete.setOnClickListener(new View.OnClickListener()
+				{
+					@Override
+					public void onClick(View v)
+					{
+						for(int i = 0; i < attachmentNames.size(); i++)
+						{
+							if(attachmentNames.get(i).equals(name.getText()))
+							{
+								attachmentNames.remove(i);
+								String key = attachmentKeys.remove(i);
+								attachmentsPanel.removeView(layout);
+								deleteKeys.add(key);
+							}
+						}
+					}
+				});
+				attachmentsPanel.addView(layout);
+			}
+			else if(!profileUpload)
+			{
+				String src = "<img src=\"http://classmeapp.appspot.com/fileRequest?key=" + response + "\">";
+				postText.setText(postText.getText().toString() + src);
+			}
 		}
 		else
-			Toast.makeText(context, "Upload error, please check your connection and try again.", Toast.LENGTH_SHORT).show();
+			Toast.makeText(activity, "Upload error, please check your connection and try again", Toast.LENGTH_SHORT).show();
 	}
 }

@@ -229,7 +229,7 @@ public class ChatActivity extends ActionBarActivity
 	 * Stores the registration ID and app versionCode in the application's
 	 * {@code SharedPreferences}.
 	 *
-	 * @param context application's context.
+	 * @param context application's activity.
 	 * @param regId   registration ID
 	 */
 	private void storeRegistrationId(Context context, String regId)

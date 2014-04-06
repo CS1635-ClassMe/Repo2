@@ -8,6 +8,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 
 public class BuckCourse extends ActionBarActivity implements ActionBar.TabListener
 {
@@ -17,9 +19,12 @@ public class BuckCourse extends ActionBarActivity implements ActionBar.TabListen
 	private String[] tabs = {"Discussions", "Recorded Lectures", "Class Notes", "Events"};
 	public static String classId = "CS1635";
 
-    private static int remembered_tab;
+	private static int remembered_tab;
 
-    public static enum Position {DISCUSS, LECTURE, NOTES, EVENTS}
+	public static enum Position
+	{
+		DISCUSS, LECTURE, NOTES, EVENTS
+	}
 
 	@TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
 	@Override
@@ -73,7 +78,7 @@ public class BuckCourse extends ActionBarActivity implements ActionBar.TabListen
 	public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction)
 	{
 		viewPager.setCurrentItem(tab.getPosition());
-    }
+	}
 
 	@Override
 	public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction)
@@ -87,44 +92,63 @@ public class BuckCourse extends ActionBarActivity implements ActionBar.TabListen
 
 	}
 
+	@Override
+	public void onResume()
+	{
+		super.onResume();
 
-    @Override
-    public void onResume(){
-        super.onResume();
+		viewPager.setCurrentItem(remembered_tab);
+	}
 
-        Log.i("buck1", "Current tab before setCurrentItem in onResume: "+remembered_tab );
+	public static void resetPosition()
+	{
+		remembered_tab = 0;
+	}
 
-        viewPager.setCurrentItem(remembered_tab);
-    }
+	public static void rememberPosition(Position position)
+	{
+		int pos;
 
-    public static void resetPosition(){
-        remembered_tab = 0;
-    }
+		switch(position)
+		{
+			case DISCUSS:
+				pos = 0;
+				break;
+			case LECTURE:
+				pos = 1;
+				break;
+			case NOTES:
+				pos = 2;
+				break;
+			case EVENTS:
+				pos = 3;
+				break;
+			default:
+				pos = 0;
+		}
 
-    public static void rememberPosition(Position position){
-        Log.i("buck1", "remembering tab: "+position );
-        int pos;
+		remembered_tab = pos;
+	}
 
-        switch(position){
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu)
+	{
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.buckcourse, menu);
+		return true;
+	}
 
-            case DISCUSS:
-                pos = 0;
-                break;
-            case LECTURE:
-                pos = 1;
-                break;
-            case NOTES:
-                pos = 2;
-                break;
-            case EVENTS:
-                pos = 3;
-                break;
-            default:
-                pos = 0;
-
-        }
-
-        remembered_tab = pos;
-    }
-
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
+		// Handle action bar item clicks here. The action bar will
+		// automatically handle clicks on the Home/Up button, so long
+		// as you specify a parent activity in AndroidManifest.xml.
+		int id = item.getItemId();
+		if(id == R.id.action_settings)
+		{
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
 }

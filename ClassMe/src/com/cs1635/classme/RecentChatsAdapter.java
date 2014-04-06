@@ -14,8 +14,6 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.shared.TextMessage;
 
 import java.util.ArrayList;
@@ -50,9 +48,7 @@ public class RecentChatsAdapter extends ArrayAdapter<ArrayList<TextMessage>>
 		ImageView userImage = (ImageView) v.findViewById(R.id.userImage);
 
 		String url = "http://classmeapp.appspot.com/fileRequest?username="+recentChats.get(position).get(recentChats.get(position).size()-1).getFrom();
-		ImageLoader loader = ImageLoader.getInstance();
-		loader.init(new ImageLoaderConfiguration.Builder(context).build());
-		loader.displayImage(url, userImage);
+		UrlImageViewHelper.setUrlDrawable(userImage,url,R.drawable.user_icon,10000);
 
 		String nameString = "";
 		for(String username : recentChats.get(position).get(0).getUsernames())

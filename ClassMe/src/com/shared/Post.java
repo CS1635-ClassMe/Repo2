@@ -8,8 +8,8 @@ import java.util.Date;
 public class Post implements Serializable
 {
 	private static final long serialVersionUID = -6112430428377944014L;
-	
-	private String postTitle, postContent, username, streamLevel, postKey, reportReason;
+
+	private String postTitle, postContent, username, classId, postKey, reportReason;
 	private Date postTime, lastEdit;
 	private int upvotes, downvotes;
 	private double score;
@@ -46,7 +46,7 @@ public class Post implements Serializable
 			return(post2.getPostTime().compareTo(post1.getPostTime()));
 		}
 	};
-	
+
 	public static Comparator<Post> PostScoreComparator = new Comparator<Post>()
 	{
 		@Override
@@ -116,14 +116,14 @@ public class Post implements Serializable
 		this.postTime = postTime;
 	}
 
-	public String getStreamLevel()
+	public String getClassId()
 	{
-		return streamLevel;
+		return classId;
 	}
 
-	public void setStreamLevel(String streamLevel)
+	public void setClassId(String classId)
 	{
-		this.streamLevel = streamLevel;
+		this.classId = classId;
 	}
 
 	public double getScore()

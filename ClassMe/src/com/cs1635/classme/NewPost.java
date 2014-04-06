@@ -126,7 +126,7 @@ public class NewPost extends ActionBarActivity
 			@Override
 			public void onClick(View v)
 			{
-				//new PhotoDialog(context, captureUri);
+				//new PhotoDialog(activity, captureUri);
 			}
 		});
 		LinearLayout linkLayout = (LinearLayout) findViewById(R.id.linkLayout);
@@ -163,10 +163,10 @@ public class NewPost extends ActionBarActivity
 		else
 		{
 			ArrayList<String> course = new ArrayList<String>();
-			if(editPost.getStreamLevel().equals("all"))
+			if(editPost.getClassId().equals("all"))
 				course.add("Everyone");
 			else
-				course.add(editPost.getStreamLevel());
+				course.add(editPost.getClassId());
 			adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, course);
 		}
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
