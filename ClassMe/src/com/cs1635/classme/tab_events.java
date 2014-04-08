@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,10 +59,18 @@ public class tab_events extends Fragment
 	}
 
 	@Override
-	public void setUserVisibleHint(boolean isVisibleToUser)
+	public void onResume()
 	{
-		super.setUserVisibleHint(isVisibleToUser);
-		if(isVisibleToUser)
+		super.onResume();
+		Log.d("ClassMe", "events onResume()");
+		populateListView(rootView);
+	}
+
+	@Override
+	public void setMenuVisibility(boolean menuVisibility)
+	{
+		super.setMenuVisibility(menuVisibility);
+		if(menuVisibility)
 		{
 			if(rootView != null)
 			{

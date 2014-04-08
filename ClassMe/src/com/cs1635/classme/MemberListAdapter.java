@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
-import com.shared.TextMessage;
 
 import java.util.ArrayList;
 import java.util.Random;
