@@ -6,12 +6,17 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 
 /**
  * Created by BuckYoung on 3/29/14.
  */
-public class tab_lecture extends Fragment {
+public class tab_lecture extends Fragment
+{
+	ListView postList;
+	boolean doneTask = false;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -30,6 +35,24 @@ public class tab_lecture extends Fragment {
                 }
         );
 
-        return rootView;
-    }
+		postList = (ListView) rootView.findViewById(R.id.list_of_lectures);
+		if(!doneTask)
+			new GetPostsTask(getActivity(),null,postList).execute(BuckCourse.classId,"Lecture","Popular");
+
+		return rootView;
+	}
+
+	@Override
+	public void setUserVisibleHint(boolean isVisibleToUser)
+	{
+		super.setUserVisibleHint(isVisibleToUser);
+		if(isVisibleToUser)
+		{
+			if(postList != null)
+			{
+				new GetPostsTask(getActivity(), null, postList).execute(BuckCourse.classId, "Lecture", "Popular");
+				doneTask = true;
+			}
+		}
+	}
 }

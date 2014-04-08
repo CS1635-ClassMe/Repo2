@@ -1,17 +1,12 @@
 package com.cs1635.classme;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.Toast;
+import android.widget.ListView;
 
 
 /**
@@ -19,9 +14,8 @@ import android.widget.Toast;
  */
 public class tab_notes extends Fragment
 {
-	ImageView preview;
-	tab_notes fragment = this;
-	Uri captureUri, fileUri;
+	ListView postList;
+	boolean doneTask = false;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -40,58 +34,24 @@ public class tab_notes extends Fragment
                 }
         );
 
-	/*preview = (ImageView) rootView.findViewById(R.id.preview);
+		postList = (ListView) rootView.findViewById(R.id.list_of_notes);
+		if(!doneTask)
+			new GetPostsTask(getActivity(),null,postList).execute(BuckCourse.classId,"Note","Popular");
 
-		ContentValues values = new ContentValues();
-		values.put(MediaStore.Images.Media.TITLE, "temp.jpg");
-		captureUri = getActivity().getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-
-		View attachLayout = rootView.findViewById(R.id.attachLayout);
-		attachLayout.setOnClickListener(new View.OnClickListener()
-		{
-			@Override
-			public void onClick(View v)
-			{
-				new PhotoDialog(fragment, captureUri);
-			}
-		});
-
-		View shareLayout = rootView.findViewById(R.id.shareLayout);
-		shareLayout.setOnClickListener(new View.OnClickListener()
-		{
-			@Override
-			public void onClick(View v)
-			{
-				new FileUploadTask(getActivity()).execute(getRealPathFromURI(fileUri));
-			}
-		});
-*/
 		return rootView;
 	}
 
 	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent)
+	public void setUserVisibleHint(boolean isVisibleToUser)
 	{
-		super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
-
-		if(resultCode != Activity.RESULT_OK)
+		super.setUserVisibleHint(isVisibleToUser);
+		if(isVisibleToUser)
 		{
-			Toast.makeText(getActivity(), "Unable to get image", Toast.LENGTH_SHORT).show();
-			return;
+			if(postList != null)
+			{
+				new GetPostsTask(getActivity(), null, postList).execute(BuckCourse.classId, "Note", "Popular");
+				doneTask = true;
+			}
 		}
-		if(requestCode == 0) //if camera
-			fileUri = captureUri;
-		else if(resultCode == Activity.RESULT_OK) //if photo chooser
-			fileUri = imageReturnedIntent.getData();
-
-		preview.setImageURI(fileUri);
-	}
-
-	public String getRealPathFromURI(Uri uri)
-	{
-		Cursor cursor = getActivity().getContentResolver().query(uri, null, null, null, null);
-		cursor.moveToFirst();
-		int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
-		return cursor.getString(idx);
 	}
 }

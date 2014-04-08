@@ -109,8 +109,7 @@ public class FileUploadTask extends AsyncTask<String, Void, String>
 			HttpPost httppost = new HttpPost(responseUrl);
 			MultipartEntity entity = new MultipartEntity();
 			File image = new File(arg0[0]);
-			String mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(MimeTypeMap.getFileExtensionFromUrl(arg0[0]));
-			entity.addPart("data", new FileBody(image, mimeType));
+			entity.addPart("data", new FileBody(image));
 			httppost.setEntity(entity);
 			response = EntityUtils.toString(httpclient.execute(httppost).getEntity());
 			if(isAttachment && !isCancelled())

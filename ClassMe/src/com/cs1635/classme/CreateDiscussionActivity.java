@@ -83,18 +83,10 @@ public class CreateDiscussionActivity extends ActionBarActivity
 				else
 					shareLayout.startAnimation(alphaDown);
 			}
-
 			@Override
-			public void onTextChanged(CharSequence s, int start, int before, int count)
-			{
-
-			}
-
+			public void onTextChanged(CharSequence s, int start, int before, int count){}
 			@Override
-			public void afterTextChanged(Editable s)
-			{
-
-			}
+			public void afterTextChanged(Editable s){}
 		};
 		postText.addTextChangedListener(textWatcher);
 		postTitle.addTextChangedListener(textWatcher);
@@ -189,14 +181,14 @@ public class CreateDiscussionActivity extends ActionBarActivity
 					editPost.setPostTitle(postTitle.getText().toString());
 					editPost.setAttachmentKeys(attachmentKeys);
 					editPost.setAttachmentNames(attachmentNames);
-					new EditPostTask(activity,attachmentKeys,attachmentNames,deleteKeys,editPost).execute();
+					new EditPostTask(activity, attachmentKeys, attachmentNames, deleteKeys, editPost).execute();
 				}
 				else
 				{
 					if(postText.getText().length() > 0 && postTitle.getText().length() > 0)
 					{
 						SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
-						new PostUploadTask(activity,attachmentKeys,attachmentNames,deleteKeys).execute(postTitle.getText().toString(),postText.getText().toString().replaceAll("\n", "<br>"), prefs.getString("loggedIn",""), BuckCourse.classId, "Discussion");
+						new PostUploadTask(activity, attachmentKeys, attachmentNames, deleteKeys).execute(postTitle.getText().toString(), postText.getText().toString().replaceAll("\n", "<br>"), prefs.getString("loggedIn", ""), BuckCourse.classId, "Discussion");
 					}
 				}
 			}
@@ -244,23 +236,38 @@ public class CreateDiscussionActivity extends ActionBarActivity
 
 		if(resultCode != Activity.RESULT_OK)
 		{
-			Toast.makeText(this, "Unable to get image", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, "Unable to get file", Toast.LENGTH_SHORT).show();
 			return;
 		}
 
 		if(requestCode == 0)
 			filePath = new File(Environment.getExternalStorageDirectory() + "/DCIM/", "temp.png").getPath();
 		else
-			filePath = getRealPathFromURI(data.getData());
+		{
+			filePath = getFilePathFromContentUri(data.getData());
+		}
 
-		new FileUploadTask(requestCode == 3,activity,attachmentKeys,attachmentNames,deleteKeys,attachmentsPanel,postText).execute(filePath);
+		new FileUploadTask(requestCode == 3, activity, attachmentKeys, attachmentNames, deleteKeys, attachmentsPanel, postText).execute(filePath);
 	}
 
-	public String getRealPathFromURI(Uri uri)
+	private String getFilePathFromContentUri(Uri uri)
 	{
-		Cursor cursor = getContentResolver().query(uri, null, null, null, null);
-		cursor.moveToFirst();
-		int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
-		return cursor.getString(idx);
+		String filePath;
+		try
+		{
+			String[] filePathColumn = {MediaStore.Files.FileColumns.DATA};
+
+			Cursor cursor = getContentResolver().query(uri, filePathColumn, null, null, null);
+			cursor.moveToFirst();
+
+			int columnIndex = cursor.getColumnIndexOrThrow(filePathColumn[0]);
+			filePath = cursor.getString(columnIndex);
+			cursor.close();
+		}
+		catch(Exception e)
+		{
+			filePath = uri.getPath();
+		}
+		return filePath;
 	}
 }

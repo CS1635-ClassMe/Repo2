@@ -79,7 +79,7 @@ public class tab_events extends Fragment
 		new AsyncTask<Void, Void, ArrayList<Event>>()
 		{
 			@Override
-			protected ArrayList<Event> doInBackground(Void... voidsss)
+			protected ArrayList<Event> doInBackground(Void... args)
 			{
 				List<NameValuePair> params = new ArrayList<NameValuePair>(1);
 				params.add(new BasicNameValuePair("classId", BuckCourse.classId));
@@ -92,7 +92,7 @@ public class tab_events extends Fragment
 					Type listOfEvents = new TypeToken<ArrayList<Event>>(){}.getType();
 					String entityString = EntityUtils.toString(response.getEntity());
 
-					return gson.fromJson(entityString, listOfEvents); //Return listy!
+					return gson.fromJson(entityString, listOfEvents);
 				}
 				catch(Exception e)
 				{
@@ -103,13 +103,19 @@ public class tab_events extends Fragment
 			}
 
 			@Override
-			protected void onPostExecute(ArrayList<Event> listy)
+			protected void onPostExecute(ArrayList<Event> events)
 			{
-				if(listy != null)
+				if(events != null)
 				{
-					UpcomingEventsAdapter adapt = (UpcomingEventsAdapter) listView.getAdapter();
-					adapt.addAll(listy);
-					adapt.notifyDataSetChanged();
+					if(listView.getAdapter() != null)
+					{
+						UpcomingEventsAdapter adapter = (UpcomingEventsAdapter) listView.getAdapter();
+						adapter.clear();
+						adapter.addAll(events);
+						adapter.notifyDataSetChanged();
+					}
+					else
+						listView.setAdapter(new UpcomingEventsAdapter(getActivity(), 42, events));
 				}
 			}
 
