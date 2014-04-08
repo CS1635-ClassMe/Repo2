@@ -113,7 +113,14 @@ public class GetPostsTask extends AsyncTask<String, Void, ArrayList<Post>>
 					intent.putExtras(bundle);
 					context.startActivity(intent);
 
-                    //BUCK(posts.get(position)).get;
+                    String type = (posts.get(position)).getType(); // Discussion Lecture Note
+                    if (type.equalsIgnoreCase("discussion")){
+                        BuckCourse.rememberPosition(BuckCourse.Position.DISCUSS);
+                    } else if (type.equalsIgnoreCase("lecture")){
+                        BuckCourse.rememberPosition(BuckCourse.Position.LECTURE);
+                    } else if (type.equalsIgnoreCase("note")){
+                        BuckCourse.rememberPosition(BuckCourse.Position.NOTES);
+                    }
 				}
 			});
 		}
