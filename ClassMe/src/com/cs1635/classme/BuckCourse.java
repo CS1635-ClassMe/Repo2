@@ -1,15 +1,31 @@
 package com.cs1635.classme;
 
 import android.annotation.TargetApi;
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.shared.User;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BuckCourse extends ActionBarActivity implements ActionBar.TabListener
 {
@@ -18,8 +34,10 @@ public class BuckCourse extends ActionBarActivity implements ActionBar.TabListen
 	// Tab titles
 	private String[] tabs = {"Discussions", "Recorded Lectures", "Class Notes", "Events"};
 	public static String classId = "CS1635";
-
 	private static int remembered_tab;
+	SharedPreferences prefs;
+
+	MenuItem joinClass, leaveClass;
 
 	public static enum Position
 	{
@@ -32,6 +50,8 @@ public class BuckCourse extends ActionBarActivity implements ActionBar.TabListen
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_buck_course);
+
+		prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
 		// Initilization
 		viewPager = (ViewPager) findViewById(R.id.pager);
@@ -135,6 +155,20 @@ public class BuckCourse extends ActionBarActivity implements ActionBar.TabListen
 	{
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.buckcourse, menu);
+		Gson gson = new Gson();
+		User user = gson.fromJson(prefs.getString("userObject",""), User.class);
+		joinClass = menu.findItem(R.id.joinClass);
+		leaveClass = menu.findItem(R.id.leaveClass);
+		if(user.getCourseList() != null && user.getCourseList().contains(classId)) //we're already a member
+		{
+			joinClass.setVisible(false);
+			leaveClass.setVisible(true);
+		}
+		else
+		{
+			joinClass.setVisible(true);
+			leaveClass.setVisible(false);
+		}
 		return true;
 	}
 
@@ -145,10 +179,107 @@ public class BuckCourse extends ActionBarActivity implements ActionBar.TabListen
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
-		if(id == R.id.action_settings)
+		if(id == R.id.listMembers)
 		{
+			new GetMembersTask().execute();
+			return true;
+		}
+		if(id == R.id.joinClass || id == R.id.leaveClass)
+		{
+			new ToggleClassTask().execute();
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	private class ToggleClassTask extends AsyncTask<Void,Void,String>
+	{
+		@Override
+		protected String doInBackground(Void... params)
+		{
+			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+			nameValuePairs.add(new BasicNameValuePair("username", prefs.getString("loggedIn","")));
+			nameValuePairs.add(new BasicNameValuePair("id", classId));
+
+			try
+			{
+				HttpResponse urlResponse = AppEngineClient.makeRequest("/toggleClass", nameValuePairs);
+				String response = EntityUtils.toString(urlResponse.getEntity());
+				return response;
+			}
+			catch(Exception ex)
+			{
+				return null;
+			}
+		}
+
+		@Override
+		protected void onPostExecute(String response)
+		{
+			if(response.equals("success"))
+			{
+				Gson gson = new Gson();
+				User user = gson.fromJson(prefs.getString("userObject",""),User.class);
+
+				if(user.getCourseList().contains(classId))
+				{
+					user.getCourseList().remove(classId);
+					joinClass.setVisible(true);
+					leaveClass.setVisible(false);
+				}
+				else
+				{
+					user.getCourseList().add(classId);
+					joinClass.setVisible(false);
+					leaveClass.setVisible(true);
+				}
+
+				SharedPreferences.Editor edit = prefs.edit();
+				edit.putString("userObject",gson.toJson(user));
+				edit.apply();
+			}
+			else
+			{
+				Toast.makeText(BuckCourse.this,"Unable to contact server, please try again later",Toast.LENGTH_SHORT).show();
+			}
+		}
+	}
+
+	private class GetMembersTask extends AsyncTask<Void,Void,ArrayList<String>>
+	{
+		@Override
+		protected ArrayList<String> doInBackground(Void... params)
+		{
+			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
+			nameValuePairs.add(new BasicNameValuePair("id", classId));
+
+			try
+			{
+				HttpResponse urlResponse = AppEngineClient.makeRequest("/listMembers", nameValuePairs);
+				String response = EntityUtils.toString(urlResponse.getEntity());
+				Gson gson = new Gson();
+				Type listOfStrings = new TypeToken<ArrayList<String>>(){}.getType();
+				ArrayList<String> members = gson.fromJson(response,listOfStrings);
+				return members;
+			}
+			catch(Exception ex)
+			{
+				return null;
+			}
+		}
+
+		@Override
+		protected void onPostExecute(ArrayList<String> members)
+		{
+			if(members != null)
+			{
+				if(members.size() > 0)
+					new ListMembersDialog(BuckCourse.this, members);
+				else
+					Toast.makeText(BuckCourse.this,"No current members of this class.", Toast.LENGTH_SHORT).show();
+			}
+			else
+				Toast.makeText(BuckCourse.this,"Could not get list of members from server.", Toast.LENGTH_SHORT).show();
+		}
 	}
 }

@@ -67,7 +67,7 @@ public class PostViewAdapter extends ArrayAdapter<Post>
 		if(posts.get(position).getLastEdit() != null)
 			timeString += "(last edit - " + String.valueOf(android.text.format.DateFormat.format(editFormatString, posts.get(position).getLastEdit())) + ")";
 		time.setText(timeString);
-		UrlImageViewHelper.setUrlDrawable(profileImage, "https://classmeapp.appspot.com/fileRequest?username="+posts.get(position).getUsername());
+		UrlImageViewHelper.setUrlDrawable(profileImage, "https://classmeapp.appspot.com/fileRequest?username="+posts.get(position).getUsername(), R.drawable.user_icon,10000);
 
 		numComments.setText(String.valueOf(posts.get(position).getComments().size()));
 
@@ -105,7 +105,7 @@ public class PostViewAdapter extends ArrayAdapter<Post>
 
 				View imageLayout = vi.inflate(R.layout.profile_image,null);
 				ImageView image = (ImageView)imageLayout.findViewById(R.id.image);
-				UrlImageViewHelper.setUrlDrawable(image,"https://classmeapp.appspot.com/fileRequest?username="+comments.get(i).getUsername());
+				UrlImageViewHelper.setUrlDrawable(image,"https://classmeapp.appspot.com/fileRequest?username="+comments.get(i).getUsername(),R.drawable.user_icon,10000);
 				profileImages.add(imageLayout);
 				commentProfileLayout.addView(imageLayout);
 			}

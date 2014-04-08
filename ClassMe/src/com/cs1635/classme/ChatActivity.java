@@ -72,6 +72,8 @@ public class ChatActivity extends ActionBarActivity
 			Type type = new TypeToken<ArrayList<TextMessage>>(){}.getType();
 			if(prefs.contains(id+"-history")) //do we have any previous history for this conversation?
 				messages = gson.fromJson(prefs.getString(id+"-history",null), type);
+			else
+				messages = new ArrayList<TextMessage>();
 
 			String title = "";
 			for(String username : usernames)
