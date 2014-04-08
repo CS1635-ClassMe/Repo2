@@ -51,6 +51,8 @@ public class CreateLectureActivity extends ActionBarActivity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.create_lecture);
 
+        BuckCourse.rememberPosition(BuckCourse.Position.LECTURE);
+
 		postTitle = (EditText) findViewById(R.id.post_title);
 		postText = (EditText) findViewById(R.id.post_text);
 

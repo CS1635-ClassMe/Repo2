@@ -8,7 +8,25 @@
     <color name="blue_dark">#176075</color>
 
     <color name="white">#eef9fc</color>
-    <color name="black">#030e11</color>
-    <color name="muted">#999</color>
+    <color name="muted">#777</color>
+
+
+    <color name="button_text_color">#fff</color>
+    <color name="black">#333</color>
+
+    <color name="discuss_background">#81E8E4</color>
+    <color name="lecture_background">#E8D69B</color>
+    <color name="note_background">#D1FFA8</color>
+    <color name="event_background">#C1B3FF</color>
+
+    <color name="discuss_button">#479B98</color>
+    <color name="lecture_button">#9B8C58</color>
+    <color name="note_button">#89B264</color>
+    <color name="event_button">#796BB2</color>
+
+    <color name="discuss_list_background">#A7FFFC</color>
+    <color name="lecture_list_background">#FFF1C4</color>
+    <color name="note_list_background">#DEFFC1</color>
+    <color name="event_list_background">#D6CCFF</color>
 
 </resources>

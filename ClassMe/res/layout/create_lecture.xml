@@ -7,7 +7,7 @@
     android:paddingRight="10dp"
     android:paddingTop="10dp"
     android:paddingBottom="10dp"
-    android:background="@color/background"
+    android:background="@color/lecture_background"
     >
 
     <TextView
@@ -25,7 +25,7 @@
         android:id="@+id/create_title"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/card"
+        android:background="@color/lecture_list_background"
         android:layout_marginBottom="5dp"
         android:layout_below="@id/top_title">
 
@@ -36,6 +36,7 @@
             android:inputType="textCapSentences"
             android:gravity="top|left"
             android:hint="Title"
+            android:textColorHint="@color/black"
             android:lines="1"/>
 
     </LinearLayout>
@@ -43,7 +44,7 @@
     <LinearLayout android:id="@+id/create_description"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/card"
+        android:background="@color/lecture_list_background"
         android:layout_marginBottom="5dp"
         android:layout_below="@id/create_title">
 
@@ -54,6 +55,7 @@
             android:inputType="textCapSentences|textMultiLine"
             android:gravity="top|left"
             android:hint="Short Description of Attached Lecture"
+            android:textColorHint="@color/black"
             android:lines="3"/>
 
     </LinearLayout>
@@ -63,9 +65,9 @@
     <LinearLayout
         android:id="@+id/attachmentLayout"
         android:layout_width="fill_parent"
-        android:layout_height="80dp"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
-        android:background="@drawable/card"
+        android:background="@color/lecture_list_background"
         android:layout_below="@id/create_description"
         android:gravity="center">
 
@@ -84,11 +86,6 @@
             android:lines="4"
             />
 
-        <View
-            android:layout_width="1dp"
-            android:layout_height="45dp"
-            android:background="#ff979797"/>
-
 
         <LinearLayout
             android:layout_width="0dp"
@@ -97,6 +94,7 @@
             android:layout_weight="1"
             android:orientation="vertical"
             android:gravity="center"
+            android:background="@color/lecture_button"
             android:layout_marginRight="10dp">
 
             <ImageView
@@ -107,7 +105,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="File"/>
+                android:text="File"
+                android:textColor="@color/button_text_color"
+                android:textStyle="bold"
+               />
 
         </LinearLayout>
 
@@ -115,11 +116,12 @@
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:id="@+id/buttonLayout"
         android:layout_marginBottom="15dp"
-        android:background="@color/tan"
+        android:background="@color/lecture_list_background"
         android:gravity="center"
+
         android:layout_below="@id/attachmentLayout">
 
         <LinearLayout
@@ -128,6 +130,7 @@
             android:gravity="center"
             android:id="@+id/cancelLayout"
             android:layout_marginRight="5dp"
+            android:background="@color/lecture_button"
             android:layout_weight="1">
 
             <ImageView
@@ -138,21 +141,19 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
+                android:textColor="@color/button_text_color"
+                android:textStyle="bold"
+                android:textSize="26sp"
                 android:text="Cancel"/>
 
         </LinearLayout>
-
-        <View
-            android:layout_width="1dp"
-            android:layout_height="wrap_content"
-            android:background="#ff979797"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:gravity="center"
             android:id="@+id/shareLayout"
+            android:background="@color/lecture_button"
             android:layout_marginLeft="5dp"
             android:layout_weight="1">
 
@@ -165,7 +166,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
+                android:textColor="@color/button_text_color"
+                android:textStyle="bold"
+                android:textSize="26sp"
                 android:text="Upload"
                 android:layout_weight="1"/>
 

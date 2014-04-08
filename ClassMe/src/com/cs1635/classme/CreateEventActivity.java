@@ -42,6 +42,8 @@ public class CreateEventActivity extends ActionBarActivity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.cal_create_event);
 
+        BuckCourse.rememberPosition(BuckCourse.Position.EVENTS);
+
 		final DatePickerDialog datePickerDialog = DatePickerDialog.newInstance(this, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), false);
 		final TimePickerDialog timePickerDialog = TimePickerDialog.newInstance(this, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), false, false);
 

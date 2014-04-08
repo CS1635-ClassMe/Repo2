@@ -112,6 +112,8 @@ public class GetPostsTask extends AsyncTask<String, Void, ArrayList<Post>>
 					bundle.putString("post", gson.toJson(posts.get(position)));
 					intent.putExtras(bundle);
 					context.startActivity(intent);
+
+                    //BUCK(posts.get(position)).get;
 				}
 			});
 		}
