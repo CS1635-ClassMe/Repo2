@@ -51,6 +51,8 @@ public class CreateNoteActivity extends ActionBarActivity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.create_note);
 
+        BuckCourse.rememberPosition(BuckCourse.Position.NOTES);
+
 		postTitle = (EditText) findViewById(R.id.post_title);
 		postText = (EditText) findViewById(R.id.post_text);
 

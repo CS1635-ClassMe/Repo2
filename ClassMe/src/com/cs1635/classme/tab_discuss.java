@@ -3,7 +3,6 @@ package com.cs1635.classme;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,8 +29,6 @@ public class tab_discuss extends Fragment
 					@Override
 					public void onClick(View view)
 					{
-
-						BuckCourse.rememberPosition(BuckCourse.Position.DISCUSS);
 
 						Intent intent = new Intent(getActivity(), CreateDiscussionActivity.class);
 						startActivity(intent);

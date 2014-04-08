@@ -27,7 +27,6 @@ public class tab_notes extends Fragment
                     @Override
                     public void onClick(View view) {
 
-                        BuckCourse.rememberPosition(BuckCourse.Position.NOTES);
                         Intent intent = new Intent(getActivity(), CreateNoteActivity.class);
                         startActivity(intent);
                     }

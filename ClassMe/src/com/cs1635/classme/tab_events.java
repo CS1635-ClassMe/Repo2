@@ -43,7 +43,6 @@ public class tab_events extends Fragment
 			@Override
 			public void onClick(View v)
 			{
-				BuckCourse.rememberPosition(BuckCourse.Position.EVENTS);
 
 				startActivity(new Intent(getActivity(), CreateEventActivity.class));
 			}

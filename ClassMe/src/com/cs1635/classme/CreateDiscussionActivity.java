@@ -51,6 +51,8 @@ public class CreateDiscussionActivity extends ActionBarActivity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.create_discussion);
 
+        BuckCourse.rememberPosition(BuckCourse.Position.DISCUSS);
+
 		postTitle = (EditText) findViewById(R.id.post_title);
 		postText = (EditText) findViewById(R.id.post_text);
 

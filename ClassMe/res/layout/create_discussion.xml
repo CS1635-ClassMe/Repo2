@@ -7,7 +7,7 @@
     android:paddingRight="10dp"
     android:paddingTop="10dp"
     android:paddingBottom="10dp"
-    android:background="@color/background"
+    android:background="@color/discuss_background"
     >
 
     <TextView
@@ -25,7 +25,8 @@
         android:id="@+id/create_title"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/card"
+        android:background="@color/discuss_list_background"
+
         android:layout_marginBottom="5dp"
         android:layout_below="@id/top_title">
 
@@ -36,6 +37,7 @@
             android:inputType="textCapSentences"
             android:gravity="top|left"
             android:hint="Title"
+            android:textColorHint="@color/black"
             android:lines="1"/>
 
     </LinearLayout>
@@ -43,7 +45,7 @@
     <LinearLayout android:id="@+id/create_description"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/card"
+        android:background="@color/discuss_list_background"
         android:layout_marginBottom="5dp"
         android:layout_below="@id/create_title">
 
@@ -54,16 +56,17 @@
             android:inputType="textCapSentences|textMultiLine"
             android:gravity="top|left"
             android:hint="Questions or Comments"
+            android:textColorHint="@color/black"
             android:lines="4"/>
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:id="@+id/buttonLayout"
         android:layout_marginBottom="5dp"
-        android:background="@color/tan"
+        android:background="@color/discuss_list_background"
         android:gravity="center"
         android:layout_below="@id/create_description">
 
@@ -74,6 +77,7 @@
             android:layout_height="fill_parent"
             android:gravity="center"
             android:id="@+id/cancelLayout"
+            android:background="@color/discuss_button"
             android:layout_marginRight="5dp"
             android:layout_weight="1">
 
@@ -85,21 +89,19 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
+                android:textColor="@color/button_text_color"
+                android:textSize="26dp"
+                android:textStyle="bold"
                 android:text="Cancel"/>
 
         </LinearLayout>
-
-        <View
-            android:layout_width="1dp"
-            android:layout_height="wrap_content"
-            android:background="#ff979797"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:gravity="center"
             android:id="@+id/shareLayout"
+            android:background="@color/discuss_button"
             android:layout_marginLeft="5dp"
             android:layout_weight="1">
 
@@ -112,8 +114,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
+                android:textColor="@color/button_text_color"
                 android:text="Create"
+                android:textSize="26dp"
+                android:textStyle="bold"
                 android:layout_weight="1"/>
 
         </LinearLayout>
@@ -134,8 +138,8 @@
     <LinearLayout
         android:id="@+id/attachmentLayout"
         android:layout_width="fill_parent"
-        android:layout_height="80dp"
-        android:background="@drawable/card"
+        android:layout_height="wrap_content"
+        android:background="@color/discuss_list_background"
         android:layout_below="@id/attatext"
         android:gravity="center">
 
@@ -144,6 +148,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/photoLayout"
+            android:background="@color/discuss_button"
             android:layout_weight="1"
             android:orientation="vertical"
             android:gravity="center"
@@ -157,19 +162,17 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/button_text_color"
+                android:textStyle="bold"
                 android:text="Photo"/>
 
         </LinearLayout>
-
-        <View
-            android:layout_width="1dp"
-            android:layout_height="45dp"
-            android:background="#ff979797"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/linkLayout"
+            android:background="@color/discuss_button"
             android:layout_weight="1"
             android:orientation="vertical"
             android:gravity="center"
@@ -183,14 +186,11 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/button_text_color"
+                android:textStyle="bold"
                 android:text="Link"/>
 
         </LinearLayout>
-
-        <View
-            android:layout_width="1dp"
-            android:layout_height="45dp"
-            android:background="#ff979797"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -198,6 +198,7 @@
             android:id="@+id/fileLayout"
             android:layout_weight="1"
             android:orientation="vertical"
+            android:background="@color/discuss_button"
             android:gravity="center"
             android:layout_marginRight="10dp">
 
@@ -209,6 +210,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/button_text_color"
+                android:textStyle="bold"
                 android:text="File"/>
 
         </LinearLayout>
