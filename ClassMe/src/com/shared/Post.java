@@ -9,7 +9,7 @@ public class Post implements Serializable
 {
 	private static final long serialVersionUID = -6112430428377944014L;
 
-	private String postTitle, postContent, username, classId, postKey, reportReason;
+	private String postTitle, postContent, username, classId, postKey, reportReason, type;
 	private Date postTime, lastEdit;
 	private int upvotes, downvotes;
 	private double score;
@@ -204,5 +204,15 @@ public class Post implements Serializable
 	public void setPostTitle(String postTitle)
 	{
 		this.postTitle = postTitle;
+	}
+
+	public String getType()
+	{
+		return type;
+	}
+
+	public void setType(String type)
+	{
+		this.type = type;
 	}
 }

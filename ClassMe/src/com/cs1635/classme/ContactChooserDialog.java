@@ -7,14 +7,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -25,6 +22,7 @@ import org.apmem.tools.layouts.FlowLayout;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class ContactChooserDialog extends AlertDialog
 {
@@ -94,17 +92,12 @@ public class ContactChooserDialog extends AlertDialog
 			@Override
 			public void onClick(DialogInterface dialog, int which)
 			{
-				String users = "";
-				for(String user : chosenContacts)
-					users += user + ",";
-				if(users.endsWith(","))
-					users = users.substring(0,users.length()-1);
-
 				Gson gson = new Gson();
+				Random rand = new Random();
 				Intent intent = new Intent(context,ChatActivity.class);
 				Bundle bundle = new Bundle();
 				bundle.putString("usernames",gson.toJson(chosenContacts));
-				bundle.putString("id",String.valueOf(users.hashCode()));
+				bundle.putString("id",String.valueOf(rand.nextInt(10000000)));
 				intent.putExtras(bundle);
 				context.startActivity(intent);
 			}

@@ -2,15 +2,22 @@
 
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:AddendumMobile="http://schemas.android.com/apk/res-auto">
+    xmlns:ClassMe="http://schemas.android.com/apk/res-auto">
 
 	<item
 		android:id="@+id/joinClass"
 		android:title="Join Class"
-		android:showAsAction="always|withText"/>
+		android:icon="@drawable/ic_action_add_group"
+		ClassMe:showAsAction="always"/>
 
-	<item android:id="@+id/action_settings"
-		  android:title="@string/action_settings"
-		  android:showAsAction="always" />
+	<item
+		android:id="@+id/listMembers"
+		android:title="List Members"
+		android:visible="true"/>
+
+	<item
+		android:id="@+id/leaveClass"
+		android:title="Leave Class"
+		android:visible="false"/>
 
 </menu>
