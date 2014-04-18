@@ -10,6 +10,9 @@ import android.support.v4.util.LruCache;
 import android.text.Html;
 import android.widget.TextView;
 
+import com.koushikdutta.async.future.FutureCallback;
+import com.koushikdutta.ion.Ion;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -31,49 +34,21 @@ public class MyImageGetter implements Html.ImageGetter
 	@Override
 	public Drawable getDrawable(String source)
 	{
-		Drawable d;
-		if((d = cache.get(source)) != null)
-			return d;
-
-		d = context.getResources().getDrawable(R.drawable.ic_launcher);
-		new LoadImage().execute(source, d);
-
-		return d;
-	}
-
-	class LoadImage extends AsyncTask<Object, Void, Bitmap> {
-
-		private Drawable mDrawable;
-		private String source;
-
-		@Override
-		protected Bitmap doInBackground(Object... params) {
-			source = (String) params[0];
-			mDrawable = (Drawable) params[1];
-			try {
-				InputStream is = new URL(source).openStream();
-				return BitmapFactory.decodeStream(is);
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			} catch (MalformedURLException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			return null;
-		}
-
-		@Override
-		protected void onPostExecute(Bitmap bitmap) {
-			if (bitmap != null) {
-				mDrawable = new BitmapDrawable(context.getResources(),bitmap);
-				mDrawable.setBounds(0, 0, bitmap.getWidth(), bitmap.getHeight());
-				cache.put(source,mDrawable);
+		final Drawable[] d = {context.getResources().getDrawable(R.drawable.ic_launcher)};
+		Ion.with(context).load(source).asBitmap().setCallback(new FutureCallback<Bitmap>()
+		{
+			@Override
+			public void onCompleted(Exception e, Bitmap result)
+			{
+				d[0] = new BitmapDrawable(context.getResources(),result);
+				d[0].setBounds(0, 0, result.getWidth(), result.getHeight());
 				// i don't know yet a better way to refresh TextView
 				// mTv.invalidate() doesn't work as expected
 				CharSequence t = textView.getText();
 				textView.setText(t);
 			}
-		}
+		});
+
+		return d[0];
 	}
 }

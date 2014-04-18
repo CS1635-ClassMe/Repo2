@@ -13,11 +13,12 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
+import com.koushikdutta.ion.Ion;
 import com.shared.Comment;
 import com.shared.Post;
 
@@ -35,14 +36,16 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>
 	Post post;
 	CommentViewAdapter adapter = this;
 	SharedPreferences prefs;
+	ListView commentList;
 
-	public CommentViewAdapter(Context context, int textViewResourceId, ArrayList<Comment> comments, Post post)
+	public CommentViewAdapter(Context context, int textViewResourceId, ArrayList<Comment> comments, Post post, ListView commentList)
 	{
 		super(context, textViewResourceId, comments);
 		this.comments = comments;
 		this.context = context;
 		this.post = post;
 		prefs = PreferenceManager.getDefaultSharedPreferences(context);
+		this.commentList = commentList;
 	}
 
 	@Override
@@ -135,7 +138,7 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>
 		if(comments.get(position).getLastEdit() != null)
 			timeString += "(last edit - " + String.valueOf(android.text.format.DateFormat.format(editFormatString, comments.get(position).getLastEdit())) + ")";
 		time.setText(timeString);
-		UrlImageViewHelper.setUrlDrawable(profileImage, "https://classmeapp.appspot.com/fileRequest?username=" + comments.get(position).getUsername());
+		Ion.with(profileImage).placeholder(R.drawable.user_icon).load("https://classmeapp.appspot.com/fileRequest?username=" + comments.get(position).getUsername());
 
 		if(comments.get(position).getAttachmentKeys().size() > 0)
 		{
@@ -152,6 +155,15 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>
 				attachmentsLayout.addView(attachment);
 			}
 		}
+
+		v.setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				new CommentOptionsDialog(context, comments.get(position), comments, commentList);
+			}
+		});
 
 		return v;
 	}

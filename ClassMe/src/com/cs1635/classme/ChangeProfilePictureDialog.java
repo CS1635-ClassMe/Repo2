@@ -11,7 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
+import com.koushikdutta.ion.Ion;
 
 import java.io.File;
 
@@ -28,7 +28,7 @@ public class ChangeProfilePictureDialog extends AlertDialog
 		{
 			SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
 			String url = "http://classmeapp.appspot.com/fileRequest?username=" + prefs.getString("loggedIn", "");
-			UrlImageViewHelper.setUrlDrawable(currentAvatar,url,R.drawable.user_icon,10000);
+			Ion.with(currentAvatar).placeholder(R.drawable.user_icon).load(url);
 		}
 		else
 		{

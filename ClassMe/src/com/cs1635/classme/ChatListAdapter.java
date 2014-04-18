@@ -10,7 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
+import com.koushikdutta.ion.Ion;
 import com.shared.TextMessage;
 
 import java.util.ArrayList;
@@ -70,7 +70,7 @@ public class ChatListAdapter extends ArrayAdapter<TextMessage>
 		username.setText(messages.get(position).getFrom());
 
 		String url = "http://classmeapp.appspot.com/fileRequest?username="+messages.get(position).getFrom();
-		UrlImageViewHelper.setUrlDrawable(userImage,url,R.drawable.user_icon,10000);
+		Ion.with(userImage).placeholder(R.drawable.user_icon).load("https://classmeapp.appspot.com/fileRequest?username=" + messages.get(position).getFrom());
 
 		return  v;
 	}
