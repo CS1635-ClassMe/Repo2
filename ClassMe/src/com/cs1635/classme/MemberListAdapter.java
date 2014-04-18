@@ -52,7 +52,7 @@ public class MemberListAdapter extends ArrayAdapter<String>
 		name.setText(members.get(position));
 		text.setText(""); //TODO make this something useful
 
-		userImage.setOnClickListener(new View.OnClickListener()
+		v.setOnClickListener(new View.OnClickListener()
 		{
 			@Override
 			public void onClick(View v)

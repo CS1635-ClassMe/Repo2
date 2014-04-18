@@ -73,10 +73,7 @@
 		android:id="@+id/imageLayout"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:layout_below="@id/ohHai">
-
-
-	</org.apmem.tools.layouts.FlowLayout>
+		android:layout_below="@id/ohHai"/>
 
 	<LinearLayout
 		android:id="@+id/commentLayout"

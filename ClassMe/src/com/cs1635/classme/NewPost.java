@@ -51,10 +51,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-
 public class NewPost extends ActionBarActivity
 {
-
 	Activity context = this;
 	EditText post;
 	Uri captureUri;

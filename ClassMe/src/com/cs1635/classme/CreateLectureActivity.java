@@ -51,7 +51,7 @@ public class CreateLectureActivity extends ActionBarActivity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.create_lecture);
 
-        BuckCourse.rememberPosition(BuckCourse.Position.LECTURE);
+		BuckCourse.rememberPosition(BuckCourse.Position.LECTURE);
 
 		postTitle = (EditText) findViewById(R.id.post_title);
 		postText = (EditText) findViewById(R.id.post_text);
@@ -80,15 +80,27 @@ public class CreateLectureActivity extends ActionBarActivity
 			@Override
 			public void beforeTextChanged(CharSequence s, int start, int count, int after)
 			{
+
+			}
+
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count)
+			{
+				if(postText.getText().length() > 0)
+					postText.setError(null);
+				if(postTitle.getText().length() > 0)
+					postTitle.setError(null);
+
 				if(postText.getText().length() > 0 && postTitle.getText().length() > 0)
 					shareLayout.startAnimation(alphaUp);
 				else
 					shareLayout.startAnimation(alphaDown);
 			}
+
 			@Override
-			public void onTextChanged(CharSequence s, int start, int before, int count){}
-			@Override
-			public void afterTextChanged(Editable s){}
+			public void afterTextChanged(Editable s)
+			{
+			}
 		};
 		postText.addTextChangedListener(textWatcher);
 		postTitle.addTextChangedListener(textWatcher);
@@ -173,6 +185,19 @@ public class CreateLectureActivity extends ActionBarActivity
 					{
 						SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
 						new PostUploadTask(activity, attachmentKeys, attachmentNames, deleteKeys).execute(postTitle.getText().toString(), postText.getText().toString().replaceAll("\n", "<br>"), prefs.getString("loggedIn", ""), BuckCourse.classId, "Lecture");
+					}
+					else
+					{
+						if(postTitle.getText().length() == 0)
+						{
+							postTitle.setError("Title cannot be blank");
+							postTitle.requestFocus();
+						}
+						if(postText.getText().length() == 0)
+						{
+							postText.setError("Body cannot be blank");
+							postText.requestFocus();
+						}
 					}
 				}
 			}
