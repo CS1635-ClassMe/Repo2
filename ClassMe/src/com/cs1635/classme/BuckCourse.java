@@ -1,6 +1,7 @@
 package com.cs1635.classme;
 
 import android.annotation.TargetApi;
+import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -247,6 +248,14 @@ public class BuckCourse extends ActionBarActivity implements ActionBar.TabListen
 
 	private class GetMembersTask extends AsyncTask<Void,Void,ArrayList<String>>
 	{
+		ProgressDialog dialog;
+
+		@Override
+		protected void onPreExecute()
+		{
+			dialog = ProgressDialog.show(BuckCourse.this,"","Getting Member List...");
+		}
+
 		@Override
 		protected ArrayList<String> doInBackground(Void... params)
 		{
@@ -271,6 +280,8 @@ public class BuckCourse extends ActionBarActivity implements ActionBar.TabListen
 		@Override
 		protected void onPostExecute(ArrayList<String> members)
 		{
+			dialog.dismiss();
+
 			if(members != null)
 			{
 				if(members.size() > 0)

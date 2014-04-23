@@ -13,7 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
-import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
+import com.koushikdutta.ion.Ion;
 import com.shared.Comment;
 import com.shared.Post;
 
@@ -53,7 +53,8 @@ public class PostViewAdapter extends ArrayAdapter<Post>
 		String streamLevel = posts.get(position).getClassId();
 		title.setText(posts.get(position).getPostTitle());
 
-		content.setText(Html.fromHtml(posts.get(position).getPostContent(),new MyImageGetter(content,context),null));
+		content.setText(Html.fromHtml(posts.get(position).getPostContent(), null,null));
+
 		//content.loadDataWithBaseURL(null, posts.get(position).getPostContent(), "text/html", "utf-8", null);
 		username.setText(posts.get(position).getUsername());
 		String timeFormatString = "h:mm a";
@@ -67,7 +68,8 @@ public class PostViewAdapter extends ArrayAdapter<Post>
 		if(posts.get(position).getLastEdit() != null)
 			timeString += "(last edit - " + String.valueOf(android.text.format.DateFormat.format(editFormatString, posts.get(position).getLastEdit())) + ")";
 		time.setText(timeString);
-		UrlImageViewHelper.setUrlDrawable(profileImage, "https://classmeapp.appspot.com/fileRequest?username="+posts.get(position).getUsername(), R.drawable.user_icon,10000);
+
+		Ion.with(profileImage).placeholder(R.drawable.user_icon).load("https://classmeapp.appspot.com/fileRequest?username=" + posts.get(position).getUsername());
 
 		numComments.setText(String.valueOf(posts.get(position).getComments().size()));
 
@@ -91,32 +93,33 @@ public class PostViewAdapter extends ArrayAdapter<Post>
 			final ArrayList<View> profileImages = new ArrayList<View>(3);
 			ArrayList<Comment> comments = posts.get(position).getComments();
 
-			int start = comments.size()-3;
+			int start = comments.size() - 3;
 			if(start < 0)
 				start = 0;
-			for(int i=start; i<comments.size(); i++)
+			for(int i = start; i < comments.size(); i++)
 			{
 				View commentView = vi.inflate(R.layout.single_comment, null);
 				TextView commentUsername = (TextView) commentView.findViewById(R.id.commentUsername);
 				TextView commentContent = (TextView) commentView.findViewById(R.id.commentContent);
 				commentUsername.setText(comments.get(i).getUsername());
-				commentContent.setText(Html.fromHtml(comments.get(i).getContent(), new MyImageGetter(commentContent,context),null));
+				commentContent.setText(Html.fromHtml(comments.get(i).getContent(), new MyImageGetter(commentContent, context), null));
 				commentFlipper.addView(commentView);
 
-				View imageLayout = vi.inflate(R.layout.profile_image,null);
-				ImageView image = (ImageView)imageLayout.findViewById(R.id.image);
-				UrlImageViewHelper.setUrlDrawable(image,"https://classmeapp.appspot.com/fileRequest?username="+comments.get(i).getUsername(),R.drawable.user_icon,10000);
+				View imageLayout = vi.inflate(R.layout.profile_image, null);
+				ImageView image = (ImageView) imageLayout.findViewById(R.id.image);
+				Ion.with(image).placeholder(R.drawable.user_icon).load("https://classmeapp.appspot.com/fileRequest?username=" + comments.get(i).getUsername());
 				profileImages.add(imageLayout);
 				commentProfileLayout.addView(imageLayout);
 			}
 
 			profileImages.get(0).findViewById(R.id.underline).setVisibility(View.VISIBLE);
-			if(comments.size()>1)
+			if(comments.size() > 1)
 			{
-				commentFlipper.setInAnimation(AnimationUtils.loadAnimation(context,android.R.anim.fade_in));
-				commentFlipper.setOutAnimation(AnimationUtils.loadAnimation(context,android.R.anim.fade_out));
+				commentFlipper.setInAnimation(AnimationUtils.loadAnimation(context, android.R.anim.fade_in));
+				commentFlipper.setOutAnimation(AnimationUtils.loadAnimation(context, android.R.anim.fade_out));
 				commentFlipper.setFlipInterval(4000);
-				commentFlipper.getInAnimation().setAnimationListener(new Animation.AnimationListener() {
+				commentFlipper.getInAnimation().setAnimationListener(new Animation.AnimationListener()
+				{
 					int count = 1;
 
 					public void onAnimationStart(Animation animation)
@@ -124,19 +127,25 @@ public class PostViewAdapter extends ArrayAdapter<Post>
 						if(count == 0)
 						{
 							profileImages.get(count).findViewById(R.id.underline).setVisibility(View.VISIBLE);
-							profileImages.get(profileImages.size()-1).findViewById(R.id.underline).setVisibility(View.GONE);
+							profileImages.get(profileImages.size() - 1).findViewById(R.id.underline).setVisibility(View.GONE);
 						}
 						else
 						{
 							profileImages.get(count).findViewById(R.id.underline).setVisibility(View.VISIBLE);
-							profileImages.get((count-1)).findViewById(R.id.underline).setVisibility(View.GONE);
+							profileImages.get((count - 1)).findViewById(R.id.underline).setVisibility(View.GONE);
 						}
 						count++;
 						if(count == profileImages.size())
 							count = 0;
 					}
-					public void onAnimationRepeat(Animation animation) {}
-					public void onAnimationEnd(Animation animation) {}
+
+					public void onAnimationRepeat(Animation animation)
+					{
+					}
+
+					public void onAnimationEnd(Animation animation)
+					{
+					}
 				});
 				commentFlipper.startFlipping();
 			}

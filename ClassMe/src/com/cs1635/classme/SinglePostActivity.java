@@ -6,6 +6,9 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.AssetFileDescriptor;
+import android.graphics.drawable.Drawable;
+import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -13,6 +16,7 @@ import android.support.v4.internal.view.SupportMenuItem;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -20,6 +24,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.HeaderViewListAdapter;
@@ -30,7 +35,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
+import com.koushikdutta.ion.Ion;
 import com.shared.Comment;
 import com.shared.Post;
 
@@ -38,7 +43,9 @@ import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
+import org.apmem.tools.layouts.FlowLayout;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -49,6 +56,7 @@ public class SinglePostActivity extends ActionBarActivity
 	Post post;
 	ListView commentList;
 	View postView;
+	MediaPlayer mediaPlayer;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -74,16 +82,6 @@ public class SinglePostActivity extends ActionBarActivity
 		ImageView send = (ImageView) findViewById(R.id.send);
 		commentList = (ListView) findViewById(R.id.commentList);
 
-		commentList.setClickable(true);
-		commentList.setOnItemClickListener(new AdapterView.OnItemClickListener()
-		{
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-			{
-				new CommentOptionsDialog(context, post.getComments().get(position - 1), post.getComments(), commentList); //position-1 because of the header view
-			}
-		});
-
 		send.setOnClickListener(new View.OnClickListener()
 		{
 			@Override
@@ -94,7 +92,20 @@ public class SinglePostActivity extends ActionBarActivity
 		});
 
 		commentList.addHeaderView(postView);
-		commentList.setAdapter(new CommentViewAdapter(this, R.id.commentList, post.getComments(), post));
+		commentList.setAdapter(new CommentViewAdapter(this, R.id.commentList, post.getComments(), post, commentList));
+	}
+
+	@Override
+	public void onPause()
+	{
+		super.onPause();
+
+		if(mediaPlayer != null)
+		{
+			if(mediaPlayer.isPlaying())
+				mediaPlayer.stop();
+			mediaPlayer.release();
+		}
 	}
 
 	@Override
@@ -117,16 +128,96 @@ public class SinglePostActivity extends ActionBarActivity
 		View v = vi.inflate(R.layout.single_post, null);
 
 		TextView title = (TextView) v.findViewById(R.id.title);
-		WebView content = (WebView) v.findViewById(R.id.content);
+		final TextView content = (TextView) v.findViewById(R.id.content);
+		final WebView ohHai = (WebView) v.findViewById(R.id.ohHai);
 		TextView username = (TextView) v.findViewById(R.id.from);
 		ImageView profileImage = (ImageView) v.findViewById(R.id.profileImage);
 		TextView time = (TextView) v.findViewById(R.id.time);
 		TextView numComments = (TextView) v.findViewById(R.id.numComments);
+		final FlowLayout imageLayout = (FlowLayout) v.findViewById(R.id.imageLayout);
 
 		String streamLevel = post.getClassId();
 		title.setText(post.getPostTitle());
 
-		content.loadDataWithBaseURL(null, post.getPostContent(), "text/html", "utf-8", null);
+		final ArrayList<String> imgSources = new ArrayList<String>();
+		content.setText(Html.fromHtml(post.getPostContent(),new Html.ImageGetter()
+		{
+			@Override
+			public Drawable getDrawable(String source)
+			{
+				if(!imgSources.contains(source))
+				{
+					ImageView img = new ImageView(context);
+					img.setMaxWidth(200);
+					img.setAdjustViewBounds(true);
+					imageLayout.addView(img);
+					Ion.with(img).placeholder(R.drawable.ic_launcher).load(source);
+				}
+				return null;
+			}
+		},null));
+		//content.loadDataWithBaseURL(null, post.getPostContent(), "text/html", "utf-8", null);
+		ohHai.getSettings().setJavaScriptEnabled(true);
+		ohHai.setWebViewClient(new WebViewClient()
+		{
+			@Override
+			public void onPageFinished(WebView view, String url)
+			{
+				WindowManager manager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+
+				DisplayMetrics metrics = new DisplayMetrics();
+				manager.getDefaultDisplay().getMetrics(metrics);
+
+				metrics.widthPixels /= metrics.density;
+
+				ohHai.loadUrl("javascript:var scale = " + metrics.widthPixels + " / (document.body.scrollWidth); document.body.style.zoom = scale;");
+			}
+		});
+
+		content.setOnLongClickListener(new View.OnLongClickListener()
+		{
+			@Override
+			public boolean onLongClick(View v)
+			{
+				try
+				{
+					if(content.getVisibility() == View.GONE)
+					{
+						mediaPlayer.release();
+						content.setVisibility(View.VISIBLE);
+						ohHai.setVisibility(View.GONE);
+					}
+					else
+					{
+						content.setVisibility(View.GONE);
+						ohHai.setVisibility(View.VISIBLE);
+						//String text = new Scanner(context.getAssets().open("index.html")).useDelimiter("\\Z").next();
+						//content.setText(Html.fromHtml(text,null,null));
+						ohHai.loadUrl("file:///android_asset/index.html");
+
+						if(mediaPlayer != null)
+						{
+							if(mediaPlayer.isPlaying())
+								mediaPlayer.stop();
+							mediaPlayer.release();
+						}
+
+						AssetFileDescriptor afd = getAssets().openFd("Oh_Hai.mp3");
+						mediaPlayer = new MediaPlayer();
+						mediaPlayer.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
+						mediaPlayer.prepare();
+						mediaPlayer.setLooping(true);
+						mediaPlayer.start();
+					}
+				}
+				catch(IOException e)
+				{
+					e.printStackTrace();
+				}
+				return true;
+			}
+		});
+
 		username.setText(post.getUsername());
 		String timeFormatString = "h:mm a";
 		String editFormatString = "h:mm a";
@@ -139,7 +230,7 @@ public class SinglePostActivity extends ActionBarActivity
 		if(post.getLastEdit() != null)
 			timeString += "(last edit - " + String.valueOf(android.text.format.DateFormat.format(editFormatString, post.getLastEdit())) + ")";
 		time.setText(timeString);
-		UrlImageViewHelper.setUrlDrawable(profileImage, "https://classmeapp.appspot.com/fileRequest?username=" + post.getUsername());
+		Ion.with(profileImage).placeholder(R.drawable.user_icon).load("https://classmeapp.appspot.com/fileRequest?username=" + post.getUsername());
 
 		numComments.setText(String.valueOf(post.getComments().size()));
 
@@ -157,7 +248,7 @@ public class SinglePostActivity extends ActionBarActivity
 			LinearLayout attachmentsLayout = (LinearLayout) v.findViewById(R.id.attachmentsLayout);
 			attachmentsLayout.setVisibility(View.VISIBLE);
 
-			for(int i=0; i<post.getAttachmentNames().size(); i++)
+			for(int i = 0; i < post.getAttachmentNames().size(); i++)
 			{
 				String key = post.getAttachmentKeys().get(i);
 				String name = post.getAttachmentNames().get(i);
@@ -198,10 +289,10 @@ public class SinglePostActivity extends ActionBarActivity
 		{
 			case R.id.edit:
 			{
-				Intent intent = new Intent(this,CreateDiscussionActivity.class);
+				Intent intent = new Intent(this, CreateDiscussionActivity.class);
 				Bundle bundle = new Bundle();
-				bundle.putSerializable("post",post);
-				intent.putExtra("bundle",bundle);
+				bundle.putSerializable("post", post);
+				intent.putExtra("bundle", bundle);
 				startActivityForResult(intent, 1);
 				return true;
 			}

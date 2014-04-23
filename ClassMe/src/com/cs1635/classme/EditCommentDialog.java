@@ -100,7 +100,7 @@ public class EditCommentDialog extends AlertDialog
 
 			try
 			{
-				HttpResponse urlResponse = AppEngineClient.makeRequest("/addendum/editComment", nameValuePairs);
+				HttpResponse urlResponse = AppEngineClient.makeRequest("/editComment", nameValuePairs);
 				String response = EntityUtils.toString(urlResponse.getEntity());
 				if(!response.equals("done"))
 					return false;

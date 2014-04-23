@@ -13,7 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
-import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
+import com.koushikdutta.ion.Ion;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -47,12 +47,12 @@ public class MemberListAdapter extends ArrayAdapter<String>
 		ImageView userImage = (ImageView) v.findViewById(R.id.userImage);
 
 		String url = "http://classmeapp.appspot.com/fileRequest?username="+members.get(position);
-		UrlImageViewHelper.setUrlDrawable(userImage,url,R.drawable.user_icon,10000);
+		Ion.with(userImage).placeholder(R.drawable.user_icon).load(url);
 
 		name.setText(members.get(position));
 		text.setText(""); //TODO make this something useful
 
-		userImage.setOnClickListener(new View.OnClickListener()
+		v.setOnClickListener(new View.OnClickListener()
 		{
 			@Override
 			public void onClick(View v)

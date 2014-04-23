@@ -88,7 +88,7 @@ public class CommentOptionsDialog extends AlertDialog
 
 			try
 			{
-				HttpResponse urlResponse = AppEngineClient.makeRequest("/addendum/plusOne", nameValuePairs);
+				HttpResponse urlResponse = AppEngineClient.makeRequest("/plusOne", nameValuePairs);
 				String response = EntityUtils.toString(urlResponse.getEntity());
 				return Boolean.valueOf(response);
 			}
@@ -125,7 +125,7 @@ public class CommentOptionsDialog extends AlertDialog
 
 			try
 			{
-				HttpResponse urlResponse = AppEngineClient.makeRequest("/addendum/deleteComment", nameValuePairs);
+				HttpResponse urlResponse = AppEngineClient.makeRequest("/deleteComment", nameValuePairs);
 				String response = EntityUtils.toString(urlResponse.getEntity());
 				if(!response.equals("done"))
 					return false;
@@ -166,7 +166,7 @@ public class CommentOptionsDialog extends AlertDialog
 
 			try
 			{
-				HttpResponse urlResponse = AppEngineClient.makeRequest("/addendum/flagComment", nameValuePairs);
+				HttpResponse urlResponse = AppEngineClient.makeRequest("/flagComment", nameValuePairs);
 				String response = EntityUtils.toString(urlResponse.getEntity());
 				if(!response.equals("done"))
 					return false;
