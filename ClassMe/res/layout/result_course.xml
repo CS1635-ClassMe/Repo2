@@ -1,0 +1,42 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:descendantFocusability="blocksDescendants">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/result_courseid"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_margin="5dp"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:text="Course ID"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/result_coursedepartment"
+            android:layout_below="@id/result_courseid"
+            android:layout_marginLeft="20dp"
+            android:textSize="16sp"
+            android:text="Department"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/result_courseinstructor"
+            android:layout_below="@id/result_courseid"
+            android:layout_toRightOf="@id/result_coursedepartment"
+            android:layout_marginLeft="20dp"
+            android:textSize="16sp"
+            android:text="Instructor Name"/>
+
+
+    </RelativeLayout>
+
+</RelativeLayout>
