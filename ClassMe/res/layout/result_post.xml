@@ -1,0 +1,54 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:descendantFocusability="blocksDescendants">
+
+		<RelativeLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content">
+
+			<TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/result_title"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_margin="5dp"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:text="Title of Post"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/result_body"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:layout_below="@id/result_title"
+                android:layout_marginLeft="20dp"
+                android:textSize="16sp"
+                android:text="Short body text blag sgfh hd hs g fsg fgsf sfg dgfsfgfgdfg sfgsggfgf fg  gfd"/>
+
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:id="@+id/result_from"
+                android:layout_below="@id/result_body"
+				android:layout_alignTop="@+id/profileImage"
+				android:layout_toRightOf="@+id/profileImage"
+				android:text="bucko"
+                android:layout_marginLeft="20dp"
+                />
+
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:id="@+id/result_time"
+                android:layout_marginLeft="20dp"
+                android:layout_below="@id/result_body"
+                android:layout_toRightOf="@id/result_from"
+				android:text="4/16/14-8:13am"/>
+
+	</RelativeLayout>
+
+</RelativeLayout>
