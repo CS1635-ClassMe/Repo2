@@ -5,70 +5,77 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background">
-
+    android:background="@color/discuss_background"
+    >
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
+        android:layout_marginBottom="40dp"
         >
         <EditText android:id="@+id/search_text"
+            android:layout_weight="2"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:hint="Enter a search"
+            android:textSize="24dp"
+            />
+        <Button android:id="@+id/search_submit"
             android:layout_weight="1"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:hint="Enter a search" />
-
-        <Button android:id="@+id/search_submit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Search" />
+            android:layout_height="40dp"
+            android:background="@color/discuss_button"
+            android:text="Search"
+            android:textColor="@color/button_text_color"
+            android:textSize="26dp"
+            android:textStyle="bold"
+            android:layout_margin="10dp"
+            />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="180dp"
         android:orientation="vertical"
-        android:background="@color/background"
-        android:layout_margin="50dp">
-
-
+        android:background="@color/discuss_list_background"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        >
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/muted"
-            android:text="Filters:"/>
-        <include layout="@layout/hr" />
-
-
-        <CheckBox android:id="@+id/search_filter_activecourse"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Active Course"
-            android:onClick="onCheckboxClicked"/>
-        <CheckBox android:id="@+id/search_filter_archivedcourse"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Archived Course"
-            android:onClick="onCheckboxClicked"/>
-        <CheckBox android:id="@+id/search_filter_Posts"
+            android:text="Refine your search:"
+            android:textSize="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="5dp"
+            android:padding="10dp"
+            />
+        <include layout="@layout/hr"/>
+        <CheckBox android:id="@+id/search_filter_post_title"
+            android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Posts"
-            android:onClick="onCheckboxClicked"/>
-        <CheckBox android:id="@+id/search_filter_instructors"
+            android:onClick="onCheckboxClicked"
+            android:textSize="24dp"
+            />
+        <CheckBox android:id="@+id/search_filter_post_body"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Instructors"
-            android:onClick="onCheckboxClicked"/>
-        <CheckBox android:id="@+id/search_filter_members"
+            android:text="Users"
+            android:onClick="onCheckboxClicked"
+            android:textSize="24dp"
+            />
+        <CheckBox android:id="@+id/search_filter_Posts"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Members"
-            android:onClick="onCheckboxClicked"/>
-
-
+            android:text="Courses"
+            android:onClick="onCheckboxClicked"
+            android:textSize="24dp"
+            />
         </LinearLayout>
 
 
