@@ -4,43 +4,60 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="10dp"
-    android:background="@color/background"
+    android:background="@color/discuss_background"
 	android:orientation="vertical">
 
 	<TextView
 		android:id="@+id/postsTitle"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:text="Posts"/>
+        android:textColor="@color/muted"
+        android:text="Posts:"
+        android:textSize="20dp"
+        />
 
 	<ListView
 		android:id="@+id/postsList"
 		android:layout_width="wrap_content"
 		android:layout_height="0dp"
-		android:layout_weight="1"/>
+		android:layout_weight="1"
+        android:background="@color/discuss_list_background"
+        />
 
 	<TextView
 		android:id="@+id/usersTitle"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:text="Users"/>
+        android:textColor="@color/muted"
+        android:text="Users:"
+        android:textSize="20dp"
+        android:layout_marginTop="10dp"
+        />
 
 	<ListView
 		android:id="@+id/usersList"
 		android:layout_width="wrap_content"
 		android:layout_height="0dp"
-		android:layout_weight="1"/>
+		android:layout_weight="1"
+        android:background="@color/discuss_list_background"
+        />
 
 	<TextView
 		android:id="@+id/coursesTitle"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:text="Classes"/>
+        android:textColor="@color/muted"
+        android:text="Courses:"
+        android:textSize="20dp"
+        android:layout_marginTop="10dp"
+        />
 
 	<ListView
 		android:id="@+id/coursesList"
 		android:layout_width="wrap_content"
 		android:layout_height="0dp"
-		android:layout_weight="1"/>
+		android:layout_weight="1"
+        android:background="@color/discuss_list_background"
+        />
 
 </LinearLayout>
