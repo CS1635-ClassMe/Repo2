@@ -4,20 +4,22 @@
 	android:layout_width="match_parent"
 	android:orientation="vertical"
 	android:layout_height="match_parent"
-	android:background="@color/background">
+	android:background="@color/home_background">
 
 	<RelativeLayout
 		android:id="@+id/topLayout"
 		android:layout_width="match_parent"
 		android:layout_height="0dp"
-		android:layout_weight="4">
+		android:layout_weight="4"
+        android:padding="10dp"
+        >
 
 		<TextView
 			android:id="@+id/classesLabel"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_marginLeft="10dp"
-			android:textSize="25sp"
+			android:textSize="32sp"
 			android:text="My Classes"/>
 
 		<include layout="@layout/hr"
@@ -38,14 +40,16 @@
 		android:id="@+id/bottomLayout"
 		android:layout_width="match_parent"
 		android:layout_height="0dp"
-		android:layout_weight="3">
+		android:layout_weight="3"
+        android:padding="10dp"
+        >
 
 		<TextView
 			android:id="@+id/recentLabel"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_marginLeft="10dp"
-			android:textSize="25sp"
+			android:textSize="32sp"
 			android:text="Recent Chats"/>
 
 		<include layout="@layout/hr"
