@@ -61,7 +61,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Posts"
-            android:onClick="onCheckboxClicked"
             android:textSize="24dp"
             />
         <CheckBox android:id="@+id/search_filter_Users"
@@ -69,21 +68,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Users"
-            android:onClick="onCheckboxClicked"
             android:textSize="24dp"
             />
         <CheckBox android:id="@+id/search_filter_Courses"
             android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Courses"
-            android:onClick="onCheckboxClicked"
+            android:text="Classes"
             android:textSize="24dp"
             />
         </LinearLayout>
-
-
-
-
 
 </LinearLayout>
