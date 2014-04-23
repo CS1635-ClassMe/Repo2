@@ -1,18 +1,24 @@
 package com.cs1635.classme;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.v4.internal.view.SupportMenuItem;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ListView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.shared.Course;
+import com.shared.Post;
+import com.shared.User;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 
 public class ResultsActivity extends ActionBarActivity
 {
-
 	ResultsActivity activity = this;
 
 	@Override
@@ -21,52 +27,49 @@ public class ResultsActivity extends ActionBarActivity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.results);
 
-		ViewGroup result = (ViewGroup) findViewById(R.id.bs_row_clickme);
-		result.setOnClickListener(new View.OnClickListener()
-		{
-			@Override
-			public void onClick(View view)
-			{
-				Intent intent = new Intent(activity, BuckCourse.class);
-				startActivity(intent);
-			}
-		});
+		ListView postsList = (ListView) findViewById(R.id.postsList);
+		ListView usersList = (ListView) findViewById(R.id.usersList);
+		ListView coursesList = (ListView) findViewById(R.id.coursesList);
 
-		Button newCourseButton = (Button) findViewById(R.id.newCourseButton);
-		newCourseButton.setOnClickListener(new View.OnClickListener()
+		ArrayList<Post> posts = new ArrayList<Post>();
+		ArrayList<User> users = new ArrayList<User>();
+		ArrayList<Course> courses = new ArrayList<Course>();
+
+		Bundle bundle = getIntent().getExtras();
+		if(bundle != null)
 		{
-			@Override
-			public void onClick(View v)
+			Gson gson = new Gson();
+			Type listOfResults = new TypeToken<ArrayList<Object>>(){}.getType();
+			ArrayList<Object> results = gson.fromJson(bundle.getString("results"), listOfResults);
+			if(results != null)
 			{
-				Intent intent = new Intent(activity, NewCourse.class);
-				startActivity(intent);
+				for(Object result : results)
+				{
+					if(result instanceof Post)
+						posts.add((Post)result);
+					if(result instanceof User)
+						users.add((User)result);
+					if(result instanceof Course)
+						courses.add((Course)result);
+				}
+
+				//add adapters to lists
 			}
-		});
+		}
 	}
-
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)
 	{
-
-		// Inflate the menu; this adds items to the action bar if it is present.
-		//getMenuInflater().inflate(R.menu.stream, menu);
-
+		getMenuInflater().inflate(R.menu.single_post, menu);
 		return true;
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item)
 	{
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
-		if(id == R.id.action_settings)
-		{
-			return true;
-		}
+
 		return super.onOptionsItemSelected(item);
 	}
-
 }
