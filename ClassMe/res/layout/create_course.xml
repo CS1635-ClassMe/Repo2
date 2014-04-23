@@ -1,0 +1,136 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:flow="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+    android:background="@color/lecture_background"
+    >
+
+    <TextView
+        android:id="@+id/top_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        android:layout_centerHorizontal="true"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:text="Create A New Course"/>
+
+    <TextView
+        android:id="@+id/course_label"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/muted"
+        android:text="Course ID:"
+        android:textSize="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="5dp"
+        android:padding="10dp"
+        android:layout_below="@id/top_title"
+        />
+
+    <LinearLayout
+        android:id="@+id/create_courseid"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/lecture_list_background"
+        android:layout_marginBottom="5dp"
+        android:layout_below="@id/course_label">
+
+        <EditText
+            android:id="@+id/courseid"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textCapSentences"
+            android:gravity="top|left"
+            android:hint="Example: CS1635"
+            android:textColorHint="@color/black"
+            android:lines="1"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/department_label"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/muted"
+        android:text="Department:"
+        android:textSize="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="5dp"
+        android:padding="10dp"
+        android:layout_below="@id/create_courseid"
+        />
+
+    <LinearLayout
+        android:id="@+id/create_department"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/lecture_list_background"
+        android:layout_marginBottom="5dp"
+        android:layout_below="@id/department_label">
+
+        <EditText
+            android:id="@+id/department"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textCapSentences"
+            android:gravity="top|left"
+            android:hint="Example: Computer Science"
+            android:textColorHint="@color/black"
+            android:lines="1"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/instructor_label"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/muted"
+        android:text="Instructor:"
+        android:textSize="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="5dp"
+        android:padding="10dp"
+        android:layout_below="@id/create_department"
+        />
+
+    <LinearLayout
+        android:id="@+id/create_instructor"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/lecture_list_background"
+        android:layout_marginBottom="5dp"
+        android:layout_below="@id/instructor_label">
+
+        <EditText
+            android:id="@+id/instructor"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textCapSentences"
+            android:gravity="top|left"
+            android:hint="Example: Jingtao Wang"
+            android:textColorHint="@color/black"
+            android:lines="1"/>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/create_submit"
+        android:layout_below="@id/create_instructor"
+        android:layout_width="fill_parent"
+        android:layout_height="60dp"
+        android:background="@color/lecture_button"
+        android:text="Create"
+        android:textColor="@color/button_text_color"
+        android:textSize="26dp"
+        android:textStyle="bold"
+        android:layout_marginTop="40dp"
+        />
+
+</RelativeLayout>

@@ -10,7 +10,7 @@
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:padding="10dp"
-		android:background="@color/tan">
+		android:background="@color/home_list">
 
 		<TextView
 			android:id="@+id/courseName"
@@ -19,24 +19,6 @@
 			android:textSize="25sp"
 			android:layout_centerVertical="true"
 			android:text="CS1635"/>
-
-		<RelativeLayout
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:background="@drawable/border"
-			android:layout_alignParentRight="true"
-			android:layout_centerVertical="true">
-
-			<TextView
-				android:id="@+id/unread"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:textSize="20sp"
-				android:padding="3dp"
-				android:background="@color/red"
-				android:text="3"/>
-
-		</RelativeLayout>
 
 	</RelativeLayout>
 
