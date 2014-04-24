@@ -41,14 +41,14 @@ public class NewCourse extends ActionBarActivity
 					courseId.setError("Cannot be blank");
 					return;
 				}
-				if(instructor.getText().toString().length() < 1)
-				{
-					instructor.setError("Cannot be blank");
-					return;
-				}
 				if(department.getText().toString().length() < 1)
 				{
 					department.setError("Cannot be blank");
+					return;
+				}
+				if(instructor.getText().toString().length() < 1)
+				{
+					instructor.setError("Cannot be blank");
 					return;
 				}
 				new NewCourseTask().execute();
@@ -76,7 +76,7 @@ public class NewCourse extends ActionBarActivity
 
 			try
 			{
-				AppEngineClient.makeRequest("/newCourse", nameValuePairs);
+				AppEngineClient.makeRequest("/createCourse", nameValuePairs);
 			}
 			catch(Exception ex)
 			{

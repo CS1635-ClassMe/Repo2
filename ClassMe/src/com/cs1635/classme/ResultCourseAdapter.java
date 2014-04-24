@@ -1,6 +1,7 @@
 package com.cs1635.classme;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
@@ -45,6 +46,17 @@ public class ResultCourseAdapter extends ArrayAdapter<Course>
 		courseId.setText(courses.get(position).getCourseId());
 		department.setText(courses.get(position).getDepartment());
 		instructor.setText(courses.get(position).getInstructor());
+
+		v.setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				Intent intent = new Intent(context, BuckCourse.class);
+				intent.putExtra("classId",courses.get(position).getCourseId());
+				context.startActivity(intent);
+			}
+		});
 
 		return  v;
 	}

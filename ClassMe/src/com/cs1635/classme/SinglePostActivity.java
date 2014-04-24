@@ -25,7 +25,6 @@ import android.view.View;
 import android.view.WindowManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.HeaderViewListAdapter;
 import android.widget.ImageView;

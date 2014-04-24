@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -49,22 +50,21 @@ public class HomeActivity extends ActionBarActivity
 		prefs = PreferenceManager.getDefaultSharedPreferences(activity);
 
 		Gson gson = new Gson();
-		User user = gson.fromJson(prefs.getString("userObject",""),User.class);
+		final User user = gson.fromJson(prefs.getString("userObject",""),User.class);
 		ListView myClasses = (ListView) findViewById(R.id.myClasses);
 		myClasses.setAdapter(new ArrayAdapter<String>(this,R.layout.class_row,R.id.courseName,user.getCourseList()));
-
-		BuckCourse.resetPosition();
-
-		ViewGroup classRow = (ViewGroup) findViewById(R.id.classRow);
-		classRow.setOnClickListener(new View.OnClickListener()
+		myClasses.setOnItemClickListener(new AdapterView.OnItemClickListener()
 		{
 			@Override
-			public void onClick(View v)
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id)
 			{
 				Intent intent = new Intent(activity, BuckCourse.class);
+				intent.putExtra("classId",user.getCourseList().get(position));
 				startActivity(intent);
 			}
 		});
+
+		BuckCourse.resetPosition();
 
 		//find all chat histories
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);

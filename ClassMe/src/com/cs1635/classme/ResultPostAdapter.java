@@ -1,17 +1,23 @@
 package com.cs1635.classme;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.shared.Course;
 import com.shared.Post;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Random;
 
 public class ResultPostAdapter extends ArrayAdapter<Post>
 {
@@ -54,6 +60,20 @@ public class ResultPostAdapter extends ArrayAdapter<Post>
 		if(posts.get(position).getLastEdit() != null)
 			timeString += "(last edit - " + String.valueOf(android.text.format.DateFormat.format(editFormatString, posts.get(position).getLastEdit())) + ")";
 		time.setText(timeString);
+
+		v.setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				Intent intent = new Intent(context, SinglePostActivity.class);
+				Bundle bundle = new Bundle();
+				Gson gson = new Gson();
+				bundle.putString("post", gson.toJson(posts.get(position)));
+				intent.putExtras(bundle);
+				context.startActivity(intent);
+			}
+		});
 
 		return  v;
 	}
