@@ -51,7 +51,7 @@
 			android:layout_height="wrap_content"
 			android:gravity="bottom"
 			android:orientation="vertical"
-			android:background="@color/white"
+			android:background="@color/lecture_list_background"
 			android:layout_toRightOf="@id/userImageFrame">
 
 			<TextView

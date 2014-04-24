@@ -14,7 +14,7 @@
 		android:padding="5dp"
 		android:minHeight="64dp"
 		android:orientation="vertical"
-		android:background="@color/white"
+		android:background="@color/note_list_background"
 		android:layout_toLeftOf="@+id/userImageFrame">
 
 		<TextView
