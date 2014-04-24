@@ -59,8 +59,7 @@
 		android:id="@+id/content"
 		android:layout_below="@+id/profileImage"
 		android:layout_margin="5dp"
-		android:layout_alignParentLeft="true"
-		android:background="@color/post_body"/>
+		android:layout_alignParentLeft="true"/>
 
 	<WebView
 		android:id="@+id/ohHai"

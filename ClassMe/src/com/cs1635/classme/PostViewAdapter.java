@@ -1,7 +1,6 @@
 package com.cs1635.classme;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -106,11 +105,21 @@ public class PostViewAdapter extends ArrayAdapter<Post>
 				commentContent.setText(Html.fromHtml(comments.get(i).getContent(), null, null));
 				commentFlipper.addView(commentView);
 
+                if(posts.get(position).getType().equals("Discussion")){
+                    commentView.setBackgroundColor(context.getResources().getColor(R.color.discuss_list_background));
+                } else if(posts.get(position).getType().equals("Lecture")){
+                    commentView.setBackgroundColor(context.getResources().getColor(R.color.lecture_list_background));
+                } else if (posts.get(position).getType().equals("Note")){
+                    commentView.setBackgroundColor(context.getResources().getColor(R.color.note_list_background));
+                }
+
 				View imageLayout = vi.inflate(R.layout.profile_image, null);
 				ImageView image = (ImageView) imageLayout.findViewById(R.id.image);
 				Ion.with(image).placeholder(R.drawable.user_icon).load("https://classmeapp.appspot.com/fileRequest?username=" + comments.get(i).getUsername());
 				profileImages.add(imageLayout);
 				commentProfileLayout.addView(imageLayout);
+
+
 			}
 
 			profileImages.get(0).findViewById(R.id.underline).setVisibility(View.VISIBLE);
