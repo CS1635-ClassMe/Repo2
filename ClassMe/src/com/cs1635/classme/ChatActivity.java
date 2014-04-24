@@ -102,6 +102,9 @@ public class ChatActivity extends ActionBarActivity
 			@Override
 			public void onClick(View v)
 			{
+				if(text.getText().toString().length() < 1)
+					return;
+
 				new SendTask().execute(text.getText().toString());
 				SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
 				addMessage(text.getText().toString(),prefs.getString("loggedIn",null),sdf.format(new Date()),usernames);

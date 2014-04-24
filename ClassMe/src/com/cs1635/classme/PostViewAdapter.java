@@ -1,6 +1,7 @@
 package com.cs1635.classme;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -102,7 +103,7 @@ public class PostViewAdapter extends ArrayAdapter<Post>
 				TextView commentUsername = (TextView) commentView.findViewById(R.id.commentUsername);
 				TextView commentContent = (TextView) commentView.findViewById(R.id.commentContent);
 				commentUsername.setText(comments.get(i).getUsername());
-				commentContent.setText(Html.fromHtml(comments.get(i).getContent(), new MyImageGetter(commentContent, context), null));
+				commentContent.setText(Html.fromHtml(comments.get(i).getContent(), null, null));
 				commentFlipper.addView(commentView);
 
 				View imageLayout = vi.inflate(R.layout.profile_image, null);

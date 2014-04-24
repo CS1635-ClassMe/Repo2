@@ -125,7 +125,7 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>
 		else
 			plusOne.setTextColor(Color.parseColor("#ff979797"));
 
-		content.setText(Html.fromHtml(comments.get(position).getContent() + "", new MyImageGetter(content, context), null));
+		content.setText(Html.fromHtml(comments.get(position).getContent() + "", null, null));
 		username.setText(comments.get(position).getUsername());
 		String timeFormatString = "h:mm a";
 		String editFormatString = "h:mm a";

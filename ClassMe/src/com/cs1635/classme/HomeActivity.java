@@ -12,12 +12,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.shared.TextMessage;
+import com.shared.User;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -46,6 +48,11 @@ public class HomeActivity extends ActionBarActivity
 
 		prefs = PreferenceManager.getDefaultSharedPreferences(activity);
 
+		Gson gson = new Gson();
+		User user = gson.fromJson(prefs.getString("userObject",""),User.class);
+		ListView myClasses = (ListView) findViewById(R.id.myClasses);
+		myClasses.setAdapter(new ArrayAdapter<String>(this,R.layout.class_row,R.id.courseName,user.getCourseList()));
+
 		BuckCourse.resetPosition();
 
 		ViewGroup classRow = (ViewGroup) findViewById(R.id.classRow);
@@ -61,7 +68,6 @@ public class HomeActivity extends ActionBarActivity
 
 		//find all chat histories
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-		Gson gson = new Gson();
 		Map<String, ?> keys = prefs.getAll();
 		ArrayList<ArrayList<TextMessage>> recentChats = new ArrayList<ArrayList<TextMessage>>();
 		if(keys != null)
