@@ -4,7 +4,7 @@
     android:id="@+id/commentLayout"
     android:layout_width="fill_parent"
     android:layout_height="45dp"
-    android:background="#ffeeeeee">
+    android:background="@color/comment_background">
 
     <TextView
             android:layout_width="wrap_content"

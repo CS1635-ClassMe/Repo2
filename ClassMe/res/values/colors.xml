@@ -19,6 +19,13 @@
     <color name="home_background">#81E8E4</color>
     <color name="home_list">#A7FFFC</color>
 
+    <color name="comment_background">#F3E6F5</color>
+
+    <color name="post_background">#EDF5EC</color>
+    <color name="post_body">#F5ECF1</color>
+
+
+
 
 
     <color name="discuss_background">#81E8E4</color>
