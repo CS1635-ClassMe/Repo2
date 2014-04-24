@@ -36,7 +36,6 @@ import java.util.List;
 public class ChatActivity extends ActionBarActivity
 {
 	ActionBar actionBar;
-	Context context;
 	ChatActivity activity = this;
 	EditText text;
 	ArrayList<String> usernames;
