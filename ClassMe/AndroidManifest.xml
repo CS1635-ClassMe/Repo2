@@ -127,8 +127,7 @@
         </activity>
 		<activity
 			android:name="com.cs1635.classme.SinglePostActivity"
-			android:configChanges="orientation|screenSize"
-			android:parentActivityName="com.cs1635.classme.BuckCourse">
+			android:configChanges="orientation|screenSize">
 		</activity>
 
     </application>

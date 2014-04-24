@@ -65,7 +65,6 @@ public class SinglePostActivity extends ActionBarActivity
 
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN); //no idea why the keyboard appears, this hides it
 		getSupportActionBar().setDisplayShowTitleEnabled(false);
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 		Bundle bundle = getIntent().getExtras();
 		if(bundle == null)
@@ -335,10 +334,6 @@ public class SinglePostActivity extends ActionBarActivity
 			case R.id.flag:
 			{
 				return true;
-			}
-			case android.R.id.home:
-			{
-				finish();
 			}
 			default:
 				return super.onOptionsItemSelected(item);
