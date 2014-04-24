@@ -1,6 +1,7 @@
 package com.cs1635.classme;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,13 +45,11 @@ public class PostViewAdapter extends ArrayAdapter<Post>
 
 		TextView title = (TextView) v.findViewById(R.id.title);
 		TextView content = (TextView) v.findViewById(R.id.content);
-		//WebView content = (WebView) v.findViewById(R.id.content);
 		TextView username = (TextView) v.findViewById(R.id.from);
 		ImageView profileImage = (ImageView) v.findViewById(R.id.profileImage);
 		TextView time = (TextView) v.findViewById(R.id.time);
 		TextView numComments = (TextView) v.findViewById(R.id.numComments);
 
-		String streamLevel = posts.get(position).getClassId();
 		title.setText(posts.get(position).getPostTitle());
 
 		content.setText(Html.fromHtml(posts.get(position).getPostContent(), new Html.ImageGetter()
@@ -62,7 +61,6 @@ public class PostViewAdapter extends ArrayAdapter<Post>
 			}
 		},null));
 
-		//content.loadDataWithBaseURL(null, posts.get(position).getPostContent(), "text/html", "utf-8", null);
 		username.setText(posts.get(position).getUsername());
 		String timeFormatString = "h:mm a";
 		String editFormatString = "h:mm a";

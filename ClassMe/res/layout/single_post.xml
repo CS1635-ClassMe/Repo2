@@ -5,7 +5,6 @@
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
 				android:id="@+id/postLayout"
-                android:background="@color/post_background"
     >
 
 	<TextView
@@ -74,7 +73,9 @@
 		android:id="@+id/imageLayout"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:layout_below="@id/ohHai"/>
+		android:layout_below="@id/ohHai"
+		android:layout_marginLeft="10dp"
+		android:layout_marginRight="10dp"/>
 
 	<LinearLayout
 		android:id="@+id/commentLayout"

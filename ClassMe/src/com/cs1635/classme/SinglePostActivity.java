@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.os.AsyncTask;
@@ -153,7 +152,6 @@ public class SinglePostActivity extends ActionBarActivity
 		TextView numComments = (TextView) v.findViewById(R.id.numComments);
 		final FlowLayout imageLayout = (FlowLayout) v.findViewById(R.id.imageLayout);
 
-		String streamLevel = post.getClassId();
 		title.setText(post.getPostTitle());
 
 		final ArrayList<String> imgSources = new ArrayList<String>();
@@ -173,7 +171,6 @@ public class SinglePostActivity extends ActionBarActivity
 				return getResources().getDrawable(R.drawable.ic_launcher);
 			}
 		},null));
-		//content.loadDataWithBaseURL(null, post.getPostContent(), "text/html", "utf-8", null);
 		ohHai.getSettings().setJavaScriptEnabled(true);
 		ohHai.setWebViewClient(new WebViewClient()
 		{
@@ -208,8 +205,6 @@ public class SinglePostActivity extends ActionBarActivity
 					{
 						content.setVisibility(View.GONE);
 						ohHai.setVisibility(View.VISIBLE);
-						//String text = new Scanner(context.getAssets().open("index.html")).useDelimiter("\\Z").next();
-						//content.setText(Html.fromHtml(text,null,null));
 						ohHai.loadUrl("file:///android_asset/index.html");
 
 						if(mediaPlayer != null)
