@@ -1,36 +1,99 @@
 package com.cs1635.classme;
 
-import android.support.v7.app.ActionBarActivity;
+import android.app.ProgressDialog;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
-public class NewCourse extends ActionBarActivity {
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class NewCourse extends ActionBarActivity
+{
+	EditText courseId, instructor, department;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState)
+	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.create_course);
 
+		Button createSubmit = (Button) findViewById(R.id.create_submit);
+		courseId = (EditText) findViewById(R.id.courseid);
+		instructor = (EditText) findViewById(R.id.instructor);
+		department = (EditText) findViewById(R.id.department);
+
+		createSubmit.setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				if(courseId.getText().toString().length() < 1)
+				{
+					courseId.setError("Cannot be blank");
+					return;
+				}
+				if(department.getText().toString().length() < 1)
+				{
+					department.setError("Cannot be blank");
+					return;
+				}
+				if(instructor.getText().toString().length() < 1)
+				{
+					instructor.setError("Cannot be blank");
+					return;
+				}
+				new NewCourseTask().execute();
+			}
+		});
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
+	private class NewCourseTask extends AsyncTask<Void,Void,Boolean>
+	{
+		ProgressDialog dialog;
 
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.new_course, menu);
-		return true;
-	}
+		@Override
+		protected void onPreExecute()
+		{
+			dialog = ProgressDialog.show(NewCourse.this,"","Creating Course...",true);
+		}
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
+		@Override
+		protected Boolean doInBackground(Void... params)
+		{
+			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(3);
+			nameValuePairs.add(new BasicNameValuePair("department", department.getText().toString()));
+			nameValuePairs.add(new BasicNameValuePair("instructor", instructor.getText().toString()));
+			nameValuePairs.add(new BasicNameValuePair("courseId", courseId.getText().toString()));
+
+			try
+			{
+				AppEngineClient.makeRequest("/createCourse", nameValuePairs);
+			}
+			catch(Exception ex)
+			{
+				Log.e("ClassMe", "Error searching: " + ex.getMessage());
+				return false;
+			}
 			return true;
 		}
-		return super.onOptionsItemSelected(item);
+
+		@Override
+		protected void onPostExecute(Boolean success)
+		{
+			dialog.dismiss();
+			if(success)
+				finish();
+			else
+				Toast.makeText(NewCourse.this,"Error creating course",Toast.LENGTH_SHORT);
+		}
 	}
 }

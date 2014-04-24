@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.koushikdutta.ion.Ion;
 
 import org.apmem.tools.layouts.FlowLayout;
 
@@ -67,7 +68,8 @@ public class ContactChooserDialog extends AlertDialog
 		chosenContacts = new ArrayList<String>();
 		for(String contact : knownUsers)
 		{
-			addContact(contact);
+			if(contact.length() != 0)
+				addContact(contact);
 		}
 
 		ImageView addButton = (ImageView) view.findViewById(R.id.addButton);
@@ -117,6 +119,9 @@ public class ContactChooserDialog extends AlertDialog
 	{
 		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		final View contactLayout = inflater.inflate(R.layout.contact_card,null);
+		ImageView contactPicture = (ImageView) contactLayout.findViewById(R.id.contactPicture);
+		String url = "http://classmeapp.appspot.com/fileRequest?username="+contact;
+		Ion.with(contactPicture).placeholder(R.drawable.user_icon).load(url);
 		TextView name = (TextView) contactLayout.findViewById(R.id.contactName);
 		name.setText(contact);
 		contactLayout.setTag(contact);

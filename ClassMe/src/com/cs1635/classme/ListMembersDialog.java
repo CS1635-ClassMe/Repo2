@@ -15,11 +15,15 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +36,21 @@ public class ListMembersDialog extends AlertDialog
 	{
 		super(con);
 		context = con;
+
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+		ArrayList<String> knownUsers = new ArrayList<String>();
+		Gson gson = new Gson();
+		Type listOfStrings = new TypeToken<ArrayList<String>>(){}.getType();
+		if(prefs.contains("knownUsers"))
+			knownUsers = gson.fromJson(prefs.getString("knownUsers",""),listOfStrings);
+
+		for(String member : members)
+		{
+			if(!knownUsers.contains(member))
+				knownUsers.add(member);
+		}
+
+		prefs.edit().putString("knownUsers",gson.toJson(knownUsers)).apply();
 
 		Builder builder = new Builder(context);
 		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

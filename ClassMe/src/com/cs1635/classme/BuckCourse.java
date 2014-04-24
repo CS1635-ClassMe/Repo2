@@ -54,6 +54,8 @@ public class BuckCourse extends ActionBarActivity implements ActionBar.TabListen
 
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
+		classId = getIntent().getStringExtra("classId");
+
 		// Initilization
 		viewPager = (ViewPager) findViewById(R.id.pager);
 		actionBar = getSupportActionBar();

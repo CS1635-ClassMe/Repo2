@@ -52,6 +52,12 @@ public class SearchActivity extends ActionBarActivity
 			@Override
 			public void onClick(View view)
 			{
+				if(searchText.getText().toString().length() < 1)
+				{
+					searchText.setError("Cannot be blank");
+					return;
+				}
+
 				if(searchFilterCourses.isChecked())
 				{
 					courses = null;
