@@ -52,9 +52,9 @@ import java.util.List;
 public class SinglePostActivity extends ActionBarActivity
 {
 	SinglePostActivity context = this;
-	Post post;
-	ListView commentList;
-	View postView;
+	Post post; ///QUERY FOR TYPE (string)
+	ListView commentList; //Background!
+	View postView; //THE POST WITH A BACKGROUND -- SET BASED ON
 	MediaPlayer mediaPlayer;
 
 	@Override
@@ -80,6 +80,23 @@ public class SinglePostActivity extends ActionBarActivity
 		final EditText commentBox = (EditText) findViewById(R.id.addComment);
 		ImageView send = (ImageView) findViewById(R.id.send);
 		commentList = (ListView) findViewById(R.id.commentList);
+
+
+        //D
+        if(post.getType() == "Discussion"){
+            Log.d("Discussion", "yeppppp");
+            postView.setBackgroundColor(getResources().getColor(R.color.discuss_background));
+            commentList.setBackgroundColor(getResources().getColor(R.color.discuss_list_background));
+        } else if(post.getType() == "Lecture"){
+            Log.d("Lecture", "yeppppp");
+            postView.setBackgroundColor(getResources().getColor(R.color.lecture_background));
+            commentList.setBackgroundColor(getResources().getColor(R.color.lecture_list_background));
+        } else if (post.getType() == "Note"){
+            Log.d("Note", "yeppppp");
+            postView.setBackgroundColor(getResources().getColor(R.color.note_background));
+            commentList.setBackgroundColor(getResources().getColor(R.color.note_list_background));
+        }
+
 
 		send.setOnClickListener(new View.OnClickListener()
 		{

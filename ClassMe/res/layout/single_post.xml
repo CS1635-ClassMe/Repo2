@@ -4,7 +4,9 @@
 				xmlns:tools="http://schemas.android.com/tools"
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
-				android:id="@+id/postLayout">
+				android:id="@+id/postLayout"
+                android:background="@color/post_background"
+    >
 
 	<TextView
 		android:layout_width="wrap_content"
@@ -58,7 +60,7 @@
 		android:layout_below="@+id/profileImage"
 		android:layout_margin="5dp"
 		android:layout_alignParentLeft="true"
-		android:background="@color/tan"/>
+		android:background="@color/post_body"/>
 
 	<WebView
 		android:id="@+id/ohHai"

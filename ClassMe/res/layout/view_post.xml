@@ -2,13 +2,15 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+
+    >
 
     <ListView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/commentList"
-            android:background="#ffe4e4e4"
+            android:background="@color/comment_background"
             android:layout_alignParentTop="true"
             android:layout_above="@+id/addComment"/>
 
