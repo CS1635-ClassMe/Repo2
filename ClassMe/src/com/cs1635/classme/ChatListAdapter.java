@@ -2,6 +2,8 @@ package com.cs1635.classme;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
+import android.graphics.PorterDuff;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -71,6 +73,25 @@ public class ChatListAdapter extends ArrayAdapter<TextMessage>
 
 		String url = "http://classmeapp.appspot.com/fileRequest?username="+messages.get(position).getFrom();
 		Ion.with(userImage).placeholder(R.drawable.user_icon).load("https://classmeapp.appspot.com/fileRequest?username=" + messages.get(position).getFrom());
+
+        //CHeck not null
+
+        Resources res = context.getResources();
+        ImageView you_triangle = (ImageView) v.findViewById(R.id.you);
+        ImageView me_triangle = (ImageView) v.findViewById(R.id.me);
+        int youColor = res.getColor(R.color.lecture_list_background);
+        int meColor = res.getColor(R.color.note_list_background);
+
+        if(you_triangle != null) {
+            you_triangle.setColorFilter(youColor, PorterDuff.Mode.SRC_ATOP);
+        }
+
+        if(me_triangle != null){
+            me_triangle.setColorFilter(meColor, PorterDuff.Mode.SRC_ATOP);
+        }
+
+
+
 
 		return  v;
 	}

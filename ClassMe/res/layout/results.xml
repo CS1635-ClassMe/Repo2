@@ -60,4 +60,35 @@
         android:background="@color/discuss_list_background"
         />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:text="Can't find a course?"
+            android:gravity="right"
+            android:textSize="16sp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="5dp"
+            android:padding="10dp"
+            />
+
+    <Button android:id="@+id/result_createnew"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="40dp"
+        android:background="@color/discuss_button"
+        android:text="Create New"
+        android:textColor="@color/button_text_color"
+        android:textSize="22dp"
+        android:layout_margin="10dp"
+        />
+    </LinearLayout>
+
 </LinearLayout>
