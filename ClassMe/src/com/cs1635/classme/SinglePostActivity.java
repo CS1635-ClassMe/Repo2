@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.os.AsyncTask;
@@ -169,7 +170,7 @@ public class SinglePostActivity extends ActionBarActivity
 					imageLayout.addView(img);
 					Ion.with(img).placeholder(R.drawable.ic_launcher).load(source);
 				}
-				return null;
+				return getResources().getDrawable(R.drawable.ic_launcher);
 			}
 		},null));
 		//content.loadDataWithBaseURL(null, post.getPostContent(), "text/html", "utf-8", null);

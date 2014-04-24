@@ -54,7 +54,14 @@ public class PostViewAdapter extends ArrayAdapter<Post>
 		String streamLevel = posts.get(position).getClassId();
 		title.setText(posts.get(position).getPostTitle());
 
-		content.setText(Html.fromHtml(posts.get(position).getPostContent(), null,null));
+		content.setText(Html.fromHtml(posts.get(position).getPostContent(), new Html.ImageGetter()
+		{
+			@Override
+			public Drawable getDrawable(String source)
+			{
+				return context.getResources().getDrawable(R.drawable.ic_launcher);
+			}
+		},null));
 
 		//content.loadDataWithBaseURL(null, posts.get(position).getPostContent(), "text/html", "utf-8", null);
 		username.setText(posts.get(position).getUsername());
