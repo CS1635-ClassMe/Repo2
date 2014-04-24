@@ -1,9 +1,10 @@
 package com.cs1635.classme;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.support.v4.internal.view.SupportMenuItem;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
@@ -27,41 +28,36 @@ public class ResultsActivity extends ActionBarActivity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.results);
 
+		ActionBar actionBar = getSupportActionBar();
+		actionBar.setDisplayShowCustomEnabled(true);
+		actionBar.setCustomView(R.layout.results_actionbar);
+
 		ListView postsList = (ListView) findViewById(R.id.postsList);
 		ListView usersList = (ListView) findViewById(R.id.usersList);
 		ListView coursesList = (ListView) findViewById(R.id.coursesList);
-
-		ArrayList<Post> posts = new ArrayList<Post>();
-		ArrayList<User> users = new ArrayList<User>();
-		ArrayList<Course> courses = new ArrayList<Course>();
 
 		Bundle bundle = getIntent().getExtras();
 		if(bundle != null)
 		{
 			Gson gson = new Gson();
-			Type listOfResults = new TypeToken<ArrayList<Object>>(){}.getType();
-			ArrayList<Object> results = gson.fromJson(bundle.getString("results"), listOfResults);
-			if(results != null)
-			{
-				for(Object result : results)
-				{
-					if(result instanceof Post)
-						posts.add((Post)result);
-					if(result instanceof User)
-						users.add((User)result);
-					if(result instanceof Course)
-						courses.add((Course)result);
-				}
+			Type listOfResults = new TypeToken<ArrayList<User>>(){}.getType();
+			ArrayList<User> users = gson.fromJson(bundle.getString("users"), listOfResults);
+			listOfResults = new TypeToken<ArrayList<Post>>(){}.getType();
+			ArrayList<Post> posts = gson.fromJson(bundle.getString("posts"), listOfResults);
+			listOfResults = new TypeToken<ArrayList<Course>>(){}.getType();
+			ArrayList<Course> courses = gson.fromJson(bundle.getString("courses"), listOfResults);
 
-				//add adapters to lists
-			}
+			//add adapters to lists
+			usersList.setAdapter(new ResultUserAdapter(this, 1, users));
+			postsList.setAdapter(new ResultPostAdapter(this,1,posts));
+			coursesList.setAdapter(new ResultCourseAdapter(this, 1, courses));
 		}
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)
 	{
-		getMenuInflater().inflate(R.menu.single_post, menu);
+		getMenuInflater().inflate(R.menu.search_results, menu);
 		return true;
 	}
 
@@ -69,6 +65,11 @@ public class ResultsActivity extends ActionBarActivity
 	public boolean onOptionsItemSelected(MenuItem item)
 	{
 		int id = item.getItemId();
+
+		if(id == R.id.newClass)
+		{
+			startActivity(new Intent(this, NewCourse.class));
+		}
 
 		return super.onOptionsItemSelected(item);
 	}

@@ -1,5 +1,6 @@
 package com.cs1635.classme;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -12,6 +13,9 @@ import android.widget.EditText;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.shared.Course;
+import com.shared.Post;
+import com.shared.User;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -27,8 +31,9 @@ public class SearchActivity extends ActionBarActivity
 	SearchActivity activity = this;
 	CheckBox searchFilterUsers, searchFilterCourses, searchFilterPosts;
 	EditText searchText;
-	ArrayList<Object> results = new ArrayList<Object>();
-	int numExpected = 0, numReturned = 0;
+	ArrayList<User> users = new ArrayList<User>();
+	ArrayList<Post> posts = new ArrayList<Post>();
+	ArrayList<Course> courses = new ArrayList<Course>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -49,22 +54,24 @@ public class SearchActivity extends ActionBarActivity
 			{
 				if(searchFilterCourses.isChecked())
 				{
-					numExpected++;
+					courses = null;
 					new SearchTask().execute("courses");
 				}
 				if(searchFilterUsers.isChecked())
 				{
-					numExpected++;
+					users = null;
 					new SearchTask().execute("users");
 				}
 				if(searchFilterPosts.isChecked())
 				{
-					numExpected++;
+					posts = null;
 					new SearchTask().execute("posts");
 				}
 				if(!searchFilterCourses.isChecked() && !searchFilterUsers.isChecked() && !searchFilterPosts.isChecked())
 				{
-					numExpected = 3;
+					courses = null;
+					users = null;
+					posts = null;
 					new SearchTask().execute("courses");
 					new SearchTask().execute("users");
 					new SearchTask().execute("posts");
@@ -73,42 +80,62 @@ public class SearchActivity extends ActionBarActivity
 		});
 	}
 
-	private class SearchTask extends AsyncTask<String,Void,ArrayList<Object>>
+	private class SearchTask extends AsyncTask<String,Void,Boolean>
 	{
 		Gson gson = new Gson();
+		ProgressDialog dialog;
 
 		@Override
-		protected ArrayList<Object> doInBackground(String... params)
+		protected void onPreExecute()
+		{
+			dialog = ProgressDialog.show(SearchActivity.this,"","Getting Results...",true);
+		}
+
+		@Override
+		protected Boolean doInBackground(String... params)
 		{
 			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
 			nameValuePairs.add(new BasicNameValuePair("searchString", searchText.getText().toString()));
 
-			ArrayList<Object> partialResults = null;
 			try
 			{
-				numReturned++;
 				HttpResponse urlResponse = AppEngineClient.makeRequest("/search/"+params[0], nameValuePairs);
 				String response = EntityUtils.toString(urlResponse.getEntity());
-				Type listOfResults = new TypeToken<ArrayList<Object>>(){}.getType();
-				partialResults = gson.fromJson(response, listOfResults);
+				if(params[0].equals("users"))
+				{
+					Type listOfResults = new TypeToken<ArrayList<User>>(){}.getType();
+					users = gson.fromJson(response, listOfResults);
+				}
+				if(params[0].equals("posts"))
+				{
+					Type listOfResults = new TypeToken<ArrayList<Post>>(){}.getType();
+					posts = gson.fromJson(response, listOfResults);
+				}
+				if(params[0].equals("courses"))
+				{
+					Type listOfResults = new TypeToken<ArrayList<Course>>(){}.getType();
+					courses = gson.fromJson(response, listOfResults);
+				}
 			}
 			catch(Exception ex)
 			{
 				Log.e("ClassMe", "Error searching: " + ex.getMessage());
-				return partialResults;
+				return false;
 			}
-			return partialResults;
+			return true;
 		}
 
 		@Override
-		protected void onPostExecute(ArrayList<Object> partialResults)
+		protected void onPostExecute(Boolean success)
 		{
-			results.addAll(partialResults);
+			dialog.dismiss();
 
-			if(numReturned == numExpected)
+			if(posts != null && users != null && courses != null)
 			{
 				Bundle bundle = new Bundle();
-				bundle.putString("results",gson.toJson(results));
+				bundle.putString("users",gson.toJson(users));
+				bundle.putString("posts",gson.toJson(posts));
+				bundle.putString("courses",gson.toJson(courses));
 				Intent intent = new Intent(SearchActivity.this,ResultsActivity.class);
 				intent.putExtras(bundle);
 				startActivity(intent);
