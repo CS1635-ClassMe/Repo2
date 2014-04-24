@@ -10,7 +10,8 @@
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		android:text="@string/list_discussions_existing"
-		android:textSize="32dp"
+		android:textSize="24dp"
+        android:textColor="@color/muted"
 		/>
 
 	<TextView
@@ -19,7 +20,9 @@
 		android:layout_height="wrap_content"
 		android:layout_centerInParent="true"
 		android:text="No Discussions To Show"
-		android:visibility="gone"/>
+		android:visibility="gone"
+
+        />
 
 	<ListView
 		android:id="@+id/list_of_discussions"

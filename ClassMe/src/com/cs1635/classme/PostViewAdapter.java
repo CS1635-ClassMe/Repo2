@@ -111,11 +111,11 @@ public class PostViewAdapter extends ArrayAdapter<Post>
 				commentFlipper.addView(commentView);
 
                 if(posts.get(position).getType().equals("Discussion")){
-                    commentView.setBackgroundColor(context.getResources().getColor(R.color.discuss_list_background));
+                    commentView.setBackgroundColor(context.getResources().getColor(R.color.discuss_comment));
                 } else if(posts.get(position).getType().equals("Lecture")){
-                    commentView.setBackgroundColor(context.getResources().getColor(R.color.lecture_list_background));
+                    commentView.setBackgroundColor(context.getResources().getColor(R.color.lecture_comment));
                 } else if (posts.get(position).getType().equals("Note")){
-                    commentView.setBackgroundColor(context.getResources().getColor(R.color.note_list_background));
+                    commentView.setBackgroundColor(context.getResources().getColor(R.color.note_comment));
                 }
 
 				View imageLayout = vi.inflate(R.layout.profile_image, null);

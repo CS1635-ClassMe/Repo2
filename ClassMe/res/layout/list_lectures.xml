@@ -9,7 +9,8 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/list_lectures_existing"
-        android:textSize="32dp"
+        android:textSize="24dp"
+        android:textColor="@color/muted"
         />
 
     <ListView android:id="@+id/list_of_lectures"
