@@ -84,16 +84,16 @@ public class SinglePostActivity extends ActionBarActivity
 
 
         //D
-        if(post.getType() == "Discussion"){
-            Log.d("Discussion", "yeppppp");
+        if(post.getType().equals("Discussion")){
+            Log.d("buck", "discussion");
             postView.setBackgroundColor(getResources().getColor(R.color.discuss_background));
             commentList.setBackgroundColor(getResources().getColor(R.color.discuss_list_background));
-        } else if(post.getType() == "Lecture"){
-            Log.d("Lecture", "yeppppp");
+        } else if(post.getType().equals("Lecture")){
+            Log.d("buck", "lecture");
             postView.setBackgroundColor(getResources().getColor(R.color.lecture_background));
             commentList.setBackgroundColor(getResources().getColor(R.color.lecture_list_background));
-        } else if (post.getType() == "Note"){
-            Log.d("Note", "yeppppp");
+        } else if (post.getType().equals("Note")){
+            Log.d("buck", "note");
             postView.setBackgroundColor(getResources().getColor(R.color.note_background));
             commentList.setBackgroundColor(getResources().getColor(R.color.note_list_background));
         }
